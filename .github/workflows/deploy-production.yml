@@ -165,5 +165,7 @@ jobs:
           docker buildx imagetools create -t "$REGISTRY/bifrozz-gateway:production" "$REGISTRY/bifrozz-gateway@$GATEWAY"
           docker buildx imagetools create -t "$REGISTRY/bifrozz-dashboard:production" "$REGISTRY/bifrozz-dashboard@$DASHBOARD"
           docker buildx imagetools create -t "$REGISTRY/bifrozz-docs:production" "$REGISTRY/bifrozz-docs@$DOCS"
+          # The release's deployments may still be running; Coolify refuses a new one until they end.
+          bash "$GITHUB_WORKSPACE/.github/scripts/coolify-rollout.sh" --settle
           bash "$GITHUB_WORKSPACE/.github/scripts/coolify-rollout.sh"
           echo "::warning::$VERSION did not come up; production is back on the images it served before."
