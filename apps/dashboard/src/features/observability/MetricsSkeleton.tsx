@@ -63,7 +63,7 @@ export function MetricsSkeleton() {
 					{["Period · UTC", "Operation", "Public model", "Deployment"].map(
 						(label) => (
 							<div key={label}>
-								<div className="mb-2 font-medium text-sm">
+								<div className="mb-2 text-sm font-medium">
 									<TextSkeleton length={label.length} />
 								</div>
 								<Skeleton className="h-8 rounded-lg sm:h-7" />

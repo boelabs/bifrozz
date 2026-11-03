@@ -35,7 +35,7 @@ export function gatewayUrl(path = ""): string {
 		);
 	}
 	// A trailing slash makes every `${base}${path}` produce a double slash.
-	return `${parsed.origin}${parsed.pathname.replace(/\/+$/, "")}${path}`;
+	return `${parsed.origin}${parsed.pathname.replace(/\/+$/u, "")}${path}`;
 }
 
 /**

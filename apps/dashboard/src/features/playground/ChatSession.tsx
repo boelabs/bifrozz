@@ -161,7 +161,7 @@ export function ChatSession({
 			<div
 				// Bleeding into the shell's padding puts the scrollbar against the window edge, where a
 				// scrollbar belongs; the padding is given back inside so the text stays where it was.
-				className="scrollbar-gutter-stable -mr-4 min-h-0 flex-1 overflow-y-auto overscroll-y-contain pt-6 pr-4 md:-mr-8 md:pr-8"
+				className="-mr-4 min-h-0 flex-1 scrollbar-gutter-stable overflow-y-auto overscroll-y-contain pt-6 pr-4 md:-mr-8 md:pr-8"
 				onScroll={() => {
 					const area = scroll.current;
 					if (area) {
@@ -187,7 +187,7 @@ export function ChatSession({
 					/>
 				) : (
 					<div className="flex h-full items-center justify-center px-4 pb-8 sm:hidden">
-						<h2 className="text-center font-medium text-2xl tracking-tight sm:text-3xl">
+						<h2 className="text-center text-2xl font-medium tracking-tight sm:text-3xl">
 							Playground
 						</h2>
 					</div>
@@ -218,7 +218,7 @@ export function ChatSession({
 					</Button>
 				) : null}
 				{messages.length ? null : (
-					<h2 className="mb-6 hidden text-center font-medium text-3xl tracking-tight sm:block">
+					<h2 className="mb-6 hidden text-center text-3xl font-medium tracking-tight sm:block">
 						Playground
 					</h2>
 				)}

@@ -24,7 +24,7 @@ export function makeVercelRerankHandler(
 				ctx.credentials,
 				"Vercel AI Gateway adapter",
 			);
-			const base = (credentials.baseUrl ?? defaultBaseUrl).replace(/\/+$/, "");
+			const base = (credentials.baseUrl ?? defaultBaseUrl).replace(/\/+$/u, "");
 			return {
 				method: "POST",
 				url: `${base}/rerank`,

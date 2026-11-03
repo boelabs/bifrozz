@@ -466,7 +466,7 @@ test("request->canonical: extra_body cannot overwrite messages managed parameter
 					extra_body: { thinking: { type: "disabled" } },
 				}),
 			),
-		/extra_body.thinking/,
+		/extra_body.thinking/u,
 	);
 });
 
@@ -534,7 +534,7 @@ test("canonical->response: normalizes ids and preserves terminal metadata", () =
 		},
 		opts,
 	) as TestJsonObject;
-	assert.match(String(response.id), /^msg_/);
+	assert.match(String(response.id), /^msg_/u);
 	assert.notEqual(response.id, "chatcmpl-upstream");
 	assert.equal(response.stop_reason, "stop_sequence");
 	assert.equal(response.stop_sequence, "<END>");

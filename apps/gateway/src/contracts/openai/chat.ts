@@ -429,7 +429,7 @@ function mapContentPart(
 				f.fileId = part.file.file_id;
 			}
 			if (part.file.file_data !== undefined) {
-				if (/^https:\/\//i.test(part.file.file_data)) {
+				if (/^https:\/\//iu.test(part.file.file_data)) {
 					f.fileUrl = part.file.file_data;
 				} else {
 					f.fileData = part.file.file_data;

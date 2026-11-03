@@ -20,9 +20,9 @@ test("existing tables render the full collection without client pagination", () 
 			rows={rows}
 		/>,
 	);
-	assert.match(html, /<caption[^>]*>Models<\/caption>/);
-	assert.match(html, />Row 11</);
-	assert.doesNotMatch(html, /Next page/);
+	assert.match(html, /<caption[^>]*>Models<\/caption>/u);
+	assert.match(html, />Row 11</u);
+	assert.doesNotMatch(html, /Next page/u);
 });
 
 test("client pagination limits rows and keeps inaccessible pages disabled", () => {
@@ -34,10 +34,10 @@ test("client pagination limits rows and keeps inaccessible pages disabled", () =
 			rows={rows}
 		/>,
 	);
-	assert.match(html, />Row 4</);
-	assert.doesNotMatch(html, />Row 5</);
-	assert.match(html, /1–5 of 12 results/);
-	assert.match(html, /<button[^>]*aria-label="Previous page"[^>]*disabled/);
+	assert.match(html, />Row 4</u);
+	assert.doesNotMatch(html, />Row 5</u);
+	assert.match(html, /1–5 of 12 results/u);
+	assert.match(html, /<button[^>]*aria-label="Previous page"[^>]*disabled/u);
 });
 
 test("empty and loading tables retain semantic status feedback", () => {
@@ -52,14 +52,14 @@ test("empty and loading tables retain semantic status feedback", () => {
 			/>,
 		);
 		if (loading) {
-			assert.match(html, /aria-busy="true"/);
-			assert.equal(html.match(/<tr[^>]*aria-hidden="true"/g)?.length, 8);
-			assert.match(html, /data-slot="skeleton"/);
+			assert.match(html, /aria-busy="true"/u);
+			assert.equal(html.match(/<tr[^>]*aria-hidden="true"/gu)?.length, 8);
+			assert.match(html, /data-slot="skeleton"/u);
 		} else {
-			assert.match(html, /No results found\./);
+			assert.match(html, /No results found\./u);
 		}
-		assert.match(html, /0–0 of 0 results/);
-		assert.match(html, /<button[^>]*aria-label="Next page"[^>]*disabled/);
+		assert.match(html, /0–0 of 0 results/u);
+		assert.match(html, /<button[^>]*aria-label="Next page"[^>]*disabled/u);
 	}
 });
 
@@ -73,6 +73,6 @@ test("invalid page sizes fall back and numeric custom radii retain CSS units", (
 			rows={rows}
 		/>,
 	);
-	assert.match(html, /1–10 of 12 results/);
-	assert.match(html, /--table-radius:8px/);
+	assert.match(html, /1–10 of 12 results/u);
+	assert.match(html, /--table-radius:8px/u);
 });

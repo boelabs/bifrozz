@@ -140,7 +140,7 @@ export function KeysTable({
 					key.tpm ? `${key.tpm} tpm` : null,
 				].filter(Boolean);
 				return limits.length ? (
-					<span className="text-fg-muted text-xs">{limits.join(" · ")}</span>
+					<span className="text-xs text-fg-muted">{limits.join(" · ")}</span>
 				) : (
 					<Dash />
 				);
@@ -156,8 +156,8 @@ export function KeysTable({
 					<span
 						className={
 							Date.parse(key.expiresAt) < Date.now()
-								? "text-danger text-xs tabular-nums"
-								: "text-fg-muted text-xs tabular-nums"
+								? "text-xs text-danger tabular-nums"
+								: "text-xs text-fg-muted tabular-nums"
 						}
 						suppressHydrationWarning
 					>

@@ -1,21 +1,16 @@
 import type { RealtimeConversationSession } from "#adapters/types.ts";
-
-import {
-	type AudioOutputEncoder,
-	createAudioOutputEncoder,
-	createAudioInputDecoder,
-} from "#audio/pcm.ts";
+import { RealtimeClientEventError, itemId } from "./realtime.ts";
 
 import {
 	type CanonicalRealtimeConversationEvent,
-	type RealtimeFunctionCall,
 	type RealtimeFunctionResult,
 	REALTIME_OUTPUT_SAMPLE_RATE,
 	REALTIME_AUDIO_SAMPLE_RATE,
+	type RealtimeFunctionCall,
 	type RealtimeContentPart,
-	addRealtimeUsage,
 	type RealtimeUsage,
 	type RealtimeTurn,
+	addRealtimeUsage,
 } from "#core/realtime.ts";
 
 import {
@@ -27,7 +22,11 @@ import {
 	responseId,
 } from "./realtimeConversation.ts";
 
-import { RealtimeClientEventError, itemId } from "./realtime.ts";
+import {
+	createAudioOutputEncoder,
+	type AudioOutputEncoder,
+	createAudioInputDecoder,
+} from "#audio/pcm.ts";
 
 /**
  * The OpenAI side of a realtime conversation: the item list, the input audio buffer and the response
@@ -99,7 +98,7 @@ function dataUrlImage(
 	url: string,
 	clientEventId: string | null,
 ): { mimeType: string; data: string } {
-	const match = /^data:(image\/(?:png|jpeg|jpg|webp));base64,(.+)$/s.exec(url);
+	const match = /^data:(image\/(?:png|jpeg|jpg|webp));base64,(.+)$/su.exec(url);
 	if (!(match?.[1] && match[2])) {
 		throw clientError(
 			"input_image.image_url must be a base64 data URL (PNG, JPEG or WebP).",
@@ -229,7 +228,7 @@ export class RealtimeConversationTracker {
 		this.buffered = [];
 		this.bufferedBytes = 0;
 		this.finishUserTranscript();
-		const item = this.userAudioItem();
+		const item = userAudioItem();
 		const previous = this.addItem(item);
 		this.userItem = { id: String(item.id), transcript: "", done: false };
 		this.emit("input_audio_buffer.committed", {
@@ -402,6 +401,7 @@ export class RealtimeConversationTracker {
 		});
 	}
 
+	// biome-ignore lint/style/useThisInClassMethods: one of the tracker's client-event handlers, called like the rest
 	delete(_id: string, clientEventId: string | null): never {
 		throw clientError(
 			"This model cannot remove items from a conversation it has already heard.",
@@ -657,17 +657,6 @@ export class RealtimeConversationTracker {
 		}
 	}
 
-	private userAudioItem(): Record<string, unknown> {
-		return {
-			id: itemId(),
-			object: "realtime.item",
-			type: "message",
-			status: "completed",
-			role: "user",
-			content: [{ type: "input_audio", transcript: null }],
-		};
-	}
-
 	private audioMs(): number {
 		return Math.round(this.inputAudioSeconds * 1000);
 	}
@@ -695,7 +684,7 @@ export class RealtimeConversationTracker {
 			audio_end_ms: this.audioMs(),
 			item_id: id,
 		});
-		const item = { ...this.userAudioItem(), id };
+		const item = { ...userAudioItem(), id };
 		const previous = this.addItem(item);
 		this.emit("input_audio_buffer.committed", {
 			previous_item_id: previous,
@@ -814,15 +803,6 @@ export class RealtimeConversationTracker {
 		return message;
 	}
 
-	private ids(response: ActiveResponse, message: MessageOutput) {
-		return {
-			response_id: response.id,
-			item_id: message.item.id,
-			output_index: message.outputIndex,
-			content_index: 0,
-		};
-	}
-
 	private outputAudio(pcm: Buffer): void {
 		this.outputAudioSeconds += pcm.byteLength / 2 / REALTIME_OUTPUT_SAMPLE_RATE;
 		if (this.state.outputModality !== "audio") {
@@ -842,7 +822,7 @@ export class RealtimeConversationTracker {
 		this.firstOutputAt ??= Date.now();
 		this.state.spoke = true;
 		this.emit("response.output_audio.delta", {
-			...this.ids(response, message),
+			...outputItemIds(response, message),
 			delta: encoded.toString("base64"),
 		});
 	}
@@ -861,7 +841,7 @@ export class RealtimeConversationTracker {
 			}
 			message.transcript += text;
 			this.emit("response.output_audio_transcript.delta", {
-				...this.ids(response, message),
+				...outputItemIds(response, message),
 				delta: text,
 			});
 			return;
@@ -869,7 +849,7 @@ export class RealtimeConversationTracker {
 		// A text session on an audio-only model reads the transcript of its spoken reply.
 		message.text += text;
 		this.emit("response.output_text.delta", {
-			...this.ids(response, message),
+			...outputItemIds(response, message),
 			delta: text,
 		});
 	}
@@ -880,7 +860,7 @@ export class RealtimeConversationTracker {
 			return;
 		}
 		response.message = null;
-		const ids = this.ids(response, message);
+		const ids = outputItemIds(response, message);
 		let part: Record<string, unknown>;
 		if (this.state.outputModality === "audio") {
 			this.emit("response.output_audio.done", ids);
@@ -1015,4 +995,24 @@ export class RealtimeConversationTracker {
 	get hasPendingContent(): boolean {
 		return this.contentPending || this.pendingResults.length > 0;
 	}
+}
+
+function userAudioItem(): Record<string, unknown> {
+	return {
+		id: itemId(),
+		object: "realtime.item",
+		type: "message",
+		status: "completed",
+		role: "user",
+		content: [{ type: "input_audio", transcript: null }],
+	};
+}
+
+function outputItemIds(response: ActiveResponse, message: MessageOutput) {
+	return {
+		response_id: response.id,
+		item_id: message.item.id,
+		output_index: message.outputIndex,
+		content_index: 0,
+	};
 }

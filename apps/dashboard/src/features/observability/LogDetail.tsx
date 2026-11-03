@@ -76,7 +76,7 @@ function CopyButton({ value, label }: { value: string; label: string }) {
 /** An identifier to read and copy whole. */
 function CopyableId({ value, label }: { value: string; label: string }) {
 	return (
-		<span className="flex items-center gap-1 break-all font-mono text-xs">
+		<span className="flex items-center gap-1 font-mono text-xs break-all">
 			{value}
 			<CopyButton label={label} value={value} />
 		</span>
@@ -96,7 +96,7 @@ function JsonPanel({ title, value }: { title: string; value: unknown }) {
 			flush
 			title={title}
 		>
-			<pre className="max-h-[32rem] overflow-auto whitespace-pre-wrap break-words p-5 font-mono text-xs leading-relaxed">
+			<pre className="max-h-[32rem] overflow-auto p-5 font-mono text-xs leading-relaxed break-words whitespace-pre-wrap">
 				{text}
 			</pre>
 		</Panel>
@@ -110,8 +110,8 @@ function Fact({ label, value }: { label: string; value: ReactNode }) {
 	}
 	return (
 		<div className="flex min-w-0 flex-col">
-			<dt className="text-fg-muted text-xs">{label}</dt>
-			<dd className="break-words text-sm tabular-nums">{value}</dd>
+			<dt className="text-xs text-fg-muted">{label}</dt>
+			<dd className="text-sm break-words tabular-nums">{value}</dd>
 		</div>
 	);
 }
@@ -236,7 +236,7 @@ function AttemptCard({
 				}`;
 
 	return (
-		<li className="flex flex-col gap-3 border-border/40 border-b py-4 first:pt-0 last:border-0 last:pb-0">
+		<li className="flex flex-col gap-3 border-b border-border/40 py-4 first:pt-0 last:border-0 last:pb-0">
 			<div className="flex flex-wrap items-center gap-2 text-sm">
 				<span className="text-fg-muted tabular-nums">#{attempt.ordinal}</span>
 				<Status tone={outcomeTone(attempt.outcome)}>{attempt.outcome}</Status>
@@ -248,7 +248,7 @@ function AttemptCard({
 						.filter(Boolean)
 						.join(" · ")}
 				</Mono>
-				<span className="ml-auto text-fg-muted text-xs tabular-nums">
+				<span className="ml-auto text-xs text-fg-muted tabular-nums">
 					{formatDuration(attempt.durationMs)}
 				</span>
 			</div>
@@ -261,7 +261,7 @@ function AttemptCard({
 
 			{failure ? (
 				<div className="flex flex-col gap-2 rounded-md border border-destructive/24 bg-destructive/4 p-3">
-					<p className="font-medium text-sm">
+					<p className="text-sm font-medium">
 						{causeLabel(failure)}
 						<span className="font-normal text-fg-muted">
 							{" · "}
@@ -272,12 +272,12 @@ function AttemptCard({
 						</span>
 					</p>
 					{provider?.message ? (
-						<p className="whitespace-pre-wrap break-words text-sm">
+						<p className="text-sm break-words whitespace-pre-wrap">
 							{provider.message}
 						</p>
 					) : null}
 					{provider?.type || provider?.code || provider?.param ? (
-						<p className="text-fg-muted text-xs">
+						<p className="text-xs text-fg-muted">
 							{[
 								provider.type && `type ${provider.type}`,
 								provider.code && `code ${provider.code}`,
@@ -288,7 +288,7 @@ function AttemptCard({
 						</p>
 					) : null}
 					{error?.message && error.message !== provider?.message ? (
-						<p className="whitespace-pre-wrap break-words font-mono text-fg-muted text-xs">
+						<p className="font-mono text-xs break-words whitespace-pre-wrap text-fg-muted">
 							{error.message}
 						</p>
 					) : null}
@@ -370,7 +370,7 @@ function AttemptCard({
 			</dl>
 
 			{anomalies.length > 0 ? (
-				<p className="text-fg-muted text-xs">
+				<p className="text-xs text-fg-muted">
 					Tolerated:{" "}
 					{anomalies.map((item) => item.replaceAll("_", " ")).join(", ")}
 				</p>
@@ -431,7 +431,7 @@ function RetainedPayload({
 				title="Retained payload"
 			>
 				<div className="flex flex-col gap-3">
-					<p className="text-muted-foreground text-sm">{payloadNote(sample)}</p>
+					<p className="text-sm text-muted-foreground">{payloadNote(sample)}</p>
 					{error ? <ErrorNote>{error}</ErrorNote> : null}
 				</div>
 			</Panel>
@@ -546,7 +546,7 @@ export function LogDetail({ detail }: { detail: OperationDetail }) {
 										label: "Actor",
 										value:
 											typeof detail.actor === "string" ? (
-												<span className="break-all font-mono text-xs">
+												<span className="font-mono text-xs break-all">
 													{detail.actor}
 												</span>
 											) : null,
@@ -603,7 +603,7 @@ export function LogDetail({ detail }: { detail: OperationDetail }) {
 								</span>
 							</p>
 							{typeof opError.message === "string" ? (
-								<p className="whitespace-pre-wrap break-words font-mono text-fg-muted text-xs">
+								<p className="font-mono text-xs break-words whitespace-pre-wrap text-fg-muted">
 									{opError.message}
 								</p>
 							) : null}
@@ -620,7 +620,7 @@ export function LogDetail({ detail }: { detail: OperationDetail }) {
 					title={`Attempts (${attempts.length})`}
 				>
 					{attempts.length === 0 ? (
-						<p className="text-fg-muted text-sm">
+						<p className="text-sm text-fg-muted">
 							No upstream was contacted — the request never left the gateway.
 						</p>
 					) : (

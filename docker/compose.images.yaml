@@ -30,7 +30,11 @@ services:
       # PG18 moved PGDATA to /var/lib/postgresql/18/docker; the volume is mounted on the parent.
       - pgdata:/var/lib/postgresql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-gateway} -d ${POSTGRES_DB:-bifrost}"]
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER:-gateway} -d ${POSTGRES_DB:-bifrost}",
+        ]
       interval: 5s
       timeout: 5s
       retries: 10

@@ -119,7 +119,7 @@ test("prompt-cache policies participate in explicit model parameter support", ()
 	};
 	assert.throws(
 		() => applyUnsupportedParameterPolicy(req, metadata, "error"),
-		/does not support/,
+		/does not support/u,
 	);
 	const dropped = applyUnsupportedParameterPolicy(req, metadata, "drop");
 	assert.deepEqual(dropped.droppedParameters, [

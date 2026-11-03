@@ -27,7 +27,7 @@ export function PrivateKeySwitch({
 			>
 				Private key
 			</Switch>
-			<p className="text-fg-muted text-xs" id={descriptionId}>
+			<p className="text-xs text-fg-muted" id={descriptionId}>
 				{checked
 					? "The secret is shown once and never stored. A lost one can only be replaced by regenerating the key."
 					: "The secret is stored encrypted, so it can be copied again from the key's page."}

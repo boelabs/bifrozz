@@ -1,5 +1,5 @@
-import type { RealtimeTurn, RealtimeFunctionResult } from "#core/realtime.ts";
 import { RealtimeConversationTracker } from "./realtimeConversationTracker.ts";
+import type { RealtimeTurn, RealtimeFunctionResult } from "#core/realtime.ts";
 import { RealtimeClientEventError } from "./realtime.ts";
 import assert from "node:assert/strict";
 import { test } from "node:test";
@@ -7,8 +7,8 @@ import { test } from "node:test";
 import {
 	applyConversationSessionUpdate,
 	parseRealtimeConversationEvent,
-	newRealtimeConversationState,
 	type RealtimeConversationState,
+	newRealtimeConversationState,
 	renderConversationSession,
 	conversationConfigOf,
 } from "./realtimeConversation.ts";

@@ -385,7 +385,7 @@ export function DataTable<T>({
 							<TableRow data-empty="">
 								<TableCell
 									className={cn(
-										"whitespace-normal text-center text-fg-muted",
+										"text-center whitespace-normal text-fg-muted",
 										typeof placeholder === "string" ? "px-5 py-12" : "p-0",
 									)}
 									colSpan={Math.max(columns.length, 1)}
@@ -404,7 +404,7 @@ export function DataTable<T>({
 						framed ? "p-3" : "pt-4",
 					)}
 				>
-					<p className="text-fg-muted text-sm" role="status">
+					<p className="text-sm text-fg-muted" role="status">
 						{filtered.length ? currentPage * pageSize + 1 : 0}–
 						{Math.min((currentPage + 1) * pageSize, filtered.length)} of{" "}
 						{filtered.length} results
@@ -444,7 +444,7 @@ export function DataTable<T>({
 							>
 								<IconChevronLeft aria-hidden className="size-4" />
 							</Button>
-							<span className="text-fg-muted text-sm tabular-nums">
+							<span className="text-sm text-fg-muted tabular-nums">
 								{currentPage + 1} / {pageCount}
 							</span>
 							<Button
@@ -467,6 +467,6 @@ export function DataTable<T>({
 }
 
 export const Mono = ({ children }: { children: ReactNode }) => (
-	<span className="font-mono text-fg-muted text-xs">{children}</span>
+	<span className="font-mono text-xs text-fg-muted">{children}</span>
 );
 export const Dash = () => <span className="text-fg-muted">—</span>;

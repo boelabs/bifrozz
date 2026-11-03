@@ -50,7 +50,7 @@ test("gating: flexible model accepts verbose_json + timestamps and rejects strea
 	);
 	assert.throws(
 		() => assertTranscriptionRequestSupported(req({ stream: true }), flexible),
-		/streaming/,
+		/streaming/u,
 	);
 });
 
@@ -64,7 +64,7 @@ test("gating: gpt-4o-transcribe allows streaming but not verbose_json", () => {
 				req({ responseFormat: "verbose_json" }),
 				gpt4o,
 			),
-		/response_format/,
+		/response_format/u,
 	);
 });
 
@@ -75,7 +75,7 @@ test("gating: timestamp_granularities requires verbose_json", () => {
 				req({ timestampGranularities: ["word"] }),
 				flexible,
 			),
-		/verbose_json/,
+		/verbose_json/u,
 	);
 });
 
@@ -147,7 +147,7 @@ test("gating: Gemini Transcribe rejects the combinations Google rejects", () => 
 				GatewayError.is(error) &&
 				error.code === "unsupported_parameter" &&
 				error.param === param &&
-				/cannot combine/.test(error.message),
+				/cannot combine/u.test(error.message),
 		);
 	}
 });
@@ -162,7 +162,7 @@ test("gating: Gemini Transcribe limits granularity, vocabulary size, and streami
 				}),
 				geminiTranscribe,
 			),
-		/timestamp_granularities=segment/,
+		/timestamp_granularities=segment/u,
 	);
 	assert.throws(
 		() =>
@@ -170,7 +170,7 @@ test("gating: Gemini Transcribe limits granularity, vocabulary size, and streami
 				req({ keywords: Array.from({ length: 1001 }, (_, i) => `k${i}`) }),
 				geminiTranscribe,
 			),
-		/at most 1000 keywords/,
+		/at most 1000 keywords/u,
 	);
 	assert.doesNotThrow(() =>
 		assertTranscriptionRequestSupported(
@@ -184,14 +184,14 @@ test("gating: Gemini Transcribe limits granularity, vocabulary size, and streami
 				req({ stream: true }),
 				geminiTranscribe,
 			),
-		/streaming/,
+		/streaming/u,
 	);
 });
 
 test("gating: smart mode and diarization are refused by models that do not declare them", () => {
 	assert.throws(
 		() => assertTranscriptionRequestSupported(req({ mode: "smart" }), gpt4o),
-		/transcription_mode=smart/,
+		/transcription_mode=smart/u,
 	);
 	assert.doesNotThrow(() =>
 		assertTranscriptionRequestSupported(req({ mode: "verbatim" }), gpt4o),
@@ -202,7 +202,7 @@ test("gating: smart mode and diarization are refused by models that do not decla
 				req({ responseFormat: "diarized_json" }),
 				gpt4o,
 			),
-		/response_format=diarized_json/,
+		/response_format=diarized_json/u,
 	);
 });
 

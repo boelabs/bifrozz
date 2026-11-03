@@ -1,7 +1,3 @@
-import type {
-	CanonicalRealtimeConversationConfig,
-	CanonicalRealtimeConversationEvent,
-} from "#core/realtime.ts";
 import { resolveModelMetadata } from "#catalog/index.ts";
 import { type WebSocket, WebSocketServer } from "ws";
 import { openaiAdapter } from "./openai/index.ts";
@@ -17,6 +13,11 @@ import {
 	openAIRealtimeUsage,
 	openAIRealtimeUrl,
 } from "./openaiRealtime.ts";
+
+import type {
+	CanonicalRealtimeConversationConfig,
+	CanonicalRealtimeConversationEvent,
+} from "#core/realtime.ts";
 
 const MODEL = "gpt-realtime-2.1";
 

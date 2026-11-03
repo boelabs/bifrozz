@@ -146,7 +146,7 @@ test("admin platform: rejects legacy provider field", async () => {
 	if (!parsed.success) {
 		assert.match(
 			parsed.error.issues.map((issue) => issue.message).join("; "),
-			/provider/,
+			/provider/u,
 		);
 	}
 
@@ -276,5 +276,5 @@ test("admin platform: rejects deployment metadata over the size limit", async ()
 	});
 	assert.equal(response.status, 400);
 	const json = (await response.json()) as { error?: { param?: string } };
-	assert.match(json.error?.param ?? "", /metadata/);
+	assert.match(json.error?.param ?? "", /metadata/u);
 });

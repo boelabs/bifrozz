@@ -13,7 +13,7 @@ test("test-support: real fetch is blocked by default", {
 }, async () => {
 	await assert.rejects(
 		() => fetch("https://api.openai.com/v1/models"),
-		/Real fetch blocked/,
+		/Real fetch blocked/u,
 	);
 });
 
@@ -28,6 +28,6 @@ test("test-support: withStubbedFetch allows a synthetic upstream and restores th
 
 	await assert.rejects(
 		() => fetch("https://api.openai.com/v1/models"),
-		/Real fetch blocked/,
+		/Real fetch blocked/u,
 	);
 });

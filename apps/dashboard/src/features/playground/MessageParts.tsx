@@ -89,7 +89,7 @@ export function UserBubble({
 			style={{ maxHeight: expandable && !expanded ? 266 : undefined }}
 		>
 			<p
-				className="wrap-break-word wrap-anywhere whitespace-pre-wrap"
+				className="wrap-anywhere wrap-break-word whitespace-pre-wrap"
 				dir="auto"
 				id={id}
 				ref={paragraph}

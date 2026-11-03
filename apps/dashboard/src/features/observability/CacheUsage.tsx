@@ -72,13 +72,13 @@ export function CacheUsage({
 			}
 		>
 			<div className="@container">
-				<p className="font-semibold text-2xl tabular-nums">
+				<p className="text-2xl font-semibold tabular-nums">
 					{reuse === null ? "—" : percent.format(reuse)}{" "}
-					<span className="font-normal text-fg-muted text-xs">
+					<span className="text-xs font-normal text-fg-muted">
 						cache reuse · classified input
 					</span>
 				</p>
-				<div className="mt-6 grid @min-[40rem]:grid-cols-[14rem_minmax(0,1fr)] items-center @min-[40rem]:gap-8 gap-6">
+				<div className="mt-6 grid items-center gap-6 @min-[40rem]:grid-cols-[14rem_minmax(0,1fr)] @min-[40rem]:gap-8">
 					<div
 						aria-label="Reported input token distribution"
 						className="relative mx-auto h-56 w-56"
@@ -106,12 +106,12 @@ export function CacheUsage({
 							<div className="absolute inset-2 rounded-full border-[24px] border-secondary" />
 						)}
 						<div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-							<span className="font-semibold text-2xl tabular-nums">
+							<span className="text-2xl font-semibold tabular-nums">
 								{rows.some((row) => row.value != null)
 									? compact.format(total)
 									: "—"}
 							</span>
-							<span className="mt-1 text-fg-muted text-xs">input tokens</span>
+							<span className="mt-1 text-xs text-fg-muted">input tokens</span>
 						</div>
 					</div>
 					<dl className="min-w-0 divide-y divide-border/50">
@@ -131,19 +131,19 @@ export function CacheUsage({
 								</dt>
 								<dd className="flex flex-wrap items-baseline gap-x-3 font-semibold tabular-nums">
 									{tokenCount(row.value)}
-									<span className="font-normal text-fg-muted text-xs">
+									<span className="text-xs font-normal text-fg-muted">
 										{row.value == null || total === 0
 											? "—"
 											: `${((row.value / total) * 100).toFixed(1)}%`}
 									</span>
 								</dd>
-								<dd className="w-full text-fg-muted text-xs">{row.detail}</dd>
+								<dd className="w-full text-xs text-fg-muted">{row.detail}</dd>
 							</div>
 						))}
 					</dl>
 				</div>
 
-				<div className="mt-6 flex flex-wrap justify-between gap-3 border-border/50 border-t pt-4 text-fg-muted text-xs">
+				<div className="mt-6 flex flex-wrap justify-between gap-3 border-t border-border/50 pt-4 text-xs text-fg-muted">
 					<p>
 						Cache writes:{" "}
 						<span className="font-medium text-fg tabular-nums">
@@ -157,7 +157,7 @@ export function CacheUsage({
 						{tokenCount(records)} {unit}
 					</p>
 				</div>
-				<p className="mt-3 text-fg-muted text-xs">
+				<p className="mt-3 text-xs text-fg-muted">
 					— means not reported; 0 means a reported zero. Totals and percentages
 					use available measurements, not estimated usage.
 				</p>

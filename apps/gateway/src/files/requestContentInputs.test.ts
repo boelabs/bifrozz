@@ -245,7 +245,7 @@ test("file resolver materializes URLs before OpenAI Chat Completions", async () 
 	assert.equal(fetches, 1);
 	assert.match(
 		body.messages[0].content[0].file.file_data,
-		/^data:application\/pdf;base64,/,
+		/^data:application\/pdf;base64,/u,
 	);
 	assert.equal(body.messages[0].content[0].file.filename, "document.pdf");
 });
@@ -293,7 +293,7 @@ test("file resolver converts UTF-8 JSON to a portable text part", async () => {
 	const content = resolved.request.messages[0]?.content;
 	assert.ok(Array.isArray(content));
 	assert.equal(content[0]?.type, "text");
-	assert.match((content[0] as { text: string }).text, /\{"answer":42\}/);
+	assert.match((content[0] as { text: string }).text, /\{"answer":42\}/u);
 });
 
 test("pdf-text extracts a text PDF for a text-only upstream", async () => {
@@ -313,7 +313,7 @@ test("pdf-text extracts a text PDF for a text-only upstream", async () => {
 	assert.ok(Array.isArray(content));
 	assert.match(
 		(content[0] as { text: string }).text,
-		/Portable attachment text/,
+		/Portable attachment text/u,
 	);
 });
 
@@ -476,7 +476,7 @@ test("video resolver downloads every remote media reference before adapter execu
 	);
 	assert.match(
 		resolved.request.frameImages?.[0]?.url ?? "",
-		/^data:image\/png/,
+		/^data:image\/png/u,
 	);
 	assert.deepEqual(resolved.metadata, {
 		materializedAudio: 1,

@@ -3,11 +3,11 @@ import { describe, expect, it } from "bun:test";
 import { resolve } from "node:path";
 
 const root = resolve(import.meta.dir, "../content/docs");
-const fences = /^```[^\n]*\n([\s\S]*?)^```/gm;
-const inlineCode = /`[^`]+`/g;
-const codeWhitespace = /\s+/g;
-const section = /^#{2,6} /gm;
-const links = /\]\(([^\s)]+)\)|href="([^"]+)"/g;
+const fences = /^```[^\n]*\n([\s\S]*?)^```/gmu;
+const inlineCode = /`[^`]+`/gu;
+const codeWhitespace = /\s+/gu;
+const section = /^#{2,6} /gmu;
+const links = /\]\(([^\s)]+)\)|href="([^"]+)"/gu;
 
 function codeBlocks(text: string): string[] {
 	return [...text.matchAll(fences)].map((match) => match[1] ?? "");
@@ -71,11 +71,11 @@ describe("translation coverage", () => {
 					.map((m) => m[0].replace(codeWhitespace, " "))
 					.sort(),
 			});
-			expect([...esProse.matchAll(/\[#([^\]]+)\]\s*$/gm)].length).toBe(
+			expect([...esProse.matchAll(/\[#([^\]]+)\]\s*$/gmu)].length).toBe(
 				[...enProse.matchAll(section)].length,
 			);
-			expect(esProse).not.toMatch(/\]\(\/docs(?:[/)#?])|href="\/docs/);
-			expect(esProse).not.toMatch(/ZXQ[A-F0-9]|BLOCKFENCE/);
+			expect(esProse).not.toMatch(/\]\(\/docs(?:[/)#?])|href="\/docs/u);
+			expect(esProse).not.toMatch(/ZXQ[A-F0-9]|BLOCKFENCE/u);
 			expect({
 				file,
 				links: [...esProse.matchAll(links)]

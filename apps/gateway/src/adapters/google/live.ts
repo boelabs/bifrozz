@@ -9,8 +9,8 @@ import type WebSocket from "ws";
 import {
 	type CanonicalRealtimeTranscriptionConfig,
 	type CanonicalRealtimeTranscriptionEvent,
-	type RealtimeUsage,
 	REALTIME_AUDIO_SAMPLE_RATE,
+	type RealtimeUsage,
 } from "#core/realtime.ts";
 
 import type {
@@ -47,7 +47,7 @@ export function geminiLiveUrl(baseUrl: string | undefined): string {
 	const version =
 		url.pathname
 			.split("/")
-			.findLast((segment) => /^v\d+(?:alpha|beta)?\d*$/.test(segment)) ??
+			.findLast((segment) => /^v\d+(?:alpha|beta)?\d*$/u.test(segment)) ??
 		"v1beta";
 	const protocol = url.protocol === "http:" ? "ws:" : "wss:";
 	return `${protocol}//${url.host}/ws/google.ai.generativelanguage.${version}.GenerativeService.BidiGenerateContent`;
@@ -189,14 +189,16 @@ export function parseGeminiLiveMessage(raw: unknown): GeminiLiveMessage {
  */
 export function closeStatus(code: number, reason: string): number {
 	// Word boundaries: "BidiGenerateContent" contains "rate".
-	if (/\bquota\b|\brate.?limit|\bexhausted\b/i.test(reason)) {
+	if (/\bquota\b|\brate.?limit|\bexhausted\b/iu.test(reason)) {
 		return 429;
 	}
-	if (/api key|permission|unauthori[sz]ed|forbidden|credential/i.test(reason)) {
+	if (
+		/api key|permission|unauthori[sz]ed|forbidden|credential/iu.test(reason)
+	) {
 		return 403;
 	}
 	if (code === 1007 || code === 1008) {
-		return /not found/i.test(reason) ? 404 : 400;
+		return /not found/iu.test(reason) ? 404 : 400;
 	}
 	if (code === 1012 || code === 1013) {
 		return 503;

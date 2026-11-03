@@ -118,7 +118,7 @@ function validateCacheWritePrices(value: unknown, path: string): void {
 		fail(path, "must be an object");
 	}
 	for (const [ttl, rate] of Object.entries(value)) {
-		if (!/^[1-9][0-9]*$/.test(ttl)) {
+		if (!/^[1-9][0-9]*$/u.test(ttl)) {
 			fail(path, "keys must be positive lifetimes in seconds");
 		}
 		assertNumber(rate, `${path}.${ttl}`);

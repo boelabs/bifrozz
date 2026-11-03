@@ -98,15 +98,15 @@ export function UserMenu({ onNavigate }: { onNavigate?: () => void }) {
 			<Menu>
 				<MenuTrigger
 					aria-label={`Your account: ${name}`}
-					className="group flex w-full items-center gap-2 rounded-lg p-2 text-start outline-none transition-colors hover:bg-accent/50 focus-visible:ring-2 focus-visible:ring-ring data-popup-open:bg-accent"
+					className="group flex w-full items-center gap-2 rounded-lg p-2 text-start transition-colors outline-none hover:bg-accent/50 focus-visible:ring-2 focus-visible:ring-ring data-popup-open:bg-accent"
 				>
 					<span
 						aria-hidden="true"
-						className="flex size-6 shrink-0 select-none items-center justify-center rounded-full bg-primary/10 font-medium text-[0.6875rem] text-primary"
+						className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-[0.6875rem] font-medium text-primary select-none"
 					>
 						{name.slice(0, 1).toUpperCase()}
 					</span>
-					<span className="min-w-0 flex-1 truncate font-medium text-sm">
+					<span className="min-w-0 flex-1 truncate text-sm font-medium">
 						{name}
 					</span>
 					<ChevronsUpDownIcon
@@ -116,13 +116,13 @@ export function UserMenu({ onNavigate }: { onNavigate?: () => void }) {
 				</MenuTrigger>
 				<MenuPopup
 					align="start"
-					className="w-(--anchor-width) min-w-56 max-w-(--available-width)"
+					className="w-(--anchor-width) max-w-(--available-width) min-w-56"
 					side="top"
 					sideOffset={6}
 				>
 					<div className="flex min-w-0 flex-col px-2 py-1.5">
-						<span className="truncate font-medium text-sm">{name}</span>
-						<span className="truncate text-muted-foreground text-xs">
+						<span className="truncate text-sm font-medium">{name}</span>
+						<span className="truncate text-xs text-muted-foreground">
 							{role}
 						</span>
 					</div>
@@ -163,7 +163,7 @@ export function UserMenu({ onNavigate }: { onNavigate?: () => void }) {
 			</Menu>
 			{error ? (
 				<p
-					className="px-2 py-1 text-destructive-foreground text-xs"
+					className="px-2 py-1 text-xs text-destructive-foreground"
 					role="alert"
 				>
 					{error}

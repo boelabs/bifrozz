@@ -27,19 +27,19 @@ test("extra_body deep: rejects leaf collisions and prototype pollution", () => {
 				{ generationConfig: { responseModalities: ["IMAGE"] } },
 				{ generationConfig: { responseModalities: ["TEXT"] } },
 			),
-		/collides/,
+		/collides/u,
 	);
 	const polluted = JSON.parse('{"__proto__":{"admin":true}}') as Record<
 		string,
 		unknown
 	>;
-	assert.throws(() => mergeExtraBodyDeep({}, polluted), /not allowed/);
+	assert.throws(() => mergeExtraBodyDeep({}, polluted), /not allowed/u);
 });
 
 test("extra_body deep: limits size and depth", () => {
 	assert.throws(
 		() => mergeExtraBodyDeep({}, { text: "x".repeat(70_000) }),
-		/64 KiB/,
+		/64 KiB/u,
 	);
 	const deep: Record<string, unknown> = {};
 	let cursor = deep;
@@ -48,5 +48,5 @@ test("extra_body deep: limits size and depth", () => {
 		cursor.next = next;
 		cursor = next;
 	}
-	assert.throws(() => mergeExtraBodyDeep({}, deep), /nesting depth/);
+	assert.throws(() => mergeExtraBodyDeep({}, deep), /nesting depth/u);
 });

@@ -133,7 +133,7 @@ export function LogDetailSkeleton() {
 							{["Headers", "First output", "Upstream bytes", "Tokens"].map(
 								(label) => (
 									<div className="flex min-w-0 flex-col" key={label}>
-										<dt className="text-fg-muted text-xs">{label}</dt>
+										<dt className="text-xs text-fg-muted">{label}</dt>
 										<dd className="text-sm">
 											<TextSkeleton length={6} />
 										</dd>
@@ -144,7 +144,7 @@ export function LogDetailSkeleton() {
 					</div>
 				</Panel>
 				<Panel action={<ButtonSkeleton label={14} />} title="Retained payload">
-					<p className="text-muted-foreground text-sm">
+					<p className="text-sm text-muted-foreground">
 						<TextSkeleton length={110} />
 					</p>
 				</Panel>

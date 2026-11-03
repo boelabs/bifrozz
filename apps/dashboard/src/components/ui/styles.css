@@ -236,9 +236,11 @@ body {
 }
 
 @layer base {
+	/* biome-ignore lint/suspicious/noDuplicateSelectors: a cascade layer, so not the same rule as the unlayered one above */
 	* {
 		@apply border-border;
 	}
+	/* biome-ignore lint/suspicious/noDuplicateSelectors: a cascade layer, so not the same rule as the unlayered one above */
 	body {
 		@apply bg-background text-foreground;
 	}
@@ -359,6 +361,7 @@ body {
 	}
 }
 
+/* biome-ignore lint/suspicious/noDuplicateSelectors: the dashboard's aliases over the shadcn tokens above, kept apart from them as in Billete */
 :root {
 	/* Billete's sidebar width: both dashboards share the shell's geometry. */
 	--app-sidebar-width: 268px;

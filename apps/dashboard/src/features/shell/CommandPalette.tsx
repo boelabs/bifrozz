@@ -213,7 +213,7 @@ function PaletteContent({ onNavigate }: { onNavigate: () => void }) {
 										<item.icon aria-hidden="true" className="size-4 shrink-0" />
 										<span className="min-w-0 truncate">{item.label}</span>
 										{item.detail ? (
-											<span className="ms-auto shrink-0 text-muted-foreground/72 text-xs">
+											<span className="ms-auto shrink-0 text-xs text-muted-foreground/72">
 												{item.detail}
 											</span>
 										) : null}

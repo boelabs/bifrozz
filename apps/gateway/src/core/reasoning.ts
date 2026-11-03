@@ -38,7 +38,7 @@ export function isReasoningEffort(value: unknown): value is ReasoningEffort {
 
 function effortIndex(e: ReasoningEffort): number {
 	const i = EFFORT_ORDER.indexOf(e);
-	return i < 0 ? 0 : i;
+	return Math.max(i, 0);
 }
 
 /** Normalized reasoning that travels in the canonical request. */

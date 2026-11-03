@@ -150,8 +150,8 @@ export const MODELS_DEV_PROVIDER_ALIASES: Readonly<Record<string, string>> = {
 export function normalizeTag(value: string | undefined): string {
 	return (value ?? "")
 		.toLowerCase()
-		.replace(/[^a-z0-9]+/g, "-")
-		.replace(/^-|-$/g, "");
+		.replace(/[^a-z0-9]+/gu, "-")
+		.replace(/^-|-$/gu, "");
 }
 
 export interface AdapterCandidateMapping {

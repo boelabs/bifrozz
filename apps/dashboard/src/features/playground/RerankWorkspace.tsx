@@ -80,7 +80,7 @@ function Documents({
 				type="button"
 			>
 				<span className="font-medium">Documents</span>
-				<span className="text-fg-muted text-xs">
+				<span className="text-xs text-fg-muted">
 					{count === 0
 						? "one per line"
 						: `${count} ${count === 1 ? "document" : "documents"}`}
@@ -122,10 +122,10 @@ function RerankRunView({
 				aria-label="You message"
 				className="ml-auto flex w-full max-w-[90%] flex-col items-end gap-1"
 			>
-				<p className="wrap-break-word wrap-anywhere w-fit max-w-full overflow-hidden rounded-3xl border border-border/60 bg-surface-2 px-3.5 py-2.5 text-base leading-6">
+				<p className="w-fit max-w-full overflow-hidden rounded-3xl border border-border/60 bg-surface-2 px-3.5 py-2.5 text-base leading-6 wrap-anywhere wrap-break-word">
 					{run.query}
 				</p>
-				<span className="text-fg-muted text-xs">
+				<span className="text-xs text-fg-muted">
 					against {run.documents.length}{" "}
 					{run.documents.length === 1 ? "document" : "documents"}
 				</span>
@@ -136,7 +136,7 @@ function RerankRunView({
 			>
 				{run.state === "running" ? <ResponseLoader /> : null}
 				{run.state === "stopped" ? (
-					<div className="text-fg-muted text-xs">
+					<div className="text-xs text-fg-muted">
 						<Status tone="muted">Stopped</Status>
 					</div>
 				) : null}
@@ -156,16 +156,16 @@ function RerankRunView({
 									}}
 								/>
 								<div className="relative flex items-start gap-3 px-3 py-2">
-									<span className="w-4 shrink-0 text-fg-muted text-xs tabular-nums">
+									<span className="w-4 shrink-0 text-xs text-fg-muted tabular-nums">
 										{position + 1}
 									</span>
-									<p className="wrap-anywhere min-w-0 flex-1 text-sm">
+									<p className="min-w-0 flex-1 text-sm wrap-anywhere">
 										{result.text}
 									</p>
 									<span className="shrink-0 font-mono text-xs">
 										{result.score.toFixed(4)}
 									</span>
-									<span className="shrink-0 text-fg-muted text-xs">
+									<span className="shrink-0 text-xs text-fg-muted">
 										#{result.index + 1}
 									</span>
 								</div>
@@ -190,7 +190,7 @@ function RerankRunView({
 					>
 						<IconRotate2 aria-hidden className={MESSAGE_ACTION_ICON} />
 					</Button>
-					<p className="px-2 text-fg-muted text-xs">
+					<p className="px-2 text-xs text-fg-muted">
 						{[
 							run.model,
 							run.settings.topN === undefined
@@ -443,7 +443,7 @@ export function RerankWorkspace({
 						>
 							<NumberField.ScrubArea>
 								<label
-									className="font-medium text-sm"
+									className="text-sm font-medium"
 									htmlFor="playground-rerank-top-n"
 								>
 									Documents returned
@@ -457,7 +457,7 @@ export function RerankWorkspace({
 								/>
 								<NumberField.Increment aria-label="More documents" />
 							</NumberField.Group>
-							<p className="text-fg-muted text-xs">
+							<p className="text-xs text-fg-muted">
 								The ranking is over all of them either way; this only trims the
 								answer.
 							</p>

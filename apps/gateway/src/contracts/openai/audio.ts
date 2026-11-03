@@ -21,7 +21,7 @@ export const transcriptionFieldsSchema = z
 			.array(
 				z
 					.string()
-					.regex(/^[^<>\r\n]*$/, "Keywords must not contain <, >, CR or LF"),
+					.regex(/^[^<>\r\n]*$/u, "Keywords must not contain <, >, CR or LF"),
 			)
 			.optional(),
 		prompt: z.string().optional(),

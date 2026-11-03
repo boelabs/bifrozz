@@ -29,7 +29,7 @@ const DEFAULT_LIMIT = 50;
 const MAX_LIMIT = 200;
 
 /** Usernames are login identifiers, not display names: no spaces, no case games. */
-const USERNAME = /^[a-zA-Z0-9._-]{3,64}$/;
+const USERNAME = /^[a-zA-Z0-9._-]{3,64}$/u;
 
 const createUserSchema = z.object({
 	username: z

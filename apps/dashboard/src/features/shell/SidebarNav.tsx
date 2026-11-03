@@ -63,7 +63,7 @@ function NavGroups({
 		<Fragment key={group.label ?? "main"}>
 			<div className="flex flex-col gap-0.5">
 				{group.label ? (
-					<p className="px-2 pb-1 font-medium text-muted-foreground text-xs">
+					<p className="px-2 pb-1 text-xs font-medium text-muted-foreground">
 						{group.label}
 					</p>
 				) : null}

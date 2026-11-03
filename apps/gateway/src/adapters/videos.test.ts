@@ -355,7 +355,7 @@ test("google veo transport builds predictLongRunning bodies with frames and seed
 	);
 	assert.match(
 		calls[0]!.url,
-		/models\/veo-3\.1-generate-preview:predictLongRunning$/,
+		/models\/veo-3\.1-generate-preview:predictLongRunning$/u,
 	);
 	assert.deepEqual(calls[0]!.body, {
 		instances: [
@@ -488,7 +488,7 @@ test("google veo transport rejects non-8s high-resolution constrained requests",
 						upstreamModel: "veo-3.1-generate-preview",
 					},
 				),
-				/duration/,
+				/duration/u,
 			);
 		},
 	);
@@ -731,7 +731,7 @@ test("google interactions rejects ambiguous video input and managed state", asyn
 			},
 			{ ...ctx("interactions"), upstreamModel: "gemini-omni-1.1-flash" },
 		),
-		/task=/,
+		/task=/u,
 	);
 	await assert.rejects(
 		must(googleAdapter, "videoGeneration").submit(
@@ -742,7 +742,7 @@ test("google interactions rejects ambiguous video input and managed state", asyn
 			},
 			{ ...ctx("interactions"), upstreamModel: "gemini-omni-1.1-flash" },
 		),
-		/previous_interaction_id/,
+		/previous_interaction_id/u,
 	);
 });
 
@@ -837,16 +837,16 @@ test("validation gates parameters by model profile", () => {
 	assert.throws(
 		() =>
 			assertVideoRequestSupported({ ...base, aspectRatio: "21:9" }, resolved),
-		/aspect_ratio/,
+		/aspect_ratio/u,
 	);
 	assert.throws(
 		() => assertVideoRequestSupported({ ...base, seed: 3 }, resolved),
-		/seed/,
+		/seed/u,
 	);
 	assert.throws(
 		() =>
 			assertVideoRequestSupported({ ...base, generateAudio: true }, resolved),
-		/generate_audio/,
+		/generate_audio/u,
 	);
 	assert.throws(
 		() =>
@@ -857,7 +857,7 @@ test("validation gates parameters by model profile", () => {
 				},
 				resolved,
 			),
-		/frame images/,
+		/frame images/u,
 	);
 	assert.doesNotThrow(() =>
 		assertVideoRequestSupported(
@@ -881,7 +881,7 @@ test("validation gates parameters by model profile", () => {
 				},
 				meta({ tasks: ["extend"] }) as unknown as ResolvedModelMetadata,
 			),
-		/exactly one video reference/,
+		/exactly one video reference/u,
 	);
 });
 
@@ -924,9 +924,9 @@ test("sanitizeVideoRequestBody redacts large data URLs anywhere in the body", ()
 	const ref = sanitized.input_reference as { image_url: string };
 	assert.match(
 		ref.image_url,
-		/^data:image\/png;base64,\[redacted 5000 chars\]$/,
+		/^data:image\/png;base64,\[redacted 5000 chars\]$/u,
 	);
 	const nested = (sanitized.extra_body as { nested: [{ image: string }] })
 		.nested[0].image;
-	assert.match(nested, /redacted/);
+	assert.match(nested, /redacted/u);
 });

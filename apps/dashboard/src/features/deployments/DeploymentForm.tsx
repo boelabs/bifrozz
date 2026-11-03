@@ -415,7 +415,7 @@ export function DeploymentForm({
 						rows={4}
 					/>
 					{known && Object.keys(catalogTransports).length > 0 ? (
-						<div className="text-muted-foreground text-sm">
+						<div className="text-sm text-muted-foreground">
 							<p>
 								Stored transport overrides are preserved for this model
 								(read-only).

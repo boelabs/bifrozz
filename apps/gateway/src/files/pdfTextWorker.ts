@@ -41,9 +41,9 @@ async function extractBoundedText(
 	}
 	return pages
 		.join("\n")
-		.replace(/[^\S\n]+/g, " ")
-		.replace(/ ?\n ?/g, "\n")
-		.replace(/\n{3,}/g, "\n\n");
+		.replace(/[^\S\n]+/gu, " ")
+		.replace(/ ?\n ?/gu, "\n")
+		.replace(/\n{3,}/gu, "\n\n");
 }
 
 const port = parentPort;

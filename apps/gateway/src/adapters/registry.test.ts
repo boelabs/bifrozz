@@ -48,7 +48,7 @@ test("rejects duplicates", () => {
 		chat: fakeChat,
 	};
 	registerAdapter(adapter);
-	assert.throws(() => registerAdapter(adapter), /Duplicate adapter/);
+	assert.throws(() => registerAdapter(adapter), /Duplicate adapter/u);
 });
 
 test("rejects adapter keys with separators or uppercase letters", () => {
@@ -59,7 +59,7 @@ test("rejects adapter keys with separators or uppercase letters", () => {
 		supportedCallTypes: new Set(["chat"]),
 		chat: fakeChat,
 	};
-	assert.throws(() => registerAdapter(bad), /adapter keys/);
+	assert.throws(() => registerAdapter(bad), /adapter keys/u);
 });
 
 test("rejects chat support declaration without handler implementation", () => {
@@ -69,7 +69,7 @@ test("rejects chat support declaration without handler implementation", () => {
 		credentials: { required: [] },
 		supportedCallTypes: new Set(["chat"]),
 	};
-	assert.throws(() => registerAdapter(broken), /does not implement/);
+	assert.throws(() => registerAdapter(broken), /does not implement/u);
 });
 
 test("rejects content inputs declared for an unsupported transport", () => {
@@ -86,7 +86,7 @@ test("rejects content inputs declared for an unsupported transport", () => {
 			responses: { image: { sources: ["url"] } },
 		},
 	};
-	assert.throws(() => registerAdapter(broken), /unsupported transport/);
+	assert.throws(() => registerAdapter(broken), /unsupported transport/u);
 });
 
 test("rejects malformed content input limits and source lists", () => {
@@ -108,7 +108,7 @@ test("rejects malformed content input limits and source lists", () => {
 					chat_completions: { image: { sources: [] } },
 				},
 			}),
-		/no sources/,
+		/no sources/u,
 	);
 	assert.throws(
 		() =>
@@ -120,6 +120,6 @@ test("rejects malformed content input limits and source lists", () => {
 					},
 				},
 			}),
-		/invalid file maxBytes/,
+		/invalid file maxBytes/u,
 	);
 });

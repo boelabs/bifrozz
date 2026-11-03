@@ -36,7 +36,7 @@ function CauseCell({ row }: { row: OperationRow }) {
 		const recovered = row.outcome === "success";
 		return (
 			<span
-				className={recovered ? "text-fg-muted text-xs" : "text-xs"}
+				className={recovered ? "text-xs text-fg-muted" : "text-xs"}
 				title={recovered ? "Recovered by a retry or fallback" : undefined}
 			>
 				{causeLabel(row.lastFailure)}
@@ -94,7 +94,7 @@ export function LogsTable({
 					 * have: the markup it streamed is expected to differ from what hydration produces.
 					 */}
 					<span
-						className="whitespace-nowrap text-fg-muted text-xs"
+						className="text-xs whitespace-nowrap text-fg-muted"
 						suppressHydrationWarning
 						title={new Date(row.startedAt).toLocaleString()}
 					>
@@ -119,7 +119,7 @@ export function LogsTable({
 				row.publicModel ? (
 					<div className="flex min-w-0 flex-col">
 						<span className="truncate font-medium">{row.publicModel}</span>
-						<span className="truncate text-fg-muted text-xs">
+						<span className="truncate text-xs text-fg-muted">
 							{row.callType}
 							{row.servedBy ? ` · ${row.servedBy}` : ""}
 						</span>

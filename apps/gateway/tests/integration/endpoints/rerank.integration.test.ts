@@ -227,7 +227,7 @@ test("POST /v1/rerank routes OpenRouter preferences, falls back across adapters,
 		});
 		assert.doesNotMatch(
 			persisted,
-			/private query|private Paris|private Berlin/,
+			/private query|private Paris|private Berlin/u,
 		);
 
 		let firstAttempt = true;

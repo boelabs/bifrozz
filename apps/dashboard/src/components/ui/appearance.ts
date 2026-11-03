@@ -81,7 +81,7 @@ export function mergeStyle<State>(
 export const focusRing =
 	"outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-background";
 const controlVariants = cva(
-	"ui-control flex min-w-0 items-center gap-2 rounded-(--ui-radius-control) border text-base text-foreground shadow-xs/5 outline-none ring-ring/24 transition-shadow placeholder:text-muted-foreground/72 focus-visible:border-ring focus-visible:ring-[3px] disabled:opacity-64 aria-invalid:border-destructive/36 data-focused:border-ring data-invalid:border-destructive/36 data-disabled:opacity-64 data-focused:ring-[3px] sm:text-sm",
+	"ui-control flex min-w-0 items-center gap-2 rounded-(--ui-radius-control) border text-base text-foreground shadow-xs/5 ring-ring/24 transition-shadow outline-none placeholder:text-muted-foreground/72 focus-visible:border-ring focus-visible:ring-[3px] disabled:opacity-64 aria-invalid:border-destructive/36 data-focused:border-ring data-focused:ring-[3px] data-invalid:border-destructive/36 sm:text-sm data-disabled:opacity-64",
 	{
 		variants: {
 			size: {

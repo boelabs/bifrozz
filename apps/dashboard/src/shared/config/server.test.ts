@@ -28,7 +28,7 @@ test("DOCS_URL is read when asked, as an absolute address", () => {
 
 test("a DOCS_URL that is not an http address is refused, never linked", () => {
 	process.env.DOCS_URL = "docs.example.com";
-	assert.throws(() => docsUrl(), /absolute URL/);
+	assert.throws(() => docsUrl(), /absolute URL/u);
 	process.env.DOCS_URL = "javascript:alert(1)";
-	assert.throws(() => docsUrl(), /http or https/);
+	assert.throws(() => docsUrl(), /http or https/u);
 });

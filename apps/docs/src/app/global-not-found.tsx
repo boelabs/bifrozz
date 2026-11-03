@@ -9,7 +9,7 @@ export default function GlobalNotFound() {
 			<main className="mx-auto flex min-h-screen max-w-2xl flex-col justify-center gap-8 px-6 py-16">
 				<p className="font-mono text-fd-muted-foreground">404 · Bifrozz</p>
 				<section lang="en">
-					<h1 className="font-semibold text-2xl">Page not found</h1>
+					<h1 className="text-2xl font-semibold">Page not found</h1>
 					<p className="mt-2 text-fd-muted-foreground">
 						The page may have moved, or the address may be incorrect.
 					</p>
@@ -18,7 +18,7 @@ export default function GlobalNotFound() {
 					</Link>
 				</section>
 				<section lang="es">
-					<h2 className="font-semibold text-2xl">Página no encontrada</h2>
+					<h2 className="text-2xl font-semibold">Página no encontrada</h2>
 					<p className="mt-2 text-fd-muted-foreground">
 						La página pudo cambiar de ubicación o la dirección es incorrecta.
 					</p>

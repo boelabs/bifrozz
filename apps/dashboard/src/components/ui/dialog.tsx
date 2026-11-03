@@ -177,7 +177,7 @@ export function DialogBody({
 			{...props}
 			className={cn(
 				// coss's DialogPanel: right under its header, the header's own bottom padding is the gap.
-				"scrollbar-gutter-stable min-h-0 min-w-0 flex-1 scroll-p-6 overflow-y-auto overscroll-contain p-6 in-[[data-slot=dialog-popup]:has([data-slot=dialog-header])]:pt-1",
+				"min-h-0 min-w-0 flex-1 scroll-p-6 scrollbar-gutter-stable overflow-y-auto overscroll-contain p-6 in-[[data-slot=dialog-popup]:has([data-slot=dialog-header])]:pt-1",
 				className,
 			)}
 			data-slot="dialog-body"

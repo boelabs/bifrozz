@@ -6,10 +6,10 @@ import { isIP } from "node:net";
 
 function normalizeIp(value: string): string | null {
 	let candidate = value.trim();
-	const bracketed = /^\[([^\]]+)\](?::\d+)?$/.exec(candidate);
+	const bracketed = /^\[([^\]]+)\](?::\d+)?$/u.exec(candidate);
 	if (bracketed?.[1]) {
 		[, candidate] = bracketed;
-	} else if (/^\d+\.\d+\.\d+\.\d+:\d+$/.test(candidate)) {
+	} else if (/^\d+\.\d+\.\d+\.\d+:\d+$/u.test(candidate)) {
 		candidate = candidate.slice(0, candidate.lastIndexOf(":"));
 	}
 	return isIP(candidate) === 0 ? null : candidate;

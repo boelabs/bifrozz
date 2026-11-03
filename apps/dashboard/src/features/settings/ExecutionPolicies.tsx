@@ -80,12 +80,12 @@ export function ExecutionPoliciesEditor({
 		<div className="flex flex-col gap-5">
 			{EXECUTION_CALL_TYPES.map(({ key, label }) => (
 				<div className="flex flex-col gap-2" key={key}>
-					<h4 className="font-medium text-fg text-xs">{label}</h4>
+					<h4 className="text-xs font-medium text-fg">{label}</h4>
 					<div className="grid grid-cols-[2.75rem_repeat(4,minmax(0,1fr))] items-center gap-x-1.5 gap-y-1.5 sm:grid-cols-[3.5rem_repeat(4,minmax(0,1fr))] sm:gap-x-2">
 						<span />
 						{FIELDS.map((field) => (
 							<span
-								className="truncate text-fg-muted text-xs"
+								className="truncate text-xs text-fg-muted"
 								key={field.key}
 								title={field.label}
 							>
@@ -94,7 +94,7 @@ export function ExecutionPoliciesEditor({
 						))}
 						{MODES.map((mode) => (
 							<div className="contents" key={mode.key}>
-								<span className="text-fg-muted text-xs">{mode.label}</span>
+								<span className="text-xs text-fg-muted">{mode.label}</span>
 								{FIELDS.map((field) => {
 									const inapplicable =
 										field.key === "idleMs" && mode.key === "json";

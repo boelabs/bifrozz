@@ -6,6 +6,15 @@ import type { GatewayError } from "#core/errors.ts";
 import type { CallType } from "#core/callType.ts";
 
 import type {
+	CanonicalRealtimeTranscriptionConfig,
+	CanonicalRealtimeConversationConfig,
+	CanonicalRealtimeTranscriptionEvent,
+	CanonicalRealtimeConversationEvent,
+	RealtimeFunctionResult,
+	RealtimeTurn,
+} from "#core/realtime.ts";
+
+import type {
 	CanonicalTranscriptionStreamEvent,
 	CanonicalTranscriptionResponse,
 	CanonicalTranscriptionRequest,
@@ -17,15 +26,6 @@ import type {
 	CanonicalVideoContent,
 	VideoAssetVariant,
 } from "#core/videos.ts";
-
-import type {
-	CanonicalRealtimeConversationConfig,
-	CanonicalRealtimeConversationEvent,
-	CanonicalRealtimeTranscriptionConfig,
-	CanonicalRealtimeTranscriptionEvent,
-	RealtimeFunctionResult,
-	RealtimeTurn,
-} from "#core/realtime.ts";
 
 import type {
 	CanonicalChatStreamChunk,

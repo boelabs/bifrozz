@@ -10,7 +10,7 @@ export function SampleSkeleton({ children }: { children: string }) {
 	return (
 		<Skeleton
 			aria-hidden="true"
-			className="w-fit max-w-full select-none box-decoration-clone text-transparent"
+			className="w-fit max-w-full box-decoration-clone text-transparent select-none"
 			render={<span />}
 		>
 			{children}

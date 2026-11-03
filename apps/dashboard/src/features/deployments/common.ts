@@ -60,6 +60,6 @@ export function isKnownUpstreamModel(
 			return false;
 		}
 		const suffix = id.slice(model.id.length + 1);
-		return /^\d{4}-\d{2}-\d{2}$/.test(suffix) || /^\d{2}-\d{4}$/.test(suffix);
+		return /^\d{4}-\d{2}-\d{2}$/u.test(suffix) || /^\d{2}-\d{4}$/u.test(suffix);
 	});
 }

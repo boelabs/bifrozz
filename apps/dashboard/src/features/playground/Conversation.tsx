@@ -80,7 +80,7 @@ export function Conversation({
 							key={message.id}
 						>
 							{message.metadata?.state === "stopped" ? (
-								<div className="mb-1 text-fg-muted text-xs">
+								<div className="mb-1 text-xs text-fg-muted">
 									<Status tone="muted">Stopped</Status>
 								</div>
 							) : null}
@@ -155,7 +155,7 @@ export function Conversation({
 													src={part.url}
 												/>
 											) : (
-												<span className="break-all text-xs">
+												<span className="text-xs break-all">
 													Attachment: {part.filename ?? part.mediaType}
 												</span>
 											)}
@@ -165,9 +165,9 @@ export function Conversation({
 								if (part.type === "source-url") {
 									return (
 										<a
-											className="block text-primary text-xs underline"
+											className="block text-xs text-primary underline"
 											href={
-												/^https?:\/\//.test(part.url) ? part.url : undefined
+												/^https?:\/\//u.test(part.url) ? part.url : undefined
 											}
 											key={key}
 											rel="noopener noreferrer"
@@ -180,7 +180,7 @@ export function Conversation({
 								return null;
 							})}
 							{message.role === "user" ? (
-								<div className="flex w-fit gap-1 self-end px-2 opacity-100 transition-opacity lg:opacity-0 lg:group-hover/message:opacity-100 lg:group-focus-within/message:opacity-100">
+								<div className="flex w-fit gap-1 self-end px-2 opacity-100 transition-opacity lg:opacity-0 lg:group-focus-within/message:opacity-100 lg:group-hover/message:opacity-100">
 									<CopyAction
 										label={
 											message.role === "user" ? "Copy message" : "Copy response"

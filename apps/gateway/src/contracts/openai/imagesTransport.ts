@@ -163,7 +163,7 @@ function imageData(raw: unknown): CanonicalImageData {
 	};
 	if (typeof image?.b64_json === "string") {
 		return {
-			b64Json: image.b64_json.replace(/^data:[^;]+;base64,/, ""),
+			b64Json: image.b64_json.replace(/^data:[^;]+;base64,/u, ""),
 			...(typeof image.revised_prompt === "string"
 				? { revisedPrompt: image.revised_prompt }
 				: {}),
@@ -368,7 +368,7 @@ export function parseOmniImageResponse(raw: unknown): CanonicalImageResponse {
 				message: "Omni image response is not a base64 data URL",
 			});
 		}
-		return { b64Json: value.replace(/^data:[^;]+;base64,/, "") };
+		return { b64Json: value.replace(/^data:[^;]+;base64,/u, "") };
 	});
 	if (data.length === 0) {
 		throw new GatewayError({

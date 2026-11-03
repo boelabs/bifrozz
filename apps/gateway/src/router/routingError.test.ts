@@ -56,9 +56,9 @@ test("the cooldown causes reach the logs and never the caller", () => {
 			"deployment:a": { class: "auth", message: "Upstream auth failure" },
 		},
 	});
-	assert.match(error.message, /reason=cooldown/);
-	assert.match(error.message, /gemini-omni-1\.1-flash is not found/);
-	assert.doesNotMatch(error.publicMessage, /gemini-omni|cooldown|deployment/);
+	assert.match(error.message, /reason=cooldown/u);
+	assert.match(error.message, /gemini-omni-1\.1-flash is not found/u);
+	assert.doesNotMatch(error.publicMessage, /gemini-omni|cooldown|deployment/u);
 });
 
 test("a transient cooldown is an overload worth retrying", () => {
@@ -104,8 +104,8 @@ test("whatever ended the request, the caller hears the last upstream answer", ()
 			"The service is temporarily unavailable. Please try again later.",
 			reason,
 		);
-		assert.doesNotMatch(error.publicMessage, /attempt|budget|deadline/);
-		assert.match(error.message, new RegExp(`reason=${reason}`));
+		assert.doesNotMatch(error.publicMessage, /attempt|budget|deadline/u);
+		assert.match(error.message, new RegExp(`reason=${reason}`, "u"));
 		assert.deepEqual(error.provider?.status, 500);
 	}
 });
@@ -125,7 +125,7 @@ test("a request rejected upstream keeps its sanitized public detail", () => {
 	assert.equal(error.httpStatus, 400);
 	assert.equal(error.code, "context_length_exceeded");
 	assert.equal(error.param, "messages");
-	assert.match(error.publicMessage, /maximum context length/);
+	assert.match(error.publicMessage, /maximum context length/u);
 });
 
 test("no upstream reached at all reads as an unavailable model", () => {

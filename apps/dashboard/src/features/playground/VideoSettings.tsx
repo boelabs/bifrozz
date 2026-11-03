@@ -168,7 +168,7 @@ export function VideoSettingsDialog({
 						>
 							<NumberField.ScrubArea>
 								<label
-									className="font-medium text-sm"
+									className="text-sm font-medium"
 									htmlFor="playground-video-seconds"
 								>
 									Duration
@@ -182,7 +182,7 @@ export function VideoSettingsDialog({
 								/>
 								<NumberField.Increment aria-label="Longer video" />
 							</NumberField.Group>
-							<p className="text-fg-muted text-xs">
+							<p className="text-xs text-fg-muted">
 								Seconds. Most models accept only a few fixed lengths.
 							</p>
 						</NumberField.Root>
@@ -195,7 +195,7 @@ export function VideoSettingsDialog({
 						>
 							<NumberField.ScrubArea>
 								<label
-									className="font-medium text-sm"
+									className="text-sm font-medium"
 									htmlFor="playground-video-seed"
 								>
 									Seed
@@ -209,7 +209,7 @@ export function VideoSettingsDialog({
 								/>
 								<NumberField.Increment aria-label="Higher seed" />
 							</NumberField.Group>
-							<p className="text-fg-muted text-xs">
+							<p className="text-xs text-fg-muted">
 								The same seed and prompt should give the same video again.
 							</p>
 						</NumberField.Root>
@@ -232,8 +232,8 @@ export function VideoSettingsDialog({
 						</Select>
 					</div>
 					<fieldset className="flex flex-col gap-3">
-						<legend className="font-medium text-sm">Dimensions</legend>
-						<p className="-mt-1 text-fg-muted text-xs">
+						<legend className="text-sm font-medium">Dimensions</legend>
+						<p className="-mt-1 text-xs text-fg-muted">
 							A proportion or exact pixels — the two are the same setting said
 							two ways, and a model takes one of them.
 						</p>

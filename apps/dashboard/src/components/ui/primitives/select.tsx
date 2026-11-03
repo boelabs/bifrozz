@@ -18,7 +18,7 @@ import {
 export const Select: typeof SelectPrimitive.Root = SelectPrimitive.Root;
 
 export const selectTriggerVariants = cva(
-	"relative inline-flex min-h-9 w-full min-w-36 select-none items-center justify-between gap-2 border border-input bg-background not-dark:bg-clip-padding px-[calc(--spacing(3)-1px)] text-left text-base text-foreground shadow-xs/5 outline-none ring-ring/24 transition-shadow before:pointer-events-none before:absolute before:inset-0 not-data-disabled:not-focus-visible:not-aria-invalid:not-data-pressed:before:shadow-[0_1px_--theme(--color-black/4%)] pointer-coarse:after:absolute pointer-coarse:after:size-full pointer-coarse:after:min-h-11 focus-visible:border-ring focus-visible:ring-[3px] aria-invalid:border-destructive/36 focus-visible:aria-invalid:border-destructive/64 focus-visible:aria-invalid:ring-destructive/16 data-disabled:pointer-events-none data-disabled:opacity-64 sm:min-h-8 sm:text-sm dark:bg-input/32 dark:aria-invalid:ring-destructive/24 dark:not-data-disabled:not-focus-visible:not-aria-invalid:not-data-pressed:before:shadow-[0_-1px_--theme(--color-white/6%)] [&_svg:not([class*='opacity-'])]:opacity-80 [&_svg:not([class*='size-'])]:size-4.5 sm:[&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0 [[data-disabled],:focus-visible,[aria-invalid],[data-pressed]]:shadow-none",
+	"relative inline-flex min-h-9 w-full min-w-36 items-center justify-between gap-2 border border-input bg-background px-[calc(--spacing(3)-1px)] text-left text-base text-foreground shadow-xs/5 ring-ring/24 transition-shadow outline-none select-none not-dark:bg-clip-padding before:pointer-events-none before:absolute before:inset-0 not-data-disabled:not-focus-visible:not-aria-invalid:not-data-pressed:before:shadow-[0_1px_--theme(--color-black/4%)] focus-visible:border-ring focus-visible:ring-[3px] aria-invalid:border-destructive/36 focus-visible:aria-invalid:border-destructive/64 focus-visible:aria-invalid:ring-destructive/16 sm:min-h-8 sm:text-sm dark:bg-input/32 dark:not-data-disabled:not-focus-visible:not-aria-invalid:not-data-pressed:before:shadow-[0_-1px_--theme(--color-white/6%)] dark:aria-invalid:ring-destructive/24 pointer-coarse:after:absolute pointer-coarse:after:size-full pointer-coarse:after:min-h-11 data-disabled:pointer-events-none data-disabled:opacity-64 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='opacity-'])]:opacity-80 [&_svg:not([class*='size-'])]:size-4.5 sm:[&_svg:not([class*='size-'])]:size-4 [[data-disabled],:focus-visible,[aria-invalid],[data-pressed]]:shadow-none",
 	{
 		defaultVariants: {
 			size: "default",
@@ -36,7 +36,7 @@ export const selectTriggerVariants = cva(
 );
 
 export const selectPopupVariants = cva(
-	"relative h-full min-w-(--anchor-width) border bg-popover not-dark:bg-clip-padding shadow-lg/5 before:pointer-events-none before:absolute before:inset-0 before:shadow-[0_1px_--theme(--color-black/4%)] dark:before:shadow-[0_-1px_--theme(--color-white/6%)]",
+	"relative h-full min-w-(--anchor-width) border bg-popover shadow-lg/5 not-dark:bg-clip-padding before:pointer-events-none before:absolute before:inset-0 before:shadow-[0_1px_--theme(--color-black/4%)] dark:before:shadow-[0_-1px_--theme(--color-white/6%)]",
 	{
 		defaultVariants: {
 			radius: "default",
@@ -48,7 +48,7 @@ export const selectPopupVariants = cva(
 );
 
 const selectScrollUpArrowVariants = cva(
-	"top-0 z-50 flex h-6 w-full cursor-default items-center justify-center before:pointer-events-none before:absolute before:inset-x-px before:top-px before:h-[200%] before:bg-linear-to-b before:from-50% before:from-popover",
+	"top-0 z-50 flex h-6 w-full cursor-default items-center justify-center before:pointer-events-none before:absolute before:inset-x-px before:top-px before:h-[200%] before:bg-linear-to-b before:from-popover before:from-50%",
 	{
 		defaultVariants: {
 			radius: "default",
@@ -68,7 +68,7 @@ const selectScrollUpArrowVariants = cva(
 );
 
 const selectScrollDownArrowVariants = cva(
-	"bottom-0 z-50 flex h-6 w-full cursor-default items-center justify-center before:pointer-events-none before:absolute before:inset-x-px before:bottom-px before:h-[200%] before:bg-linear-to-t before:from-50% before:from-popover",
+	"bottom-0 z-50 flex h-6 w-full cursor-default items-center justify-center before:pointer-events-none before:absolute before:inset-x-px before:bottom-px before:h-[200%] before:bg-linear-to-t before:from-popover before:from-50%",
 	{
 		defaultVariants: {
 			radius: "default",
@@ -213,7 +213,7 @@ export function SelectPopup({
 					<div className={selectPopupVariants({ radius })}>
 						<SelectPrimitive.List
 							className={cn(
-								"max-h-(--available-height) overflow-y-auto p-1 [scrollbar-gutter:stable]",
+								"max-h-(--available-height) [scrollbar-gutter:stable] overflow-y-auto p-1",
 								className,
 							)}
 							data-slot="select-list"
@@ -241,7 +241,7 @@ export function SelectItem({
 	return (
 		<SelectPrimitive.Item
 			className={cn(
-				"grid min-h-8 in-data-[side=none]:min-w-[calc(var(--anchor-width)-4px)] cursor-default grid-cols-[1fr_1rem] items-center gap-2 rounded-sm py-1 ps-2 pe-2 text-base outline-none data-disabled:pointer-events-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-disabled:opacity-64 sm:min-h-7 sm:text-sm [&_svg:not([class*='size-'])]:size-4.5 sm:[&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+				"grid min-h-8 cursor-default grid-cols-[1fr_1rem] items-center gap-2 rounded-sm py-1 ps-2 pe-2 text-base outline-none in-data-[side=none]:min-w-[calc(var(--anchor-width)-4px)] data-highlighted:bg-accent data-highlighted:text-accent-foreground sm:min-h-7 sm:text-sm data-disabled:pointer-events-none data-disabled:opacity-64 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4.5 sm:[&_svg:not([class*='size-'])]:size-4",
 				className,
 			)}
 			data-slot="select-item"
@@ -283,7 +283,7 @@ export function SelectLabel({
 	return (
 		<SelectPrimitive.Label
 			className={cn(
-				"not-in-data-[slot=field]:mb-2 inline-flex cursor-default items-center gap-2 font-medium text-base/4.5 text-foreground sm:text-sm/4",
+				"inline-flex cursor-default items-center gap-2 text-base/4.5 font-medium text-foreground not-in-data-[slot=field]:mb-2 sm:text-sm/4",
 				className,
 			)}
 			data-slot="select-label"
@@ -297,7 +297,7 @@ export function SelectGroupLabel(
 ): React.ReactElement {
 	return (
 		<SelectPrimitive.GroupLabel
-			className="px-2 py-1.5 font-medium text-muted-foreground text-xs"
+			className="px-2 py-1.5 text-xs font-medium text-muted-foreground"
 			data-slot="select-group-label"
 			{...props}
 		/>

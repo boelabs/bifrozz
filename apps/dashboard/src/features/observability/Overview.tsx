@@ -86,7 +86,7 @@ const usageColumns: Column<UsageRow>[] = [
 		render: (row) => (
 			<div className="tabular-nums">
 				<div>{count.format(row.totalTokens)}</div>
-				<div className="mt-1 text-fg-muted text-xs">
+				<div className="mt-1 text-xs text-fg-muted">
 					{count.format(row.promptTokens)} in ·{" "}
 					{count.format(row.completionTokens)} out
 				</div>

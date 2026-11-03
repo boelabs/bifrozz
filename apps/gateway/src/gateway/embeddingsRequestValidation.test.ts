@@ -49,7 +49,7 @@ test("embeddings validation rejects unsupported dimensions and oversized batch",
 				},
 				meta,
 			),
-		/1 and 1536/,
+		/1 and 1536/u,
 	);
 	assert.throws(
 		() =>
@@ -61,7 +61,7 @@ test("embeddings validation rejects unsupported dimensions and oversized batch",
 				},
 				meta,
 			),
-		/at most 2 inputs/,
+		/at most 2 inputs/u,
 	);
 });
 
@@ -86,6 +86,6 @@ test("embeddings validation rejects dimensions on ada-style profiles", () => {
 					},
 				},
 			),
-		/does not support dimensions/,
+		/does not support dimensions/u,
 	);
 });

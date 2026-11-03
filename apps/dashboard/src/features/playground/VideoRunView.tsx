@@ -110,7 +110,7 @@ function Working({ job }: { job: VideoJob | undefined }) {
 		return (
 			<div className="flex items-center gap-3">
 				<ResponseLoader />
-				<span className="text-fg-muted text-xs">{label}</span>
+				<span className="text-xs text-fg-muted">{label}</span>
 			</div>
 		);
 	}
@@ -172,7 +172,7 @@ export function VideoRunView({
 			>
 				{run.state === "running" ? <Working job={run.job} /> : null}
 				{run.state === "stopped" ? (
-					<div className="flex flex-wrap items-center gap-2 text-fg-muted text-xs">
+					<div className="flex flex-wrap items-center gap-2 text-xs text-fg-muted">
 						<Status tone="muted">Stopped watching</Status>
 						{resumable ? (
 							<span>The job may still be running on the provider.</span>
@@ -191,7 +191,7 @@ export function VideoRunView({
 						/>
 						<a
 							aria-label="Download video"
-							className="absolute top-2 right-2 inline-flex size-9 items-center justify-center rounded-xl bg-surface/80 text-fg opacity-0 backdrop-blur transition-opacity focus-visible:opacity-100 group-hover/video:opacity-100"
+							className="absolute top-2 right-2 inline-flex size-9 items-center justify-center rounded-xl bg-surface/80 text-fg opacity-0 backdrop-blur transition-opacity group-hover/video:opacity-100 focus-visible:opacity-100"
 							download={`${run.job.id}.mp4`}
 							href={videoContentUrl(run.job.id)}
 							title="Download"
@@ -231,7 +231,7 @@ export function VideoRunView({
 							<IconRefresh aria-hidden className={MESSAGE_ACTION_ICON} />
 						</Button>
 					) : null}
-					<p className="px-2 text-fg-muted text-xs">
+					<p className="px-2 text-xs text-fg-muted">
 						{[
 							run.model,
 							detail,

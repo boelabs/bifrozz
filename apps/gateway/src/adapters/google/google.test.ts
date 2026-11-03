@@ -812,7 +812,7 @@ test("google.buildRequest: extraBody does not overwrite managed fields", () => {
 				{ ...req, extraBody: { generationConfig: {} } },
 				geminiLevelCtx,
 			),
-		/extra_body.generationConfig/,
+		/extra_body.generationConfig/u,
 	);
 });
 

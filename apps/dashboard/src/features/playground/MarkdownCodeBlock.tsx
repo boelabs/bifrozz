@@ -136,9 +136,9 @@ export function MarkdownCodeBlock({ children }: ComponentProps<"pre">) {
 		return <pre>{children}</pre>;
 	}
 	const language =
-		/language-([^\s]+)/.exec(children.props.className ?? "")?.[1] ?? "text";
+		/language-([^\s]+)/u.exec(children.props.className ?? "")?.[1] ?? "text";
 	const code = String(children.props.children ?? "")
-		.replace(/\r\n?/g, "\n")
-		.replace(/\n$/, "");
+		.replace(/\r\n?/gu, "\n")
+		.replace(/\n$/u, "");
 	return <HighlightedCode code={code} language={language} />;
 }

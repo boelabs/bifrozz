@@ -56,8 +56,8 @@ export function MessageAttachments({
 							<IconFileText aria-hidden className="size-5" />
 						</div>
 						<div className="flex h-full min-w-0 flex-col justify-between py-0.5">
-							<span className="truncate font-medium text-xs">{name}</span>
-							<span className="w-fit max-w-full truncate rounded-md border border-border px-1 py-0.5 text-fg-muted text-xs">
+							<span className="truncate text-xs font-medium">{name}</span>
+							<span className="w-fit max-w-full truncate rounded-md border border-border px-1 py-0.5 text-xs text-fg-muted">
 								{file.mediaType === "application/pdf"
 									? "PDF"
 									: file.mediaType.split("/")[0]}

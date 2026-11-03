@@ -57,6 +57,6 @@ test("dependencyUnavailable: 503 with Retry-After and safe public message", () =
 	);
 	assert.equal(err.retryable, true);
 	// the raw cause stays internal; the client sees the generic server message
-	assert.match(err.message, /ECONNREFUSED/);
-	assert.doesNotMatch(err.publicMessage, /ECONNREFUSED/);
+	assert.match(err.message, /ECONNREFUSED/u);
+	assert.doesNotMatch(err.publicMessage, /ECONNREFUSED/u);
 });

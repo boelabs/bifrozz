@@ -63,7 +63,7 @@ test("pricing: rejects invalid rates and malformed tiers", () => {
 		{ cacheWriteCentsPerMTokensByTtl: { "3600": -1 } },
 		{ unexpected: 1 },
 	]) {
-		assert.throws(() => parsePricing(value), /Invalid pricing/);
+		assert.throws(() => parsePricing(value), /Invalid pricing/u);
 	}
 });
 

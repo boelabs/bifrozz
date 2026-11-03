@@ -522,7 +522,7 @@ export const OpenRouterError = z
 
 const nullableEnum = (values: readonly [string, ...string[]]) =>
 	z.union([z.enum([...values] as [string, ...string[]]), z.null()]);
-const sizePattern = z.string().regex(/^(auto|[1-9][0-9]*x[1-9][0-9]*)$/);
+const sizePattern = z.string().regex(/^(auto|[1-9][0-9]*x[1-9][0-9]*)$/u);
 
 export const ImageGenerationRequest = z
 	.object({
@@ -689,7 +689,7 @@ export const VideoCreateRequest = loose(
 			.optional()
 			.meta({ description: "Duration in seconds." }),
 		size: z
-			.union([z.string().regex(/^[1-9][0-9]*x[1-9][0-9]*$/), z.null()])
+			.union([z.string().regex(/^[1-9][0-9]*x[1-9][0-9]*$/u), z.null()])
 			.optional()
 			.meta({
 				description: "Interchangeable with aspect_ratio + resolution.",
@@ -1146,7 +1146,7 @@ export const ChangePassword = z
 
 export const CreateDashboardUser = z
 	.object({
-		username: z.string().regex(/^[a-zA-Z0-9._-]{3,64}$/),
+		username: z.string().regex(/^[a-zA-Z0-9._-]{3,64}$/u),
 		password: z.string().min(12),
 		role: z.enum(["owner", "admin", "viewer"]).meta({
 			description:

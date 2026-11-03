@@ -151,7 +151,7 @@ export function UsersTable({
 			render: (user) =>
 				user.lastLoginAt ? (
 					// The operator's own timezone, which the server does not have.
-					<span className="text-fg-muted text-xs" suppressHydrationWarning>
+					<span className="text-xs text-fg-muted" suppressHydrationWarning>
 						{new Date(user.lastLoginAt).toLocaleString()}
 					</span>
 				) : (

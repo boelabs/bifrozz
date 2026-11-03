@@ -125,6 +125,6 @@ test("images response/event: renders OpenAI shape without inventing usage", () =
 				created: 10,
 				data: [{}],
 			} as CanonicalImageResponse),
-		/missing b64_json/,
+		/missing b64_json/u,
 	);
 });

@@ -1,3 +1,6 @@
+import { spawnSync } from "node:child_process";
+import { gunzipSync } from "node:zlib";
+
 type Severity = "low" | "moderate" | "high" | "critical";
 
 interface Advisory {
@@ -196,5 +199,3 @@ function isSeverity(value: unknown): value is Severity {
 		value === "critical"
 	);
 }
-import { spawnSync } from "node:child_process";
-import { gunzipSync } from "node:zlib";

@@ -10,7 +10,7 @@ export const i18n: I18nConfig<Locale> = {
 };
 
 export function localizedPath(path: string, locale: Locale): string {
-	const unprefixed = path === "/es" ? "/" : path.replace(/^\/es\//, "/");
+	const unprefixed = path === "/es" ? "/" : path.replace(/^\/es\//u, "/");
 	return locale === "en"
 		? unprefixed
 		: `/es${unprefixed === "/" ? "" : unprefixed}`;

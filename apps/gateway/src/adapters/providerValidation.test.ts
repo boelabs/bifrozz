@@ -39,7 +39,7 @@ test("validateProvider: catalog reasoning.kind outside the adapter set throws", 
 			validateProvider(adapterWithKinds("openai_effort"), {
 				m: entryWithKind("gemini_level"),
 			}),
-		/incompatible/,
+		/incompatible/u,
 	);
 });
 

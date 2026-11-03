@@ -1,4 +1,6 @@
+import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, test } from "bun:test";
+import { ModelsTable } from "./ModelsTable";
 import type { Deployment } from "./common";
 
 import {
@@ -119,9 +121,6 @@ describe("model table rows", () => {
 	});
 });
 
-import { renderToStaticMarkup } from "react-dom/server";
-import { ModelsTable } from "./ModelsTable";
-
 test("renders one ordinary table row per deployment with repeated public context", () => {
 	const html = renderToStaticMarkup(
 		<ModelsTable
@@ -131,10 +130,10 @@ test("renders one ordinary table row per deployment with repeated public context
 			]}
 		/>,
 	);
-	expect(html.match(/<table\b/g)).toHaveLength(1);
-	expect(html.match(/<tr\b/g)).toHaveLength(3);
-	expect(html.match(/>assistant</g)).toHaveLength(2);
-	expect(html.match(/>gpt-5.5</g)).toHaveLength(2);
+	expect(html.match(/<table\b/gu)).toHaveLength(1);
+	expect(html.match(/<tr\b/gu)).toHaveLength(3);
+	expect(html.match(/>assistant</gu)).toHaveLength(2);
+	expect(html.match(/>gpt-5.5</gu)).toHaveLength(2);
 	expect(html).toContain("12345678…");
 	expect(html).toContain("1–2 of 2 deployments");
 	expect(html).not.toContain("colspan");
@@ -144,7 +143,7 @@ test("renders one ordinary table row per deployment with repeated public context
 
 test("loading mirrors flat rows and exposes one loading announcement", () => {
 	const html = renderToStaticMarkup(<ModelsTable loading />);
-	expect(html.match(/<tr\b/g)).toHaveLength(6);
+	expect(html.match(/<tr\b/gu)).toHaveLength(6);
 	expect(html).toContain("Loading models");
 	expect(html).toContain("inert");
 	expect(html).not.toContain("colspan");
@@ -154,6 +153,6 @@ test("an empty collection retains the table headers and navigation", () => {
 	const html = renderToStaticMarkup(<ModelsTable />);
 	expect(html).toContain("No deployments yet");
 	expect(html).toContain("0–0 of 0 deployments");
-	expect(html.match(/<table\b/g)).toHaveLength(1);
+	expect(html.match(/<table\b/gu)).toHaveLength(1);
 	expect(html).toContain("Deployment ID");
 });

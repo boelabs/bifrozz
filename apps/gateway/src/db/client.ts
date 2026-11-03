@@ -8,7 +8,7 @@ import postgres from "postgres";
  * `ssl: "require"`: it encrypts but does not verify the certificate. On an internal network (no
  * sslmode) the connection is plaintext.
  */
-const wantsSsl = /sslmode=(require|verify-full|verify-ca|prefer)/i.test(
+const wantsSsl = /sslmode=(require|verify-full|verify-ca|prefer)/iu.test(
 	env.DATABASE_URL,
 );
 

@@ -17,11 +17,11 @@ const EXTERNAL = new Set(["OTEL_EXPORTER_OTLP_ENDPOINT"]);
 test(".env.example lists exactly the variables the schema declares", () => {
 	const schema = names(
 		readFileSync(new URL("env.ts", here), "utf8"),
-		/^\s+([A-Z][A-Z0-9_]{2,}):/gm,
+		/^\s+([A-Z][A-Z0-9_]{2,}):/gmu,
 	);
 	const example = names(
 		readFileSync(new URL("../../.env.example", here), "utf8"),
-		/^([A-Z][A-Z0-9_]{2,})=/gm,
+		/^([A-Z][A-Z0-9_]{2,})=/gmu,
 	);
 
 	const undocumented = [...schema].filter((name) => !example.has(name)).sort();

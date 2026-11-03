@@ -256,7 +256,7 @@ test("azurefoundry: rejects forced Responses upstream", () => {
 				request,
 				context("responses", "DeepSeek-V3.1"),
 			),
-		(error) => GatewayError.is(error) && /not supported/.test(error.message),
+		(error) => GatewayError.is(error) && /not supported/u.test(error.message),
 	);
 });
 
@@ -276,14 +276,14 @@ test("azure v1: normalizes endpoint and rejects legacy deployments/api-version",
 			normalizeAzurev1BaseUrl(
 				"https://resource.openai.azure.com/openai/deployments/gpt",
 			),
-		/legacy/,
+		/legacy/u,
 	);
 	assert.throws(
 		() =>
 			normalizeAzurev1BaseUrl(
 				"https://resource.openai.azure.com/openai/v1?api-version=2025-01-01",
 			),
-		/query parameters/,
+		/query parameters/u,
 	);
 });
 

@@ -32,7 +32,7 @@ function Similarity({ vectors }: { vectors: number[][] }) {
 	return (
 		<div className="overflow-x-auto">
 			<table className="border-collapse text-sm">
-				<caption className="pb-2 text-left text-fg-muted text-xs">
+				<caption className="pb-2 text-left text-xs text-fg-muted">
 					Cosine similarity
 				</caption>
 				<thead>
@@ -40,7 +40,7 @@ function Similarity({ vectors }: { vectors: number[][] }) {
 						<th className="p-1" />
 						{vectors.map((_, column) => (
 							<th
-								className="px-2 py-1 text-fg-muted text-xs"
+								className="px-2 py-1 text-xs text-fg-muted"
 								// biome-ignore lint/suspicious/noArrayIndexKey: position is the identity of an input here
 								key={column}
 								scope="col"
@@ -54,7 +54,7 @@ function Similarity({ vectors }: { vectors: number[][] }) {
 					{vectors.map((row, rowIndex) => (
 						// biome-ignore lint/suspicious/noArrayIndexKey: position is the identity of an input here
 						<tr key={rowIndex}>
-							<th className="px-2 py-1 text-fg-muted text-xs" scope="row">
+							<th className="px-2 py-1 text-xs text-fg-muted" scope="row">
 								{rowIndex + 1}
 							</th>
 							{vectors.map((column, columnIndex) => {
@@ -109,8 +109,8 @@ export function EmbeddingRunView({
 						// biome-ignore lint/suspicious/noArrayIndexKey: the position is what the results are numbered by
 						key={index}
 					>
-						<span className="mt-2 text-fg-muted text-xs">{index + 1}</span>
-						<p className="wrap-break-word wrap-anywhere w-fit max-w-full overflow-hidden rounded-3xl border border-border/60 bg-surface-2 px-3.5 py-2.5 text-base leading-6">
+						<span className="mt-2 text-xs text-fg-muted">{index + 1}</span>
+						<p className="w-fit max-w-full overflow-hidden rounded-3xl border border-border/60 bg-surface-2 px-3.5 py-2.5 text-base leading-6 wrap-anywhere wrap-break-word">
 							{input}
 						</p>
 					</div>
@@ -122,7 +122,7 @@ export function EmbeddingRunView({
 			>
 				{run.state === "running" ? <ResponseLoader /> : null}
 				{run.state === "stopped" ? (
-					<div className="text-fg-muted text-xs">
+					<div className="text-xs text-fg-muted">
 						<Status tone="muted">Stopped</Status>
 					</div>
 				) : null}
@@ -135,7 +135,7 @@ export function EmbeddingRunView({
 									// biome-ignore lint/suspicious/noArrayIndexKey: position matches the input above
 									key={index}
 								>
-									<span className="text-fg-muted text-xs">{index + 1}</span>
+									<span className="text-xs text-fg-muted">{index + 1}</span>
 									<code className="min-w-0 flex-1 truncate rounded-lg bg-surface-2 px-2 py-1 font-mono text-xs">
 										{preview(vector)}
 									</code>
@@ -169,7 +169,7 @@ export function EmbeddingRunView({
 					>
 						<IconRotate2 aria-hidden className={MESSAGE_ACTION_ICON} />
 					</Button>
-					<p className="px-2 text-fg-muted text-xs">
+					<p className="px-2 text-xs text-fg-muted">
 						{[
 							run.model,
 							dimensions === undefined

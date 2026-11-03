@@ -25,7 +25,7 @@ export function recentKey(userId: string | null) {
 
 /** A record's page (`/models/<id>`, `/logs/<id>`), not a form to create one. */
 export function isRecordPath(pathname: string) {
-	return /^\/[^/]+\/[^/]/.test(pathname) && !pathname.endsWith("/new");
+	return /^\/[^/]+\/[^/]/u.test(pathname) && !pathname.endsWith("/new");
 }
 
 /**

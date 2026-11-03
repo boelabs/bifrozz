@@ -68,26 +68,26 @@ export default async function HomePage({ locale }: { locale: Locale }) {
 
 	return (
 		<main className="flex flex-1 flex-col">
-			<section className="dot-grid border-fd-border border-b">
+			<section className="dot-grid border-b border-fd-border">
 				<div className="mx-auto w-full max-w-5xl px-4 py-24 sm:py-32">
-					<h1 className="font-semibold text-5xl tracking-tight sm:text-6xl">
+					<h1 className="text-5xl font-semibold tracking-tight sm:text-6xl">
 						Bifrozz
 					</h1>
-					<p className="mt-5 max-w-2xl text-balance text-fd-muted-foreground text-lg">
+					<p className="mt-5 max-w-2xl text-lg text-balance text-fd-muted-foreground">
 						{locale === "es"
 							? "Un gateway de inteligencia artificial de Boelabs. Conecta tus proveedores mediante APIs conocidas y controla el routing, el acceso y los costos."
 							: "An artificial intelligence gateway by Boelabs. Connect your providers through familiar APIs while you control routing, access, and costs."}
 					</p>
 					<div className="mt-8 flex flex-wrap items-center gap-3">
 						<Link
-							className="inline-flex items-center gap-2 rounded-lg bg-fd-primary px-5 py-2.5 font-medium text-fd-primary-foreground text-sm transition-opacity hover:opacity-90"
+							className="inline-flex items-center gap-2 rounded-lg bg-fd-primary px-5 py-2.5 text-sm font-medium text-fd-primary-foreground transition-opacity hover:opacity-90"
 							href={localizedPath("/docs/quickstart", locale)}
 						>
 							{locale === "es" ? "Comenzar" : "Get started"}
 							<ArrowRight aria-hidden className="size-4" />
 						</Link>
 						<Link
-							className="inline-flex items-center gap-2 rounded-lg border border-fd-border bg-fd-card px-5 py-2.5 font-medium text-sm transition-colors hover:bg-fd-accent"
+							className="inline-flex items-center gap-2 rounded-lg border border-fd-border bg-fd-card px-5 py-2.5 text-sm font-medium transition-colors hover:bg-fd-accent"
 							href={localizedPath("/docs/api-overview", locale)}
 						>
 							{locale === "es" ? "Explorar la API" : "Explore the API"}
@@ -119,10 +119,10 @@ export default async function HomePage({ locale }: { locale: Locale }) {
 			</section>
 
 			<section className="mx-auto w-full max-w-5xl px-4 py-12">
-				<h2 className="font-medium text-xl">
+				<h2 className="text-xl font-medium">
 					{locale === "es" ? "Una solicitud conocida" : "A familiar request"}
 				</h2>
-				<p className="mt-2 max-w-2xl text-fd-muted-foreground text-sm">
+				<p className="mt-2 max-w-2xl text-sm text-fd-muted-foreground">
 					{locale === "es"
 						? "Apunta tu cliente a Bifrozz. El public model "
 						: "Point your client at Bifrozz. The public model "}

@@ -486,14 +486,14 @@ function mapFinishReason(f: unknown): CanonicalFinishReason | null {
 		return f;
 	}
 	const reason = String(f).toLowerCase();
-	if (/max.?tokens?|context.?window|length/.test(reason)) {
+	if (/max.?tokens?|context.?window|length/u.test(reason)) {
 		return "length";
 	}
-	if (/tool.?use|function.?call/.test(reason)) {
+	if (/tool.?use|function.?call/u.test(reason)) {
 		return "tool_calls";
 	}
 	if (
-		/content.?filter|safety|guardrail|block|prohibit|refus|recitation|language|spii/.test(
+		/content.?filter|safety|guardrail|block|prohibit|refus|recitation|language|spii/u.test(
 			reason,
 		)
 	) {

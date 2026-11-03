@@ -54,7 +54,7 @@ export function Checkbox({
 	);
 	return children ? (
 		<label
-			className="inline-flex cursor-pointer items-center gap-2 text-foreground text-sm"
+			className="inline-flex cursor-pointer items-center gap-2 text-sm text-foreground"
 			htmlFor={id}
 		>
 			{control}

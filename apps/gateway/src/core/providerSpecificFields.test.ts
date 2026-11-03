@@ -56,7 +56,7 @@ test("thought signature id: encode is a no-op without id, signature, or when alr
 test("thought signature id: separator cannot collide with base64 signatures", () => {
 	// Gemini signatures are standard base64 (A-Za-z0-9+/=): `_` cannot appear, so splitting on
 	// the first separator occurrence is unambiguous even for adversarial-looking values.
-	const base64 = /^[A-Za-z0-9+/=]+$/;
+	const base64 = /^[A-Za-z0-9+/=]+$/u;
 	const signature = "EjQKMgERTTIPxOSJU+6ZAGTusp00q9PqtMCjw3RPFew/=";
 	assert.ok(base64.test(signature));
 	assert.ok(!signature.includes("_"));

@@ -57,12 +57,12 @@ test("custom ranges include the end date and reject impossible ones", () => {
 	);
 	// An end date of today is clamped to now rather than to tomorrow's midnight.
 	assert.equal(custom("2026-09-01", "2026-09-08").end, now.toISOString());
-	assert.throws(() => custom("2026-09-03", "2026-09-01"), /increasing/);
-	assert.throws(() => custom("2026-07-01", "2026-09-01"), /31 days/);
-	assert.throws(() => custom("2026-10-01", "2026-10-03"), /today or earlier/);
+	assert.throws(() => custom("2026-09-03", "2026-09-01"), /increasing/u);
+	assert.throws(() => custom("2026-07-01", "2026-09-01"), /31 days/u);
+	assert.throws(() => custom("2026-10-01", "2026-10-03"), /today or earlier/u);
 	assert.throws(
 		() => resolveRange({ period: "custom" }, "7d", now),
-		/both dates/,
+		/both dates/u,
 	);
 });
 

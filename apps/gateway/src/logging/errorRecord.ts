@@ -10,11 +10,11 @@
 const MESSAGE_MAX_CHARS = 2000;
 
 const SECRET_PATTERNS: [RegExp, string][] = [
-	[/(Bearer\s+)[\w.~+/=-]{8,}/gi, "$1[redacted]"],
-	[/\b(?:sk|pk|rk|sess)-[\w-]{8,}/g, "[redacted]"],
-	[/\bAIza[\w-]{20,}/g, "[redacted]"],
+	[/(Bearer\s+)[\w.~+/=-]{8,}/giu, "$1[redacted]"],
+	[/\b(?:sk|pk|rk|sess)-[\w-]{8,}/gu, "[redacted]"],
+	[/\bAIza[\w-]{20,}/gu, "[redacted]"],
 	[
-		/((?:api[_-]?key|access[_-]?token|token|secret|password)["']?\s*[:=]\s*["']?)[^\s"',}]{6,}/gi,
+		/((?:api[_-]?key|access[_-]?token|token|secret|password)["']?\s*[:=]\s*["']?)[^\s"',}]{6,}/giu,
 		"$1[redacted]",
 	],
 ];

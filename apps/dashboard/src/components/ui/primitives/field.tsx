@@ -24,7 +24,7 @@ export function FieldLabel({
 	return (
 		<FieldPrimitive.Label
 			className={cn(
-				"inline-flex items-center gap-2 font-medium text-base/4.5 text-foreground data-disabled:opacity-64 sm:text-sm/4",
+				"inline-flex items-center gap-2 text-base/4.5 font-medium text-foreground sm:text-sm/4 data-disabled:opacity-64",
 				className,
 			)}
 			data-slot="field-label"
@@ -52,7 +52,7 @@ export function FieldDescription({
 }: FieldPrimitive.Description.Props): React.ReactElement {
 	return (
 		<FieldPrimitive.Description
-			className={cn("text-muted-foreground text-xs", className)}
+			className={cn("text-xs text-muted-foreground", className)}
 			data-slot="field-description"
 			{...props}
 		/>
@@ -65,7 +65,7 @@ export function FieldError({
 }: FieldPrimitive.Error.Props): React.ReactElement {
 	return (
 		<FieldPrimitive.Error
-			className={cn("text-destructive-foreground text-xs", className)}
+			className={cn("text-xs text-destructive-foreground", className)}
 			data-slot="field-error"
 			{...props}
 		/>

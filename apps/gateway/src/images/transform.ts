@@ -42,8 +42,8 @@ function formatFromMime(
 }
 
 function decodeBase64(value: string): Buffer {
-	const raw = value.replace(/^data:[^;]+;base64,/, "");
-	if (!/^[A-Za-z0-9+/]*={0,2}$/.test(raw) || raw.length % 4 !== 0) {
+	const raw = value.replace(/^data:[^;]+;base64,/u, "");
+	if (!/^[A-Za-z0-9+/]*={0,2}$/u.test(raw) || raw.length % 4 !== 0) {
 		throw new GatewayError({
 			class: "server",
 			message: "Upstream returned invalid base64 image data",

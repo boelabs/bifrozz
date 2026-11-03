@@ -68,7 +68,7 @@ export function CustomModelEditor({
 							onChange(updateProfile(value, operation.id, patch));
 						return (
 							<div
-								className="flex flex-col gap-4 border-border/50 border-t pt-4"
+								className="flex flex-col gap-4 border-t border-border/50 pt-4"
 								key={operation.id}
 							>
 								<Switch
@@ -104,7 +104,7 @@ export function CustomModelEditor({
 						</p>
 					) : null}
 					{Object.keys(value.operations).length === 0 ? (
-						<p className="text-danger text-sm" role="alert">
+						<p className="text-sm text-danger" role="alert">
 							Select at least one operation.
 						</p>
 					) : null}
@@ -122,17 +122,17 @@ export function CustomModelEditor({
 						value={technical}
 					/>
 					{error ? (
-						<p className="text-danger text-sm" role="alert">
+						<p className="text-sm text-danger" role="alert">
 							{error}
 						</p>
 					) : null}
 				</div>
 			)}
 			<details className="min-w-0">
-				<summary className="cursor-pointer font-medium text-fg text-sm">
+				<summary className="cursor-pointer text-sm font-medium text-fg">
 					Transport settings
 				</summary>
-				<p className="pt-3 text-fg-muted text-xs">
+				<p className="pt-3 text-xs text-fg-muted">
 					Use adapter defaults unless your upstream requires a specific
 					protocol. Only custom models expose these controls.
 				</p>

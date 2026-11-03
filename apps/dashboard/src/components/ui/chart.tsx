@@ -193,7 +193,7 @@ export function TimeSeriesChart({
 					</ComposedChart>
 				</ResponsiveContainer>
 				{!positive && (
-					<p className="pointer-events-none absolute inset-0 flex items-center justify-center text-fg-muted text-xs">
+					<p className="pointer-events-none absolute inset-0 flex items-center justify-center text-xs text-fg-muted">
 						{measured
 							? "All recorded values are zero"
 							: "No measurements reported"}
@@ -212,7 +212,7 @@ export function TimeSeriesChart({
 					</span>
 				))}
 			</figcaption>
-			<details className="mt-4 text-fg-muted text-xs">
+			<details className="mt-4 text-xs text-fg-muted">
 				<summary className="w-fit cursor-pointer rounded-full focus-visible:outline-2">
 					View chart data
 				</summary>
@@ -233,7 +233,7 @@ export function TimeSeriesChart({
 						</thead>
 						<tbody>
 							{rows.map((row) => (
-								<tr className="border-border/50 border-t" key={row.timestamp}>
+								<tr className="border-t border-border/50" key={row.timestamp}>
 									<th className="p-2 font-normal" scope="row">
 										{describe(row.timestamp)}
 									</th>

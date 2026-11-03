@@ -41,7 +41,7 @@ export default function AuthedError({
 				</Button>
 			</div>
 			{error.digest ? (
-				<p className="text-fg-muted text-xs">Reference {error.digest}</p>
+				<p className="text-xs text-fg-muted">Reference {error.digest}</p>
 			) : null}
 		</div>
 	);

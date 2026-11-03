@@ -23,7 +23,7 @@ test("rerank logging keeps sizes and option names without query or documents", (
 	});
 	assert.doesNotMatch(
 		JSON.stringify(summary),
-		/secret query|secret first|secret-provider/,
+		/secret query|secret first|secret-provider/u,
 	);
 });
 

@@ -54,7 +54,7 @@ export function AppShell({
 							<div className="flex min-w-0 flex-1 flex-col">
 								<MobileBar />
 								<main
-									className="min-h-0 min-w-0 flex-1 overflow-y-auto [scrollbar-gutter:stable]"
+									className="min-h-0 min-w-0 flex-1 [scrollbar-gutter:stable] overflow-y-auto"
 									id="main-content"
 									tabIndex={-1}
 								>

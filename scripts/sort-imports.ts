@@ -137,7 +137,7 @@ function sortImportsInText(original: string): string {
 	const hasFinalEol = original.endsWith("\n");
 	const bom = original.startsWith("﻿") ? "﻿" : "";
 	const text = bom ? original.slice(1) : original;
-	const lines = text.split(/\r?\n/);
+	const lines = text.split(/\r?\n/u);
 
 	if (hasFinalEol) {
 		lines.pop();
@@ -404,25 +404,25 @@ function measureImportWeight(lines: string[]): number {
 	return lines
 		.map((line) => line.trim())
 		.join(" ")
-		.replace(/\s+/g, " ").length;
+		.replace(/\s+/gu, " ").length;
 }
 
 function visibleSpecifierLength(line: string): number {
-	return line.trim().replace(/,$/, "").length;
+	return line.trim().replace(/,$/u, "").length;
 }
 
 function isBareImport(lines: string[]): boolean {
 	const firstLine = (lines[0] ?? "").trim();
 
-	return /^import\s+['"]/.test(firstLine);
+	return /^import\s+['"]/u.test(firstLine);
 }
 
 function isStaticImportStart(trimmedLine: string): boolean {
-	return /^import(?:\s|['"])/.test(trimmedLine);
+	return /^import(?:\s|['"])/u.test(trimmedLine);
 }
 
 function isDirective(trimmedLine: string): boolean {
-	return /^(['"])[^'"]+\1;?$/.test(trimmedLine);
+	return /^(['"])[^'"]+\1;?$/u.test(trimmedLine);
 }
 
 function isBlank(line: string | undefined): boolean {

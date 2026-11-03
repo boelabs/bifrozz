@@ -18,10 +18,10 @@ export function DetailLayout({
 }) {
 	return (
 		<div className="@container">
-			<div className="grid @min-[60rem]:grid-cols-3 gap-3">
+			<div className="grid gap-3 @min-[60rem]:grid-cols-3">
 				<div
 					className={cn(
-						"@min-[60rem]:col-span-2 flex min-w-0 flex-col",
+						"flex min-w-0 flex-col @min-[60rem]:col-span-2",
 						spacing === "sections" ? "gap-6" : "gap-3",
 					)}
 				>

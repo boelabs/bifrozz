@@ -112,15 +112,15 @@ test("the combinations the gateway refuses are refused here first", () => {
 	assert.equal(taskConflict("text_to_video", []), undefined);
 	assert.match(
 		taskConflict("text_to_video", [reference("reference")]) ?? "",
-		/cannot be combined/,
+		/cannot be combined/u,
 	);
 	assert.match(
 		taskConflict(undefined, [reference("last_frame")]) ?? "",
-		/requires a first frame/,
+		/requires a first frame/u,
 	);
 	assert.match(
 		taskConflict("image_to_video", [reference("reference", "video/mp4")]) ?? "",
-		/image attachments/,
+		/image attachments/u,
 	);
 	assert.equal(
 		taskConflict("image_to_video", [reference("reference")]),
@@ -130,29 +130,29 @@ test("the combinations the gateway refuses are refused here first", () => {
 		taskConflict("image_to_video", [reference("first_frame")]),
 		undefined,
 	);
-	assert.match(taskConflict("extend", []) ?? "", /exactly one video/);
+	assert.match(taskConflict("extend", []) ?? "", /exactly one video/u);
 	assert.equal(
 		taskConflict("extend", [reference("reference", "video/mp4")]),
 		undefined,
 	);
 	assert.match(
 		taskConflict("reference_to_video", [reference("first_frame")]) ?? "",
-		/cannot use frames/,
+		/cannot use frames/u,
 	);
 });
 
 test("a file is turned away before it is read into memory", () => {
 	const big = new File(["x"], "clip.mp4", { type: "video/mp4" });
 	Object.defineProperty(big, "size", { value: MAX_REFERENCE_BYTES + 1 });
-	assert.match(referenceRejection(big) ?? "", /limited to/);
+	assert.match(referenceRejection(big) ?? "", /limited to/u);
 	assert.match(
 		referenceRejection(new File(["x"], "notes.txt", { type: "text/plain" })) ??
 			"",
-		/cannot be used as a reference/,
+		/cannot be used as a reference/u,
 	);
 	assert.match(
 		referenceRejection(new File([], "empty.png", { type: "image/png" })) ?? "",
-		/empty/,
+		/empty/u,
 	);
 	assert.equal(
 		referenceRejection(new File(["x"], "a.png", { type: "image/png" })),
@@ -229,7 +229,7 @@ test("the interval stops growing at its ceiling", async () => {
 				waits.push(ms);
 			},
 		}),
-		/still being generated/,
+		/still being generated/u,
 	);
 	assert.deepEqual(waits, [8000, 10_000]);
 });
@@ -274,6 +274,6 @@ test("the gateway's own message survives a failure, instead of a bare status", a
 			{ model: "m", prompt: "a fox", settings: {}, references: [] },
 			{ fetch: stub, csrf: () => undefined },
 		),
-		/duration is not supported/,
+		/duration is not supported/u,
 	);
 });

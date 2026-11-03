@@ -36,10 +36,10 @@ export function normalizeAzurev1BaseUrl(value: string): string {
 		});
 	}
 
-	const path = url.pathname.replace(/\/+$/, "");
+	const path = url.pathname.replace(/\/+$/u, "");
 	if (
-		/\/openai\/deployments(?:\/|$)/i.test(path) ||
-		/\/deployments(?:\/|$)/i.test(path)
+		/\/openai\/deployments(?:\/|$)/iu.test(path) ||
+		/\/deployments(?:\/|$)/iu.test(path)
 	) {
 		throw new GatewayError({
 			class: "bad_request",
@@ -58,7 +58,7 @@ export function normalizeAzurev1BaseUrl(value: string): string {
 				"Azure v1: credentials.baseUrl must be the resource endpoint or end in /openai/v1",
 		});
 	}
-	return url.toString().replace(/\/+$/, "");
+	return url.toString().replace(/\/+$/u, "");
 }
 
 /** Azure v1's default API version selector; its image surface is only reachable with it. */

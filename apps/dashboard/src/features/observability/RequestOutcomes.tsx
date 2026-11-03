@@ -58,10 +58,10 @@ export function RequestOutcomes({ metrics }: { metrics: Metrics }) {
 			title={<h2>Request outcomes</h2>}
 		>
 			<div className="flex items-baseline gap-2">
-				<span className="font-semibold text-[2rem] tabular-nums leading-none tracking-tight">
+				<span className="text-[2rem] leading-none font-semibold tracking-tight tabular-nums">
 					{share(metrics.successRate)}
 				</span>
-				<span className="text-fg-muted text-xs">success rate</span>
+				<span className="text-xs text-fg-muted">success rate</span>
 			</div>
 			<div
 				aria-hidden
@@ -99,7 +99,7 @@ export function RequestOutcomes({ metrics }: { metrics: Metrics }) {
 					</div>
 				))}
 			</dl>
-			<div className="mt-5 flex flex-wrap items-center justify-between gap-2 border-border/50 border-t pt-3 text-fg-muted text-xs tabular-nums">
+			<div className="mt-5 flex flex-wrap items-center justify-between gap-2 border-t border-border/50 pt-3 text-xs text-fg-muted tabular-nums">
 				<span>{count.format(metrics.finishedRequests)} finished</span>
 				<span>{count.format(metrics.outcomes.inProgress)} in progress</span>
 			</div>
@@ -144,7 +144,7 @@ export function Reliability({ metrics }: { metrics: Metrics }) {
 						<dd className="flex items-baseline gap-2 tabular-nums">
 							<span className="font-medium">{row.value}</span>
 							{row.detail ? (
-								<span className="text-fg-muted text-xs">{row.detail}</span>
+								<span className="text-xs text-fg-muted">{row.detail}</span>
 							) : null}
 						</dd>
 					</div>

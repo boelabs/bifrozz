@@ -46,9 +46,9 @@ export function Card({
 		>
 			{title || description ? (
 				<PrimitiveHeader>
-					{title ? <h3 className="font-semibold text-sm">{title}</h3> : null}
+					{title ? <h3 className="text-sm font-semibold">{title}</h3> : null}
 					{description ? (
-						<p className="text-muted-foreground text-sm">{description}</p>
+						<p className="text-sm text-muted-foreground">{description}</p>
 					) : null}
 				</PrimitiveHeader>
 			) : null}
@@ -73,9 +73,9 @@ export function ContentPanel({
 			<FramePanel {...props} className={cn("flex-1", className)} style={style}>
 				{title || description ? (
 					<div className="mb-4 flex flex-col gap-1">
-						{title ? <h3 className="font-semibold text-sm">{title}</h3> : null}
+						{title ? <h3 className="text-sm font-semibold">{title}</h3> : null}
 						{description ? (
-							<p className="text-muted-foreground text-sm">{description}</p>
+							<p className="text-sm text-muted-foreground">{description}</p>
 						) : null}
 					</div>
 				) : null}

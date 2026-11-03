@@ -1,6 +1,6 @@
+import { realtimeClientSecretsHandler } from "#endpoints/realtimeClientSecrets.ts";
 import { redisAvailable, pgAvailable } from "#test-support/infra.ts";
 import { type WebSocketServerLike, serve } from "@hono/node-server";
-import { realtimeClientSecretsHandler } from "#endpoints/realtimeClientSecrets.ts";
 import { realtimeWebSocketHandler } from "#endpoints/realtime.ts";
 import { makeOpenAIContractTestApp } from "#test-support/app.ts";
 import { deleteDeployment } from "#db/repos/deployments.ts";
@@ -425,7 +425,7 @@ test("GET /v1/realtime?model= reports a refused session once, not once per audio
 		}
 		const error = await next("error");
 		assert.equal(error.error.param, "session.audio.output.voice");
-		assert.match(error.error.message, /Kore/);
+		assert.match(error.error.message, /Kore/u);
 		await new Promise((resolve) => setTimeout(resolve, 200));
 		assert.equal(events.filter((event) => event.type === "error").length, 1);
 		assert.equal(stub.received.length, 0);
@@ -694,7 +694,7 @@ test("POST /v1/realtime/client_secrets mints a key that only opens realtime sess
 		});
 		assert.equal(response.status, 200);
 		const secret = (await response.json()) as Record<string, any>;
-		assert.match(secret.value, /^ek_/);
+		assert.match(secret.value, /^ek_/u);
 		assert.ok(
 			Math.abs(secret.expires_at - (Date.now() / 1000 + 120)) < 5,
 			String(secret.expires_at),

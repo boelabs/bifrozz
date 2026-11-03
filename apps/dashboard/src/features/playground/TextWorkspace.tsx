@@ -276,7 +276,7 @@ function SettingsDialog({
 								>
 									<NumberField.ScrubArea>
 										<label
-											className="font-medium text-sm"
+											className="text-sm font-medium"
 											htmlFor={`playground-${control.key}`}
 										>
 											{control.label}
@@ -298,7 +298,7 @@ function SettingsDialog({
 											aria-label={`Increase ${control.label}`}
 										/>
 									</NumberField.Group>
-									<p className="text-fg-muted text-xs">
+									<p className="text-xs text-fg-muted">
 										{control.min.toLocaleString()} -{" "}
 										{control.max.toLocaleString()}
 									</p>

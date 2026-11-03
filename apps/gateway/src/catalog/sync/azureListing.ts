@@ -18,9 +18,9 @@ const PIVOT_ADAPTERS: Readonly<Record<string, string>> = {
 };
 
 /** Sections that list models for other purposes than inference (fine-tuning bases, Assistants). */
-const SKIPPED_SECTION = /^(fine-tuning|assistants)/i;
+const SKIPPED_SECTION = /^(fine-tuning|assistants)/iu;
 
-const MODEL_ID = /^[A-Za-z0-9][A-Za-z0-9._-]*$/;
+const MODEL_ID = /^[A-Za-z0-9][A-Za-z0-9._-]*$/u;
 
 /**
  * Listed ids Bifrozz deliberately does not carry, with the reason. A listed id that is neither in the
@@ -102,7 +102,7 @@ export function parseAzureListing(markdown: string): AzureListedModel[] {
 	let adapterKey: string | undefined;
 	let section = "";
 	for (const line of markdown.split("\n")) {
-		const pivot = /^::: zone pivot="([^"]+)"/.exec(line);
+		const pivot = /^::: zone pivot="([^"]+)"/u.exec(line);
 		if (pivot) {
 			adapterKey = PIVOT_ADAPTERS[pivot[1] ?? ""];
 			continue;
@@ -122,8 +122,8 @@ export function parseAzureListing(markdown: string): AzureListedModel[] {
 			continue;
 		}
 		const firstCell = line.split("|")[1] ?? "";
-		const retired = /retired/i.test(firstCell);
-		for (const [, id] of firstCell.matchAll(/`([^`]+)`/g)) {
+		const retired = /retired/iu.test(firstCell);
+		for (const [, id] of firstCell.matchAll(/`([^`]+)`/gu)) {
 			if (id === undefined || !MODEL_ID.test(id)) {
 				continue;
 			}

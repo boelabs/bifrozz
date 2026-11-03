@@ -50,7 +50,7 @@ export function SearchField({
 	return (
 		<div
 			className={cn(
-				"relative @min-[40rem]:w-64 min-w-0 @min-[40rem]:flex-none flex-1",
+				"relative min-w-0 flex-1 @min-[40rem]:w-64 @min-[40rem]:flex-none",
 				className,
 			)}
 		>

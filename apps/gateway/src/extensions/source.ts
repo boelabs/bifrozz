@@ -16,8 +16,8 @@ import {
 	stat,
 } from "node:fs/promises";
 
-const EXTENSION_KEY_PATTERN = /^[a-z0-9]+$/;
-const MATERIALIZED_MODULE_PATTERN = /^[a-z0-9]+-[a-f0-9]{64}\.mjs$/;
+const EXTENSION_KEY_PATTERN = /^[a-z0-9]+$/u;
+const MATERIALIZED_MODULE_PATTERN = /^[a-z0-9]+-[a-f0-9]{64}\.mjs$/u;
 const STALE_TEMP_FILE_MS = 5 * 60_000;
 
 /**

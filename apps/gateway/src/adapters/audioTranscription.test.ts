@@ -114,7 +114,7 @@ test("audio.buildRequest: extra_body cannot overwrite managed fields", async () 
 				{ ...req, extraBody: { model: "x" } },
 				ctx(),
 			);
-		}, /extra_body\.model/);
+		}, /extra_body\.model/u);
 	} finally {
 		cleanup();
 	}
@@ -187,7 +187,7 @@ test("audio: extra_body cannot inject hints, with or without brackets", async ()
 						{ ...req, extraBody: { [key]: ["x"] } },
 						ctx(),
 					),
-				/collides with a managed transcription field/,
+				/collides with a managed transcription field/u,
 			);
 		}
 	} finally {

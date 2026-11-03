@@ -73,7 +73,7 @@ function isPrivileged(ctx) {
 
 function escapeXml(value) {
 	return String(value).replace(
-		/[&<>"']/g,
+		/[&<>"']/gu,
 		(c) =>
 			({
 				"&": "&amp;",

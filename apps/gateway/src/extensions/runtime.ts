@@ -41,8 +41,8 @@ function extensionsStatus(
 	return hasDisabled ? "degraded" : "ok";
 }
 
-const EXTENSION_KEY_PATTERN = /^[a-z0-9]+$/;
-const INSTANCE_ID_PATTERN = /^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$/;
+const EXTENSION_KEY_PATTERN = /^[a-z0-9]+$/u;
+const INSTANCE_ID_PATTERN = /^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$/u;
 
 interface ManifestModuleSpec {
 	path: string;
@@ -528,8 +528,8 @@ class ExtensionRuntime {
 			});
 		}
 
-		const instances = this.buildInstances(manifest.instances, definitions);
-		await this.setupDefinitions(definitions, instances);
+		const instances = buildInstances(manifest.instances, definitions);
+		await setupDefinitions(definitions, instances);
 
 		this.definitions = definitions;
 		this.instances = instances.sort(
@@ -540,179 +540,6 @@ class ExtensionRuntime {
 			definitions: definitions.size,
 			instances: instances.length,
 		});
-	}
-
-	private buildInstances(
-		specs: ManifestInstanceSpec[],
-		definitions: Map<string, LoadedDefinition>,
-	): LoadedInstance[] {
-		const seen = new Set<string>();
-		const instances: LoadedInstance[] = [];
-		for (const [order, spec] of specs.entries()) {
-			// Duplicate ids can only come from a corrupt source (the DB enforces a PK); skip the dupe
-			// rather than abort the whole load.
-			if (seen.has(spec.id)) {
-				log.error("extensions", "skipped duplicate extension instance id", {
-					instanceId: spec.id,
-				});
-				continue;
-			}
-			seen.add(spec.id);
-
-			const loadedDefinition = definitions.get(spec.definition);
-			const critical =
-				spec.critical ?? loadedDefinition?.definition.defaultCritical ?? true;
-			const base: LoadedInstance = {
-				id: spec.id,
-				definitionKey: spec.definition,
-				...(loadedDefinition
-					? { definition: loadedDefinition.definition }
-					: {}),
-				enabled: spec.enabled ?? true,
-				critical,
-				priority: spec.priority ?? 0,
-				order,
-				config: spec.config ?? {},
-				match: spec.match ?? {},
-				status: spec.enabled === false ? "configured_disabled" : "active",
-				failureCount: 0,
-				lastError: null,
-				disabledReason: spec.enabled === false ? "configured disabled" : null,
-				disabledKind: spec.enabled === false ? "config" : null,
-			};
-
-			const error = this.validateInstance(base, loadedDefinition);
-			if (error) {
-				// Never fatal: a misconfigured instance is disabled and surfaced in status. A disabled
-				// CRITICAL instance makes status unhealthy and fails its matched requests closed
-				// (extension_disabled), but the gateway still boots so the admin API stays reachable to
-				// fix it (e.g. upload the missing definition), after which a reload re-activates it.
-				base.status = "runtime_disabled";
-				base.disabledReason = error.message;
-				base.disabledKind = "load";
-				base.lastError = errorView(error, "load");
-				const fields = {
-					instanceId: base.id,
-					extensionKey: base.definitionKey,
-					critical,
-					err: error,
-				};
-				if (critical) {
-					log.error(
-						"extensions",
-						"disabled invalid critical extension instance; gateway is unhealthy until fixed",
-						fields,
-					);
-				} else {
-					log.warn(
-						"extensions",
-						"disabled invalid non-critical extension instance",
-						fields,
-					);
-				}
-			}
-			instances.push(base);
-		}
-		return instances;
-	}
-
-	private validateInstance(
-		instance: LoadedInstance,
-		loadedDefinition: LoadedDefinition | undefined,
-	): Error | null {
-		if (!loadedDefinition) {
-			return new Error(
-				`Extension instance "${instance.id}" references unknown definition "${instance.definitionKey}"`,
-			);
-		}
-		try {
-			instance.match = parseWithSchema(
-				builtinMatchSchema,
-				instance.match,
-				`extension instance "${instance.id}" match`,
-			);
-			const { definition } = loadedDefinition;
-			if (definition.matchSchema) {
-				instance.match = parseWithSchema(
-					definition.matchSchema,
-					instance.match,
-					`extension instance "${instance.id}" match`,
-				) as Record<string, unknown>;
-			}
-			if (definition.configSchema) {
-				instance.config = parseWithSchema(
-					definition.configSchema,
-					instance.config,
-					`extension instance "${instance.id}" config`,
-				);
-			}
-		} catch (err) {
-			return err instanceof Error ? err : new Error(String(err));
-		}
-		return null;
-	}
-
-	private async setupDefinitions(
-		definitions: Map<string, LoadedDefinition>,
-		instances: LoadedInstance[],
-	): Promise<void> {
-		for (const loaded of definitions.values()) {
-			const activeInstances = instances.filter(
-				(instance) =>
-					instance.definitionKey === loaded.definition.key &&
-					instance.enabled &&
-					instance.status === "active",
-			);
-			if (activeInstances.length === 0 || !loaded.definition.setup) {
-				continue;
-			}
-			try {
-				await loaded.definition.setup({
-					extensionKey: loaded.definition.key,
-					log: makeLogger(loaded.definition.key),
-				});
-				loaded.setupDone = true;
-			} catch (err) {
-				// Setup failure disables the affected instances but never crashes the load: a critical
-				// one makes status unhealthy (and fails its requests closed) while the process stays up.
-				const critical = activeInstances.some((instance) => instance.critical);
-				for (const instance of activeInstances) {
-					instance.status = "runtime_disabled";
-					instance.disabledReason = `setup failed: ${schemaErrorMessage(err)}`;
-					instance.disabledKind = "setup";
-					instance.lastError = errorView(err, "setup");
-				}
-				const fields = { extensionKey: loaded.definition.key, critical, err };
-				if (critical) {
-					log.error(
-						"extensions",
-						"disabled critical extension after setup failure; gateway is unhealthy until fixed",
-						fields,
-					);
-				} else {
-					log.warn(
-						"extensions",
-						"disabled non-critical extension after setup failure",
-						fields,
-					);
-				}
-			}
-		}
-	}
-
-	private contextFor(
-		scope: ExtensionScope,
-		instance: LoadedInstance,
-	): ExtensionInstanceContext {
-		return {
-			...scope,
-			extensionKey: instance.definitionKey,
-			instanceId: instance.id,
-			critical: instance.critical,
-			config: instance.config,
-			match: instance.match,
-			log: makeLogger(instance.definitionKey, instance.id),
-		};
 	}
 
 	/**
@@ -748,37 +575,6 @@ class ExtensionRuntime {
 		return selected;
 	}
 
-	private recordSuccess(instance: LoadedInstance): void {
-		instance.failureCount = 0;
-	}
-
-	private recordFailure(
-		instance: LoadedInstance,
-		hook: ExtensionHookName,
-		err: unknown,
-	): void {
-		instance.failureCount += 1;
-		instance.lastError = errorView(err, hook);
-		log.error("extensions", "extension hook failed", {
-			extensionKey: instance.definitionKey,
-			instanceId: instance.id,
-			hook,
-			failures: instance.failureCount,
-			err,
-		});
-		if (instance.failureCount >= env.EXTENSIONS_MAX_FAILURES) {
-			instance.status = "runtime_disabled";
-			instance.disabledKind = "breaker";
-			instance.disabledReason = `${hook} failed ${instance.failureCount} consecutive time(s)`;
-			log.error("extensions", "disabled extension instance", {
-				extensionKey: instance.definitionKey,
-				instanceId: instance.id,
-				critical: instance.critical,
-				reason: instance.disabledReason,
-			});
-		}
-	}
-
 	async runCanonicalRequest<T extends ExtensionCanonicalRequest>(
 		scope: ExtensionScope,
 		request: T,
@@ -789,9 +585,10 @@ class ExtensionRuntime {
 			scope,
 		)) {
 			const hookScope = { ...scope, publicModel: current.model };
+			const input = current;
 			try {
 				const out = await withHookGuard(scope.signal, (signal) =>
-					run(this.contextFor({ ...hookScope, signal }, instance), current),
+					run(contextFor({ ...hookScope, signal }, instance), input),
 				);
 				if (out !== undefined) {
 					if (!isRecord(out)) {
@@ -799,9 +596,9 @@ class ExtensionRuntime {
 					}
 					current = out;
 				}
-				this.recordSuccess(instance);
+				recordSuccess(instance);
 			} catch (err) {
-				this.recordFailure(instance, "onCanonicalRequest", err);
+				recordFailure(instance, "onCanonicalRequest", err);
 				throw hookError(instance, "onCanonicalRequest", err);
 			}
 		}
@@ -817,9 +614,10 @@ class ExtensionRuntime {
 			"onCanonicalResponse",
 			scope,
 		)) {
+			const input = current;
 			try {
 				const out = await withHookGuard(scope.signal, (signal) =>
-					run(this.contextFor({ ...scope, signal }, instance), current),
+					run(contextFor({ ...scope, signal }, instance), input),
 				);
 				if (out !== undefined) {
 					if (!isRecord(out)) {
@@ -827,9 +625,9 @@ class ExtensionRuntime {
 					}
 					current = out;
 				}
-				this.recordSuccess(instance);
+				recordSuccess(instance);
 			} catch (err) {
-				this.recordFailure(instance, "onCanonicalResponse", err);
+				recordFailure(instance, "onCanonicalResponse", err);
 				throw hookError(instance, "onCanonicalResponse", err);
 			}
 		}
@@ -842,9 +640,10 @@ class ExtensionRuntime {
 	): Promise<T> {
 		let current: ExtensionStreamEvent = event;
 		for (const { instance, run } of this.hooksFor("onStreamEvent", scope)) {
+			const input = current;
 			try {
 				const out = await withHookGuard(scope.signal, (signal) =>
-					run(this.contextFor({ ...scope, signal }, instance), current),
+					run(contextFor({ ...scope, signal }, instance), input),
 				);
 				if (out !== undefined) {
 					if (!isRecord(out)) {
@@ -852,9 +651,9 @@ class ExtensionRuntime {
 					}
 					current = out;
 				}
-				this.recordSuccess(instance);
+				recordSuccess(instance);
 			} catch (err) {
-				this.recordFailure(instance, "onStreamEvent", err);
+				recordFailure(instance, "onStreamEvent", err);
 				throw hookError(instance, "onStreamEvent", err);
 			}
 		}
@@ -867,18 +666,19 @@ class ExtensionRuntime {
 	): Promise<ExtensionImageOutput> {
 		let current = output;
 		for (const { instance, run } of this.hooksFor("onImageOutput", scope)) {
+			const input = current;
 			try {
 				const out = await withHookGuard(scope.signal, (signal) =>
-					run(this.contextFor({ ...scope, signal }, instance), current),
+					run(contextFor({ ...scope, signal }, instance), input),
 				);
 				if (out instanceof Uint8Array) {
 					current = { ...current, data: out };
 				} else if (out !== undefined) {
 					current = validateImageOutput(out);
 				}
-				this.recordSuccess(instance);
+				recordSuccess(instance);
 			} catch (err) {
-				this.recordFailure(instance, "onImageOutput", err);
+				recordFailure(instance, "onImageOutput", err);
 				throw hookError(instance, "onImageOutput", err);
 			}
 		}
@@ -889,7 +689,7 @@ class ExtensionRuntime {
 		for (const { instance, run } of this.hooksFor("onError", scope)) {
 			try {
 				await withHookGuard(scope.signal, (signal) =>
-					run(this.contextFor({ ...scope, signal }, instance), error),
+					run(contextFor({ ...scope, signal }, instance), error),
 				);
 			} catch (err) {
 				// onError is a fire-and-forget observability hook: a failure here is recorded for
@@ -983,6 +783,208 @@ class ExtensionRuntime {
 			instanceId: instance.id,
 		});
 		return { found: true, reset: true };
+	}
+}
+
+function buildInstances(
+	specs: ManifestInstanceSpec[],
+	definitions: Map<string, LoadedDefinition>,
+): LoadedInstance[] {
+	const seen = new Set<string>();
+	const instances: LoadedInstance[] = [];
+	for (const [order, spec] of specs.entries()) {
+		// Duplicate ids can only come from a corrupt source (the DB enforces a PK); skip the dupe
+		// rather than abort the whole load.
+		if (seen.has(spec.id)) {
+			log.error("extensions", "skipped duplicate extension instance id", {
+				instanceId: spec.id,
+			});
+			continue;
+		}
+		seen.add(spec.id);
+
+		const loadedDefinition = definitions.get(spec.definition);
+		const critical =
+			spec.critical ?? loadedDefinition?.definition.defaultCritical ?? true;
+		const base: LoadedInstance = {
+			id: spec.id,
+			definitionKey: spec.definition,
+			...(loadedDefinition ? { definition: loadedDefinition.definition } : {}),
+			enabled: spec.enabled ?? true,
+			critical,
+			priority: spec.priority ?? 0,
+			order,
+			config: spec.config ?? {},
+			match: spec.match ?? {},
+			status: spec.enabled === false ? "configured_disabled" : "active",
+			failureCount: 0,
+			lastError: null,
+			disabledReason: spec.enabled === false ? "configured disabled" : null,
+			disabledKind: spec.enabled === false ? "config" : null,
+		};
+
+		const error = validateInstance(base, loadedDefinition);
+		if (error) {
+			// Never fatal: a misconfigured instance is disabled and surfaced in status. A disabled
+			// CRITICAL instance makes status unhealthy and fails its matched requests closed
+			// (extension_disabled), but the gateway still boots so the admin API stays reachable to
+			// fix it (e.g. upload the missing definition), after which a reload re-activates it.
+			base.status = "runtime_disabled";
+			base.disabledReason = error.message;
+			base.disabledKind = "load";
+			base.lastError = errorView(error, "load");
+			const fields = {
+				instanceId: base.id,
+				extensionKey: base.definitionKey,
+				critical,
+				err: error,
+			};
+			if (critical) {
+				log.error(
+					"extensions",
+					"disabled invalid critical extension instance; gateway is unhealthy until fixed",
+					fields,
+				);
+			} else {
+				log.warn(
+					"extensions",
+					"disabled invalid non-critical extension instance",
+					fields,
+				);
+			}
+		}
+		instances.push(base);
+	}
+	return instances;
+}
+
+function validateInstance(
+	instance: LoadedInstance,
+	loadedDefinition: LoadedDefinition | undefined,
+): Error | null {
+	if (!loadedDefinition) {
+		return new Error(
+			`Extension instance "${instance.id}" references unknown definition "${instance.definitionKey}"`,
+		);
+	}
+	try {
+		instance.match = parseWithSchema(
+			builtinMatchSchema,
+			instance.match,
+			`extension instance "${instance.id}" match`,
+		);
+		const { definition } = loadedDefinition;
+		if (definition.matchSchema) {
+			instance.match = parseWithSchema(
+				definition.matchSchema,
+				instance.match,
+				`extension instance "${instance.id}" match`,
+			) as Record<string, unknown>;
+		}
+		if (definition.configSchema) {
+			instance.config = parseWithSchema(
+				definition.configSchema,
+				instance.config,
+				`extension instance "${instance.id}" config`,
+			);
+		}
+	} catch (err) {
+		return err instanceof Error ? err : new Error(String(err));
+	}
+	return null;
+}
+
+async function setupDefinitions(
+	definitions: Map<string, LoadedDefinition>,
+	instances: LoadedInstance[],
+): Promise<void> {
+	for (const loaded of definitions.values()) {
+		const activeInstances = instances.filter(
+			(instance) =>
+				instance.definitionKey === loaded.definition.key &&
+				instance.enabled &&
+				instance.status === "active",
+		);
+		if (activeInstances.length === 0 || !loaded.definition.setup) {
+			continue;
+		}
+		try {
+			await loaded.definition.setup({
+				extensionKey: loaded.definition.key,
+				log: makeLogger(loaded.definition.key),
+			});
+			loaded.setupDone = true;
+		} catch (err) {
+			// Setup failure disables the affected instances but never crashes the load: a critical
+			// one makes status unhealthy (and fails its requests closed) while the process stays up.
+			const critical = activeInstances.some((instance) => instance.critical);
+			for (const instance of activeInstances) {
+				instance.status = "runtime_disabled";
+				instance.disabledReason = `setup failed: ${schemaErrorMessage(err)}`;
+				instance.disabledKind = "setup";
+				instance.lastError = errorView(err, "setup");
+			}
+			const fields = { extensionKey: loaded.definition.key, critical, err };
+			if (critical) {
+				log.error(
+					"extensions",
+					"disabled critical extension after setup failure; gateway is unhealthy until fixed",
+					fields,
+				);
+			} else {
+				log.warn(
+					"extensions",
+					"disabled non-critical extension after setup failure",
+					fields,
+				);
+			}
+		}
+	}
+}
+
+function contextFor(
+	scope: ExtensionScope,
+	instance: LoadedInstance,
+): ExtensionInstanceContext {
+	return {
+		...scope,
+		extensionKey: instance.definitionKey,
+		instanceId: instance.id,
+		critical: instance.critical,
+		config: instance.config,
+		match: instance.match,
+		log: makeLogger(instance.definitionKey, instance.id),
+	};
+}
+
+function recordSuccess(instance: LoadedInstance): void {
+	instance.failureCount = 0;
+}
+
+function recordFailure(
+	instance: LoadedInstance,
+	hook: ExtensionHookName,
+	err: unknown,
+): void {
+	instance.failureCount += 1;
+	instance.lastError = errorView(err, hook);
+	log.error("extensions", "extension hook failed", {
+		extensionKey: instance.definitionKey,
+		instanceId: instance.id,
+		hook,
+		failures: instance.failureCount,
+		err,
+	});
+	if (instance.failureCount >= env.EXTENSIONS_MAX_FAILURES) {
+		instance.status = "runtime_disabled";
+		instance.disabledKind = "breaker";
+		instance.disabledReason = `${hook} failed ${instance.failureCount} consecutive time(s)`;
+		log.error("extensions", "disabled extension instance", {
+			extensionKey: instance.definitionKey,
+			instanceId: instance.id,
+			critical: instance.critical,
+			reason: instance.disabledReason,
+		});
 	}
 }
 

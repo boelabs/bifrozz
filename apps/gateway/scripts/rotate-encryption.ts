@@ -1,6 +1,6 @@
 import { IDEMPOTENCY_PURPOSE } from "#db/repos/idempotency.ts";
-import { closeDb, db } from "#db/client.ts";
 import { and, eq, isNotNull, sql } from "drizzle-orm";
+import { closeDb, db } from "#db/client.ts";
 
 import {
 	activeEncryptionKeyId,

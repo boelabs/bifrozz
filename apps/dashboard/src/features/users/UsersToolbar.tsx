@@ -50,7 +50,7 @@ export function UsersToolbar({
 		<div aria-hidden="true" inert>
 			<ListToolbar
 				controls={
-					<GhostSkeleton className="min-w-0 @min-[40rem]:flex-none flex-1">
+					<GhostSkeleton className="min-w-0 flex-1 @min-[40rem]:flex-none">
 						{search}
 					</GhostSkeleton>
 				}

@@ -147,7 +147,7 @@ function parseRange(raw: string | undefined): ObjectRange | undefined {
 	if (!raw) {
 		return undefined;
 	}
-	const match = /^bytes=(\d*)-(\d*)$/.exec(raw.trim());
+	const match = /^bytes=(\d*)-(\d*)$/u.exec(raw.trim());
 	if (!(match && (match[1] || match[2]))) {
 		throw invalidRange();
 	}

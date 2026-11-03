@@ -29,7 +29,7 @@ export function StatCard({
 		<Frame className="min-w-0">
 			<FramePanel className="flex flex-1 flex-col gap-2 p-4">
 				<div className="flex items-start justify-between gap-2">
-					<h2 className="text-muted-foreground text-xs">{label}</h2>
+					<h2 className="text-xs text-muted-foreground">{label}</h2>
 					{Icon ? (
 						<Icon
 							aria-hidden
@@ -38,13 +38,13 @@ export function StatCard({
 					) : null}
 				</div>
 				<p
-					className="font-semibold text-2xl text-foreground tabular-nums"
+					className="text-2xl font-semibold text-foreground tabular-nums"
 					title={exact}
 				>
 					{value}
 				</p>
 			</FramePanel>
-			<FrameFooter className="flex min-w-0 items-center gap-2 px-3 pt-2 pb-1.5 text-muted-foreground text-xs">
+			<FrameFooter className="flex min-w-0 items-center gap-2 px-3 pt-2 pb-1.5 text-xs text-muted-foreground">
 				{note ? (
 					<Status
 						className="shrink-0"

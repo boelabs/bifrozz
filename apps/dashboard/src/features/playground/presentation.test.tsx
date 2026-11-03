@@ -80,17 +80,17 @@ test("pending response reserves disabled actions and places the loader inside th
 			}}
 		/>,
 	);
-	assert.match(html, /Generating response/);
+	assert.match(html, /Generating response/u);
 	assert.match(
 		html,
-		/<button(?=[^>]*aria-label="Regenerate response")(?=[^>]*disabled)[^>]*>/,
+		/<button(?=[^>]*aria-label="Regenerate response")(?=[^>]*disabled)[^>]*>/u,
 	);
 	assert.match(
 		html,
-		/<article aria-label="Assistant message"[^>]*><div(?=[^>]*role="status")[^>]*>/,
+		/<article aria-label="Assistant message"[^>]*><div(?=[^>]*role="status")[^>]*>/u,
 	);
-	assert.equal((html.match(/aria-label="Copy message"/g) ?? []).length, 2);
-	assert.equal((html.match(/aria-label="Copy response"/g) ?? []).length, 2);
+	assert.equal((html.match(/aria-label="Copy message"/gu) ?? []).length, 2);
+	assert.equal((html.match(/aria-label="Copy response"/gu) ?? []).length, 2);
 });
 
 test("every settled answer can be regenerated and metrics are accessed through an info dialog", () => {
@@ -115,18 +115,18 @@ test("every settled answer can be regenerated and metrics are accessed through a
 		/>,
 	);
 	assert.equal(
-		(html.match(/aria-label="Regenerate response"/g) ?? []).length,
+		(html.match(/aria-label="Regenerate response"/gu) ?? []).length,
 		2,
 	);
-	assert.match(html, /Response details/);
-	assert.doesNotMatch(html, /Output tokens/);
-	assert.doesNotMatch(html, /<summary[^>]*>Response details/);
+	assert.match(html, /Response details/u);
+	assert.doesNotMatch(html, /Output tokens/u);
+	assert.doesNotMatch(html, /<summary[^>]*>Response details/u);
 	const details = renderToStaticMarkup(
 		<Metrics metrics={{ outputTokens: 15 }} />,
 	);
-	assert.match(details, /Output tokens/);
-	assert.match(details, />15</);
-	assert.doesNotMatch(html, /Generating response/);
+	assert.match(details, /Output tokens/u);
+	assert.match(details, />15</u);
+	assert.doesNotMatch(html, /Generating response/u);
 });
 
 for (const busy of [true, false]) {
@@ -152,7 +152,7 @@ for (const busy of [true, false]) {
 				}}
 			/>,
 		);
-		assert.match(html, /Partial/);
+		assert.match(html, /Partial/u);
 		for (const label of [
 			"Copy response",
 			"Regenerate response",
@@ -162,10 +162,11 @@ for (const busy of [true, false]) {
 				html,
 				new RegExp(
 					`<button(?=[^>]*aria-label="${label}")(?=[^>]*disabled)[^>]*>`,
+					"u",
 				),
 			);
 		}
-		assert.match(html, /pointer-events-none/);
+		assert.match(html, /pointer-events-none/u);
 	});
 }
 
@@ -189,7 +190,7 @@ test("active responses without metadata reserve actions while earlier answers st
 			}}
 		/>,
 	);
-	assert.equal((html.match(/aria-label="Copy response"/g) ?? []).length, 2);
+	assert.equal((html.match(/aria-label="Copy response"/gu) ?? []).length, 2);
 });
 
 for (const state of ["completed", "stopped", "failed"] as const) {
@@ -213,9 +214,9 @@ for (const state of ["completed", "stopped", "failed"] as const) {
 				}}
 			/>,
 		);
-		assert.match(html, /Copy response/);
-		assert.match(html, /Regenerate response/);
-		assert.match(html, /Response details/);
+		assert.match(html, /Copy response/u);
+		assert.match(html, /Regenerate response/u);
+		assert.match(html, /Response details/u);
 	});
 }
 
@@ -224,20 +225,20 @@ test("Streamdown renders GFM, fenced code and math", () => {
 		"# Heading\n\n**Bold** and ~~removed~~\n\n| Column |\n| --- |\n| Value |\n\n- [x] Task\n\n" +
 		"```ts\nconst value = 1;\n```\n\n$$\nx^2\n$$";
 	const html = renderToStaticMarkup(<Markdown text={text} />);
-	assert.match(html, /<h1/);
-	assert.match(html, /data-streamdown="strong"[^>]*>Bold/);
-	assert.match(html, /<del[^>]*>removed/);
-	assert.match(html, /<table/);
-	assert.match(html, /type="checkbox"/);
-	assert.match(html, /data-language="ts"/);
-	assert.match(html, /class="katex"/);
+	assert.match(html, /<h1/u);
+	assert.match(html, /data-streamdown="strong"[^>]*>Bold/u);
+	assert.match(html, /<del[^>]*>removed/u);
+	assert.match(html, /<table/u);
+	assert.match(html, /type="checkbox"/u);
+	assert.match(html, /data-language="ts"/u);
+	assert.match(html, /class="katex"/u);
 });
 
 test("streaming repairs unfinished emphasis and reasoning uses Markdown", () => {
 	const html = renderToStaticMarkup(
 		<Markdown streaming text="An **unfinished" />,
 	);
-	assert.match(html, /data-streamdown="strong"/);
+	assert.match(html, /data-streamdown="strong"/u);
 	const reasoning = renderToStaticMarkup(
 		<Conversation
 			busy={false}
@@ -256,7 +257,7 @@ test("streaming repairs unfinished emphasis and reasoning uses Markdown", () => 
 			}}
 		/>,
 	);
-	assert.match(reasoning, /data-streamdown="strong"[^>]*>Reasoning/);
+	assert.match(reasoning, /data-streamdown="strong"[^>]*>Reasoning/u);
 });
 
 test("complete Markdown keeps identical layout during streaming and after completion", () => {
@@ -265,9 +266,9 @@ test("complete Markdown keeps identical layout during streaming and after comple
 	const active = renderToStaticMarkup(<Markdown streaming text={text} />);
 	const completed = renderToStaticMarkup(<Markdown text={text} />);
 	assert.equal(active, completed);
-	assert.doesNotMatch(active, /display:contents|data-sd-animate/);
+	assert.doesNotMatch(active, /display:contents|data-sd-animate/u);
 	assert.equal(
-		(active.match(/class="playground-markdown-block min-w-0"/g) ?? []).length,
+		(active.match(/class="playground-markdown-block min-w-0"/gu) ?? []).length,
 		4,
 	);
 });
@@ -293,14 +294,14 @@ test("an empty assistant uses one loader in its content slot", () => {
 			}}
 		/>,
 	);
-	assert.equal((html.match(/role="status"/g) ?? []).length, 1);
+	assert.equal((html.match(/role="status"/gu) ?? []).length, 1);
 	assert.equal(
-		(html.match(/class="playground-dotmatrix-dot"/g) ?? []).length,
+		(html.match(/class="playground-dotmatrix-dot"/gu) ?? []).length,
 		25,
 	);
 	assert.match(
 		html,
-		/<article aria-label="Assistant message"[^>]*><div(?=[^>]*role="status")[^>]*>/,
+		/<article aria-label="Assistant message"[^>]*><div(?=[^>]*role="status")[^>]*>/u,
 	);
 });
 
@@ -324,12 +325,12 @@ test("reasoning starts visibly before text arrives and replaces the generic load
 			}}
 		/>,
 	);
-	assert.match(html, /Thinking/);
-	assert.match(html, /Thinking\.\.\./);
-	assert.doesNotMatch(html, />Ready</);
-	assert.doesNotMatch(html, /The model did not return reasoning text/);
-	assert.match(html, /aria-expanded="true"/);
-	assert.doesNotMatch(html, /playground-dotmatrix/);
+	assert.match(html, /Thinking/u);
+	assert.match(html, /Thinking\.\.\./u);
+	assert.doesNotMatch(html, />Ready</u);
+	assert.doesNotMatch(html, /The model did not return reasoning text/u);
+	assert.match(html, /aria-expanded="true"/u);
+	assert.doesNotMatch(html, /playground-dotmatrix/u);
 });
 
 test("historical reasoning is collapsible and interrupted reasoning is not marked active", () => {
@@ -359,10 +360,10 @@ test("historical reasoning is collapsible and interrupted reasoning is not marke
 			}}
 		/>,
 	);
-	assert.match(html, /Reasoning interrupted/);
-	assert.doesNotMatch(html, />Ready</);
-	assert.match(html, /aria-expanded="false"/);
-	assert.doesNotMatch(html, />Thinking</);
+	assert.match(html, /Reasoning interrupted/u);
+	assert.doesNotMatch(html, />Ready</u);
+	assert.match(html, /aria-expanded="false"/u);
+	assert.doesNotMatch(html, />Thinking</u);
 });
 
 test("chain of thought groups reasoning across SDK step boundaries but separates answers", () => {
@@ -392,9 +393,9 @@ test("chain of thought groups reasoning across SDK step boundaries but separates
 			}}
 		/>,
 	);
-	assert.equal((html.match(/aria-label="Toggle reasoning"/g) ?? []).length, 2);
-	assert.equal((html.match(/data-chain-step="complete"/g) ?? []).length, 5);
-	assert.doesNotMatch(html, /Reasoning 1|Reasoning 2|2 steps/);
+	assert.equal((html.match(/aria-label="Toggle reasoning"/gu) ?? []).length, 2);
+	assert.equal((html.match(/data-chain-step="complete"/gu) ?? []).length, 5);
+	assert.doesNotMatch(html, /Reasoning 1|Reasoning 2|2 steps/u);
 	assert.ok(html.indexOf("Second thought") < html.indexOf("First answer"));
 	assert.ok(html.indexOf("First answer") < html.indexOf("Third thought"));
 });
@@ -422,14 +423,14 @@ test("empty reasoning blocks retain visual feedback without numbered labels", ()
 			}}
 		/>,
 	);
-	assert.match(html, /Toggle reasoning/);
+	assert.match(html, /Toggle reasoning/u);
 	assert.equal(
-		(html.match(/The model did not return reasoning text\./g) ?? []).length,
+		(html.match(/The model did not return reasoning text\./gu) ?? []).length,
 		2,
 	);
-	assert.equal((html.match(/data-chain-step="complete"/g) ?? []).length, 3);
-	assert.doesNotMatch(html, /Reasoning [0-9]/);
-	assert.match(html, /Answer/);
+	assert.equal((html.match(/data-chain-step="complete"/gu) ?? []).length, 3);
+	assert.doesNotMatch(html, /Reasoning [0-9]/u);
+	assert.match(html, /Answer/u);
 });
 
 test("reasoning ends with a ready step and collapses once the answer starts", () => {
@@ -459,15 +460,15 @@ test("reasoning ends with a ready step and collapses once the answer starts", ()
 			}}
 		/>,
 	);
-	assert.match(html, />Ready</);
-	assert.match(html, /aria-expanded="false"/);
-	assert.match(html, /lucide-circle-check/);
+	assert.match(html, />Ready</u);
+	assert.match(html, /aria-expanded="false"/u);
+	assert.match(html, /lucide-circle-check/u);
 	const header = html.match(
-		/<button[^>]*aria-label="Toggle reasoning"[^>]*>.*?<\/button>/,
+		/<button[^>]*aria-label="Toggle reasoning"[^>]*>.*?<\/button>/u,
 	)?.[0];
 	assert.ok(header);
-	assert.match(header, />Reasoning</);
-	assert.doesNotMatch(header, /Ready|lucide-circle-check/);
+	assert.match(header, />Reasoning</u);
+	assert.doesNotMatch(header, /Ready|lucide-circle-check/u);
 	assert.ok(html.indexOf("Considered the options.") < html.indexOf(">Ready<"));
 	assert.ok(html.indexOf(">Ready<") < html.indexOf(">Answer<"));
 });
@@ -492,11 +493,11 @@ test("a failed response is reported inside its own turn, above its regenerate bu
 	);
 	const alert = html.indexOf('role="alert"');
 	assert.notEqual(alert, -1);
-	assert.match(html, /Failed to construct &#x27;URL&#x27;: Invalid URL/);
+	assert.match(html, /Failed to construct &#x27;URL&#x27;: Invalid URL/u);
 	// Inside the assistant article, and before the actions that retry it.
 	assert.ok(alert > html.indexOf('aria-label="Assistant message"'));
 	assert.ok(alert < html.indexOf('aria-label="Regenerate response"'));
-	assert.doesNotMatch(html, /disabled[^>]*aria-label="Regenerate response"/);
+	assert.doesNotMatch(html, /disabled[^>]*aria-label="Regenerate response"/u);
 });
 
 test("a failure that left no turn behind still reports itself in the transcript", () => {
@@ -513,8 +514,8 @@ test("a failure that left no turn behind still reports itself in the transcript"
 			}}
 		/>,
 	);
-	assert.equal((html.match(/role="alert"/g) ?? []).length, 1);
-	assert.match(html, /The inference request failed\./);
+	assert.equal((html.match(/role="alert"/gu) ?? []).length, 1);
+	assert.match(html, /The inference request failed\./u);
 });
 
 test("the model picker names the current model and is reachable as a labelled control", () => {
@@ -539,10 +540,10 @@ test("the model picker names the current model and is reachable as a labelled co
 			}}
 		/>,
 	);
-	assert.match(html, /aria-label="Model"/);
-	assert.match(html, /gpt-5/);
+	assert.match(html, /aria-label="Model"/u);
+	assert.match(html, /gpt-5/u);
 	// The list lives in a portal, so the closed trigger must not leak the other names.
-	assert.doesNotMatch(html, /claude-opus-5/);
+	assert.doesNotMatch(html, /claude-opus-5/u);
 });
 
 const videoRun: VideoRun = {
@@ -566,9 +567,9 @@ test("a queued job waits behind the same loader as every other capability", () =
 			run={videoRun}
 		/>,
 	);
-	assert.match(html, /Queued/);
-	assert.doesNotMatch(html, /<video/);
-	assert.match(html, /disabled[^>]*aria-label="Generate again"/);
+	assert.match(html, /Queued/u);
+	assert.doesNotMatch(html, /<video/u);
+	assert.match(html, /disabled[^>]*aria-label="Generate again"/u);
 });
 
 test("reported progress becomes a bar, and an unreported one does not", () => {
@@ -586,8 +587,8 @@ test("reported progress becomes a bar, and an unreported one does not", () => {
 			}}
 		/>,
 	);
-	assert.match(withProgress, /aria-valuenow="42"/);
-	assert.match(withProgress, /Generating/);
+	assert.match(withProgress, /aria-valuenow="42"/u);
+	assert.match(withProgress, /Generating/u);
 	const without = renderToStaticMarkup(
 		<VideoRunView
 			onCheck={() => {
@@ -599,7 +600,7 @@ test("reported progress becomes a bar, and an unreported one does not", () => {
 			run={{ ...videoRun, job: { id: "video_1", status: "in_progress" } }}
 		/>,
 	);
-	assert.doesNotMatch(without, /aria-valuenow/);
+	assert.doesNotMatch(without, /aria-valuenow/u);
 });
 
 test("a finished video plays from the relay rather than from a blob", () => {
@@ -621,11 +622,11 @@ test("a finished video plays from the relay rather than from a blob", () => {
 	);
 	assert.match(
 		html,
-		/src="\/api\/v1\/videos\/video_1\/content\?variant=video"/,
+		/src="\/api\/v1\/videos\/video_1\/content\?variant=video"/u,
 	);
-	assert.match(html, /aria-label="Download video"/);
-	assert.match(html, /sora-2 · 8s · 16:9 · 94\.0s/);
-	assert.doesNotMatch(html, /aria-label="Check this job again"/);
+	assert.match(html, /aria-label="Download video"/u);
+	assert.match(html, /sora-2 · 8s · 16:9 · 94\.0s/u);
+	assert.doesNotMatch(html, /aria-label="Check this job again"/u);
 });
 
 test("a stopped run keeps its job, and says the provider has not stopped with it", () => {
@@ -644,9 +645,9 @@ test("a stopped run keeps its job, and says the provider has not stopped with it
 			}}
 		/>,
 	);
-	assert.match(html, /Stopped watching/);
-	assert.match(html, /may still be running on the provider/);
-	assert.match(html, /aria-label="Check this job again"/);
+	assert.match(html, /Stopped watching/u);
+	assert.match(html, /may still be running on the provider/u);
+	assert.match(html, /aria-label="Check this job again"/u);
 });
 
 test("a failed job reports what the gateway said, and offers no player", () => {
@@ -666,7 +667,7 @@ test("a failed job reports what the gateway said, and offers no player", () => {
 			}}
 		/>,
 	);
-	assert.match(html, /role="alert"/);
-	assert.match(html, /The provider rejected the prompt\./);
-	assert.doesNotMatch(html, /<video/);
+	assert.match(html, /role="alert"/u);
+	assert.match(html, /The provider rejected the prompt\./u);
+	assert.doesNotMatch(html, /<video/u);
 });

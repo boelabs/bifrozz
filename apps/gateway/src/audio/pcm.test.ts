@@ -1,10 +1,11 @@
+import assert from "node:assert/strict";
+import { test } from "node:test";
+
 import {
 	createAudioOutputEncoder,
 	createAudioInputDecoder,
 	createPcmResampler,
 } from "./pcm.ts";
-import assert from "node:assert/strict";
-import { test } from "node:test";
 
 function sine(rate: number, seconds: number, hz = 440): Buffer {
 	const samples = Math.round(rate * seconds);

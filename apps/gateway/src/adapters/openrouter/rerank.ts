@@ -26,7 +26,7 @@ export function makeOpenRouterRerankHandler(
 				ctx.credentials,
 				"OpenRouter adapter",
 			);
-			const base = (credentials.baseUrl ?? defaultBaseUrl).replace(/\/+$/, "");
+			const base = (credentials.baseUrl ?? defaultBaseUrl).replace(/\/+$/u, "");
 			return {
 				method: "POST",
 				url: `${base}/rerank`,

@@ -13,12 +13,6 @@ import { GatewayError } from "#core/errors.ts";
 import assert from "node:assert/strict";
 import { test } from "node:test";
 
-interface TestJsonObject extends Record<string, unknown> {
-	content: [TestJsonObject, ...TestJsonObject[]];
-	output: TestJsonObject[];
-	usage: TestJsonObject;
-}
-
 import {
 	canonicalChunksToResponsesEvents,
 	canonicalToResponsesResponse,
@@ -36,6 +30,12 @@ import {
 	canonicalToMessagesResponse,
 	messagesRequestToCanonical,
 } from "#contracts/anthropic/messagesRender.ts";
+
+interface TestJsonObject extends Record<string, unknown> {
+	content: [TestJsonObject, ...TestJsonObject[]];
+	output: TestJsonObject[];
+	usage: TestJsonObject;
+}
 
 /**
  * INTEGRATION tests for the pipeline, hermetic (no DB/Redis/real network): they stub `fetch`

@@ -98,7 +98,7 @@ test("a Gemini thinkingLevel ladder only declares levels Gemini accepts", () => 
 			withLevels({ levels: ["low", "high", level] });
 			assert.throws(
 				() => loadCatalogDocument(url),
-				/not a Gemini thinkingLevel/,
+				/not a Gemini thinkingLevel/u,
 			);
 		}
 		withLevels({

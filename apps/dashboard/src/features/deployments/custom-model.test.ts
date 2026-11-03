@@ -39,7 +39,7 @@ test("guided templates cover every operation without enabling speculative text c
 	assert.deepEqual(initialCustomEntry(["embedding.create"]), {
 		operations: { "embedding.create": {} },
 	});
-	assert.throws(() => operationTemplate("unknown"), /Unsupported operation/);
+	assert.throws(() => operationTemplate("unknown"), /Unsupported operation/u);
 });
 
 test("technical round trips and guided edits preserve advanced properties", () => {
@@ -85,8 +85,8 @@ test("malformed technical configuration fails explicitly", () => {
 	]) {
 		assert.throws(() => parseCustomEntry(text));
 	}
-	assert.throws(() => parseCustomEntry("{"), /not valid JSON/);
-	assert.throws(() => parseObject("[]", "Metadata"), /must be a JSON object/);
+	assert.throws(() => parseCustomEntry("{"), /not valid JSON/u);
+	assert.throws(() => parseObject("[]", "Metadata"), /must be a JSON object/u);
 	assert.equal(parseObject(" ", "Metadata"), undefined);
 });
 

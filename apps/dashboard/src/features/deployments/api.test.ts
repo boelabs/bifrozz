@@ -55,10 +55,10 @@ test("failed validation prevents both creation and updates", async () => {
 	const patch = mock.method(api, "PATCH", async () => {
 		throw new Error("Must not save");
 	});
-	await assert.rejects(saveDeployment(body), /Invalid configuration/);
+	await assert.rejects(saveDeployment(body), /Invalid configuration/u);
 	await assert.rejects(
 		saveDeployment(body, "existing"),
-		/Invalid configuration/,
+		/Invalid configuration/u,
 	);
 	assert.equal(post.mock.callCount(), 2);
 	assert.equal(patch.mock.callCount(), 0);
@@ -139,7 +139,7 @@ test("save failures propagate after successful validation", async () => {
 					response: new Response(null, { status: 500 }),
 				},
 	);
-	await assert.rejects(saveDeployment(body), /Could not create/);
+	await assert.rejects(saveDeployment(body), /Could not create/u);
 });
 
 test("editing sends explicit resets for omitted configuration after validating the same effective body", async () => {

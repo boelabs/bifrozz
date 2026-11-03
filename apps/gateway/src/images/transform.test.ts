@@ -53,7 +53,7 @@ test("image transform: rejects different upstream size without resizing", async 
 				size: "20x20",
 			},
 		),
-		/expected 20x20/,
+		/expected 20x20/u,
 	);
 });
 
@@ -102,7 +102,7 @@ test("image transform: strips upstream metadata without stamping gateway brandin
 			assert.equal(metadata.height, 6);
 			assert.doesNotMatch(
 				brandedMetadata,
-				/Google|Gemini|Vendor Artist|C2PA|Bifrozz|Boelabs/i,
+				/Google|Gemini|Vendor Artist|C2PA|Bifrozz|Boelabs/iu,
 			);
 		}
 	}

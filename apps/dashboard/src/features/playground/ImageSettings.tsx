@@ -148,7 +148,7 @@ export function ImageSettingsDialog({
 						>
 							<NumberField.ScrubArea>
 								<label
-									className="font-medium text-sm"
+									className="text-sm font-medium"
 									htmlFor="playground-image-n"
 								>
 									Images per run
@@ -174,7 +174,7 @@ export function ImageSettingsDialog({
 						>
 							<NumberField.ScrubArea>
 								<label
-									className="font-medium text-sm"
+									className="text-sm font-medium"
 									htmlFor="playground-image-compression"
 								>
 									Compression
@@ -188,7 +188,7 @@ export function ImageSettingsDialog({
 								/>
 								<NumberField.Increment aria-label="More compression" />
 							</NumberField.Group>
-							<p className="text-fg-muted text-xs">
+							<p className="text-xs text-fg-muted">
 								JPEG and WebP only, 0-100.
 							</p>
 						</NumberField.Root>

@@ -108,25 +108,25 @@ export function Metrics({ metrics }: { metrics: ResponseMetrics }) {
 				<Metric label="Reasoning tokens" value={metrics.reasoningTokens} />
 				<Metric label="Cached input" value={metrics.cachedInputTokens} />
 			</dl>
-			<p className="text-fg-muted text-xs leading-5">
+			<p className="text-xs leading-5 text-fg-muted">
 				Text speed excludes the initial wait, reported reasoning tokens and the
 				final stream closure. It is estimated between the first and last text
 				chunks; buffered delivery can distort it. Request average includes the
 				entire request and all output tokens.
 			</p>
 			{metrics.outputTokensPerSecond === undefined ? (
-				<p className="text-fg-muted text-xs">
+				<p className="text-xs text-fg-muted">
 					Text speed needs multiple timed text chunks and sufficient token usage
 					details.
 				</p>
 			) : null}
 			{metrics.finishReason ? (
-				<p className="text-fg-muted text-xs">
+				<p className="text-xs text-fg-muted">
 					Finish reason: {metrics.finishReason}
 				</p>
 			) : null}
 			{metrics.warnings?.map((warning) => (
-				<p className="wrap-break-word text-warning text-xs" key={warning}>
+				<p className="text-xs wrap-break-word text-warning" key={warning}>
 					{warning}
 				</p>
 			))}{" "}

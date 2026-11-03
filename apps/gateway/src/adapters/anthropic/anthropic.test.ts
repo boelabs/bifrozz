@@ -768,7 +768,7 @@ test("anthropic.buildRequest: extraBody does not overwrite managed fields", () =
 				{ ...req, extraBody: { output_config: { effort: "low" } } },
 				adaptiveCtx,
 			),
-		/extra_body.output_config/,
+		/extra_body.output_config/u,
 	);
 });
 

@@ -42,7 +42,7 @@ export function Pagination({
 			aria-label={`${label} pages`}
 			className="flex flex-wrap items-center justify-between gap-3 pt-4"
 		>
-			<p className="text-fg-muted text-xs tabular-nums">
+			<p className="text-xs text-fg-muted tabular-nums">
 				{count.format(first)}–{count.format(last)} of {count.format(total)}{" "}
 				{label}
 			</p>

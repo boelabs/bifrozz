@@ -1,7 +1,3 @@
-import type {
-	CanonicalRealtimeConversationConfig,
-	CanonicalRealtimeConversationEvent,
-} from "#core/realtime.ts";
 import { realtimeConversationProfileFor } from "#catalog/types.ts";
 import { resolveModelMetadata } from "#catalog/index.ts";
 import { type WebSocket, WebSocketServer } from "ws";
@@ -13,12 +9,17 @@ import { test } from "node:test";
 
 import {
 	parseGeminiConversationMessage,
-	ConversationHistory,
-	pcmLevel,
 	geminiConversationSetup,
 	geminiFunctionResponse,
+	ConversationHistory,
 	geminiClientContent,
+	pcmLevel,
 } from "./liveConversation.ts";
+
+import type {
+	CanonicalRealtimeConversationConfig,
+	CanonicalRealtimeConversationEvent,
+} from "#core/realtime.ts";
 
 const MODEL = "gemini-3.8-live";
 

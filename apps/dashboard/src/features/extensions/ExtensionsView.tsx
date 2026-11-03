@@ -262,7 +262,7 @@ export function ExtensionsView({
 			key: "size",
 			header: "Size",
 			render: (row) => (
-				<span className="text-fg-muted text-xs">{row.sizeBytes} B</span>
+				<span className="text-xs text-fg-muted">{row.sizeBytes} B</span>
 			),
 		},
 		{
@@ -270,7 +270,7 @@ export function ExtensionsView({
 			header: "Uploaded by",
 			render: (row) =>
 				row.uploadedBy ? (
-					<span className="text-fg-muted text-xs">{row.uploadedBy}</span>
+					<span className="text-xs text-fg-muted">{row.uploadedBy}</span>
 				) : (
 					<Dash />
 				),
@@ -319,7 +319,7 @@ export function ExtensionsView({
 					<div className="flex flex-col">
 						<span className="font-medium">{row.id}</span>
 						{live?.hooks.length ? (
-							<span className="text-fg-muted text-xs">
+							<span className="text-xs text-fg-muted">
 								{live.hooks.join(", ")}
 							</span>
 						) : null}
@@ -347,12 +347,12 @@ export function ExtensionsView({
 							{live.critical ? <Status tone="warning">critical</Status> : null}
 						</div>
 						{live.disabledReason ? (
-							<span className="text-fg-muted text-xs">
+							<span className="text-xs text-fg-muted">
 								{live.disabledReason}
 							</span>
 						) : null}
 						{live.lastError ? (
-							<span className="text-danger text-xs">{live.lastError}</span>
+							<span className="text-xs text-danger">{live.lastError}</span>
 						) : null}
 					</div>
 				);
@@ -516,7 +516,7 @@ export function ExtensionsView({
 							/>
 							{versionsOf ? (
 								<div className="pt-4">
-									<h3 className="pb-2 font-medium text-fg text-sm">
+									<h3 className="pb-2 text-sm font-medium text-fg">
 										Versions of {versionsOf}
 									</h3>
 									<ul className="flex flex-col gap-1">
@@ -533,7 +533,7 @@ export function ExtensionsView({
 												>
 													{version.status}
 												</Status>
-												<span className="text-fg-muted text-xs">
+												<span className="text-xs text-fg-muted">
 													{version.contentHash.slice(0, 12)}
 												</span>
 												{editable && version.status !== "active" ? (

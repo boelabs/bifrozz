@@ -241,7 +241,7 @@ function fileSource(part: CanonicalFilePart): ContentSource {
 			"File input sources cannot be empty.",
 		);
 	}
-	if (kind === "data_url" && /^https:\/\//i.test(value)) {
+	if (kind === "data_url" && /^https:\/\//iu.test(value)) {
 		return { kind: "url", value };
 	}
 	return { kind, value };
@@ -255,7 +255,7 @@ function imageSource(part: CanonicalImagePart): ContentSource {
 			"Image input sources cannot be empty.",
 		);
 	}
-	return /^data:/i.test(part.url)
+	return /^data:/iu.test(part.url)
 		? { kind: "data_url", value: part.url }
 		: { kind: "url", value: part.url };
 }
@@ -287,7 +287,7 @@ function normalizedMimeType(
 	value: string | null | undefined,
 ): string | undefined {
 	const mime = value?.split(";", 1)[0]?.trim().toLowerCase();
-	return mime && /^[a-z0-9!#$&^_.+-]+\/[a-z0-9!#$&^_.+-]+$/.test(mime)
+	return mime && /^[a-z0-9!#$&^_.+-]+\/[a-z0-9!#$&^_.+-]+$/u.test(mime)
 		? mime
 		: undefined;
 }
@@ -310,7 +310,7 @@ function extensionMime(value: string | undefined): string | undefined {
 }
 
 function dataUrlMime(value: string): string | undefined {
-	return normalizedMimeType(/^data:([^;,]+)/i.exec(value)?.[1]);
+	return normalizedMimeType(/^data:([^;,]+)/iu.exec(value)?.[1]);
 }
 
 function hintedFileMimeType(part: CanonicalFilePart): string | undefined {
@@ -330,7 +330,7 @@ function hintedImageMimeType(part: CanonicalImagePart): string | undefined {
 }
 
 function isBlockedHostname(hostname: string): boolean {
-	const normalized = hostname.toLowerCase().replace(/\.$/, "");
+	const normalized = hostname.toLowerCase().replace(/\.$/u, "");
 	return (
 		normalized === "localhost" ||
 		normalized.endsWith(".localhost") ||
@@ -784,7 +784,7 @@ function decodeDataUrl(
 	errorParam = "messages",
 ): MaterializedInput {
 	const match =
-		/^data:([^;,]+)(?:;charset=[^;,]+)?;base64,([a-z0-9+/]*={0,2})$/i.exec(
+		/^data:([^;,]+)(?:;charset=[^;,]+)?;base64,([a-z0-9+/]*={0,2})$/iu.exec(
 			value,
 		);
 	if (!match) {
@@ -823,8 +823,8 @@ function decodeDataUrl(
 		);
 	}
 	if (
-		Buffer.from(bytes).toString("base64").replace(/[=]+$/, "") !==
-		encoded.replace(/[=]+$/, "")
+		Buffer.from(bytes).toString("base64").replace(/[=]+$/u, "") !==
+		encoded.replace(/[=]+$/u, "")
 	) {
 		throw requestError(
 			`${kind} data base64 is not canonical`,
@@ -1586,7 +1586,7 @@ function videoSource(
 			param,
 		);
 	}
-	if (/^data:/i.test(url)) {
+	if (/^data:/iu.test(url)) {
 		return { kind: "data_url", value: url };
 	}
 	parseSafeHttpsUrl(url, kind, param);

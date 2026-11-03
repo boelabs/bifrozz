@@ -126,7 +126,7 @@ test("pinned fetch rejects when no validated address is available", async () => 
 			[],
 			fetchOptions(new AbortController().signal),
 		),
-		/No validated address is available for pinned\.invalid/,
+		/No validated address is available for pinned\.invalid/u,
 	);
 });
 
