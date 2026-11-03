@@ -5,9 +5,9 @@ The procedure the scheduled catalog agent follows, twice a day, to keep the prov
 syncing by hand follows it too. [AGENTS.md](../../../../../AGENTS.md) still applies in full; this
 file adds the rules specific to the job.
 
-Merging to `main` deploys production. Every number you write is billed to customers, and every
-parameter you declare is sent to a provider. When in doubt, leave the value out and say so in the
-pull request: a missing field is a known gap, a wrong one is an incident.
+What merges to `main` reaches production with the next release. Every number you write is billed to
+customers, and every parameter you declare is sent to a provider. When in doubt, leave the value out
+and say so in the pull request: a missing field is a known gap, a wrong one is an incident.
 
 ## 1. Scope
 
