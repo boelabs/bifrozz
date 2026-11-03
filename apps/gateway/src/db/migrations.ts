@@ -26,8 +26,9 @@ const MIGRATION_LOCK_ID = 918_273_645;
 export async function runMigrations(): Promise<void> {
 	// A session-level advisory lock belongs to the connection that took it, and the pool would hand
 	// the unlock to a different one — so the lock is held on a connection reserved for it. The
-	// migration itself runs on the pool; the lock only has to exist while it does.
-	const holder = await sql.reserve();
+	// migration itself runs on the pool; the lock only has to exist while it does. `using` hands the
+	// connection back to the pool when this function returns or throws, after the `finally` below.
+	using holder = await sql.reserve();
 	try {
 		await holder`select pg_advisory_lock(${MIGRATION_LOCK_ID})`;
 		await migrate(db, { migrationsFolder: MIGRATIONS_DIR });
@@ -37,6 +38,5 @@ export async function runMigrations(): Promise<void> {
 		await holder`select pg_advisory_unlock(${MIGRATION_LOCK_ID})`.catch(
 			() => undefined,
 		);
-		holder.release();
 	}
 }

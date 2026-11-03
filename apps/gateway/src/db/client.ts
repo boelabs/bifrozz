@@ -7,6 +7,11 @@ import postgres from "postgres";
  * Postgres with self-signed certificates whose SAN does not include the IP, so we use postgres-js's
  * `ssl: "require"`: it encrypts but does not verify the certificate. On an internal network (no
  * sslmode) the connection is plaintext.
+ *
+ * The explicit option matters: left to the URL, postgres-js reads `sslmode=verify-full` as verified
+ * TLS, which Bun rejects against those certificates. SCRAM channel binding (`channel_binding`
+ * defaults to `prefer`) works over the unverified connection — it hashes whatever certificate the
+ * server presented.
  */
 const wantsSsl = /sslmode=(require|verify-full|verify-ca|prefer)/i.test(
 	env.DATABASE_URL,
