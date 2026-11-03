@@ -4,7 +4,7 @@
 # network and no variables. It is a prerendered site that happens to live in the same repository, so
 # it gets its own file rather than a service someone has to remember to delete.
 #
-#   DOCS_IMAGE=ghcr.io/boelabs/bifrozz-docs:v1.0.0 docker compose -f compose.docs.yaml up -d
+#   DOCS_IMAGE=ghcr.io/boelabs/bifrozz-docs:0.5.0 docker compose -f compose.docs.yaml up -d
 name: bifrozz-docs
 
 services:
