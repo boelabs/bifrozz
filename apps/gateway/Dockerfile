@@ -16,7 +16,6 @@ WORKDIR /app
 ENV NODE_ENV=production
 # Copy only the manifests + lockfile first so this layer caches until dependencies change.
 COPY package.json bun.lock ./
-COPY patches ./patches
 COPY apps/gateway/package.json ./apps/gateway/package.json
 COPY apps/docs/package.json ./apps/docs/package.json
 COPY packages/tsconfig/package.json ./packages/tsconfig/package.json

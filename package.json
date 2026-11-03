@@ -23,32 +23,19 @@
 		"typecheck": "turbo run typecheck && tsc --noEmit -p tsconfig.json"
 	},
 	"overrides": {
-		"@grpc/grpc-js": "1.14.5",
-		"@modelcontextprotocol/sdk": "1.32.1",
-		"body-parser": "2.4.0",
-		"esbuild": "0.28.1",
-		"nanoid": "3.3.18",
-		"postcss": "8.5.26",
-		"protobufjs": "7.6.5",
-		"sharp": "0.35.5",
-		"source-map-js": "1.2.2",
-		"systeminformation": "5.33.16",
-		"undici": "7.30.1",
+		"esbuild": "0.28.2",
 		"zod": "4.6.7"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.5.13",
+		"@biomejs/biome": "2.5.15",
 		"@boelabs/tsconfig": "workspace:*",
-		"@types/node": "26.5.1",
-		"turbo": "2.10.12",
+		"@types/node": "26.6.6",
+		"turbo": "2.11.10",
 		"typescript": "7.0.2",
 		"ultracite": "7.12.0"
 	},
-	"packageManager": "bun@1.4.0",
+	"packageManager": "bun@1.4.4",
 	"engines": {
 		"bun": ">=1.4"
-	},
-	"patchedDependencies": {
-		"ai@7.0.99": "patches/ai@7.0.99.patch"
 	}
 }

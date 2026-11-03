@@ -24,7 +24,6 @@
 FROM oven/bun:1.4 AS deps
 WORKDIR /app
 COPY package.json bun.lock ./
-COPY patches ./patches
 COPY apps/dashboard/package.json ./apps/dashboard/package.json
 COPY apps/docs/package.json ./apps/docs/package.json
 COPY apps/gateway/package.json ./apps/gateway/package.json

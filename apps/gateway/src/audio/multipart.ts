@@ -60,7 +60,7 @@ function badMultipart(
 	});
 }
 
-function safeFilename(value: string): string {
+function safeFilename(value: string | undefined): string {
 	return [...basename(value || "audio")]
 		.map((character) => {
 			const codePoint = character.codePointAt(0) ?? 0;

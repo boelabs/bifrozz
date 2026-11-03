@@ -4,7 +4,6 @@ import { type AppearanceProps, appearanceStyle } from "./appearance.ts";
 import { Alert, AlertDescription } from "./primitives/alert";
 import type { CSSProperties, ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
-import { tv } from "tailwind-variants";
 import { ContentPanel } from "./card";
 
 import {
@@ -17,18 +16,14 @@ import {
 } from "./primitives/empty";
 
 /** Page headings, empty states, and errors share the dashboard primitives. */
-const page = tv({
-	slots: {
-		header: "flex flex-wrap items-start justify-between gap-4",
-		identity: "flex min-w-0 flex-col gap-1",
-		titleRow: "flex min-w-0 flex-wrap items-center gap-2",
-		heading: "min-w-0 break-words font-semibold text-foreground text-xl",
-		subtitle: "text-muted-foreground text-sm",
-		toolbar: "flex shrink-0 flex-wrap items-center gap-2 empty:hidden",
-	},
-});
-
-const { header, identity, titleRow, heading, subtitle, toolbar } = page();
+const page = {
+	header: "flex flex-wrap items-start justify-between gap-4",
+	identity: "flex min-w-0 flex-col gap-1",
+	titleRow: "flex min-w-0 flex-wrap items-center gap-2",
+	heading: "min-w-0 break-words font-semibold text-foreground text-xl",
+	subtitle: "text-muted-foreground text-sm",
+	toolbar: "flex shrink-0 flex-wrap items-center gap-2 empty:hidden",
+};
 
 /**
  * Every page starts here: its title, one line about it, a status badge for a record, and its
@@ -46,15 +41,15 @@ export function PageHeader({
 	actions?: ReactNode;
 }) {
 	return (
-		<header className={header()}>
-			<div className={identity()}>
-				<div className={titleRow()}>
-					<h1 className={heading()}>{title}</h1>
+		<header className={page.header}>
+			<div className={page.identity}>
+				<div className={page.titleRow}>
+					<h1 className={page.heading}>{title}</h1>
 					{badge}
 				</div>
-				{description ? <p className={subtitle()}>{description}</p> : null}
+				{description ? <p className={page.subtitle}>{description}</p> : null}
 			</div>
-			{actions ? <div className={toolbar()}>{actions}</div> : null}
+			{actions ? <div className={page.toolbar}>{actions}</div> : null}
 		</header>
 	);
 }
