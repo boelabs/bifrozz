@@ -53,28 +53,49 @@ Expanda primero, contraiga después: agrega la nueva columna y escriba en ambas,
 
 ## Imágenes y versiones [#images-and-versions]
 
-Tres imágenes, una por aplicación: `ghcr.io/<owner>/bifrozz-{gateway,dashboard,docs}`. Una etiqueta `v*` publica los tres en la misma versión, incluso cuando solo uno cambia: el cliente API del panel se genera a partir del `openapi.yaml` del gateway, por lo que un número compartido elimina una pregunta de compatibilidad en lugar de responderla. CI también publica `sha-<commit>`, que nunca se mueve y es a lo que se fija una reversión, y `<branch>`, que se mueve y es lo que sigue un entorno, para `main` y para las ramas que realmente están implementadas, no para todas las ramas.
+Tres imágenes, una por aplicación: `ghcr.io/<owner>/bifrozz-{gateway,dashboard,docs}`. Una etiqueta `v*` publica las tres en la misma versión, incluso cuando solo una cambió: el cliente API del panel se genera a partir del `openapi.yaml` del gateway, así que un número compartido elimina una pregunta de compatibilidad en lugar de responderla.
 
-## Deployment desde CI [#deploying-from-ci]
+| Etiqueta | La publica | Se mueve |
+|---|---|---|
+| `1.2.3`, `1.2` | `release.yml`, con una etiqueta `v1.2.3` | `1.2` sigue al parche más reciente |
+| `latest` | `release.yml`, solo con etiquetas estables | a la release estable más reciente |
+| `production` | `deploy-production.yml` | a lo que sirve producción; vuelve atrás en un rollback |
+| `main`, `sha-<commit>` | `ci.yml`, con cada commit de `main` | `main` sigue a la rama; `sha-` nunca se mueve |
 
-`.github/workflows/ci.yml` crea las imágenes para una confirmación y le pide a Coolify que las implemente, de modo que un entorno obtenga el artefacto con el que se ejecutaron las pruebas. No hay nada vinculado a `main`: una rama que no está en el mapa no se implementa. Un push a esa rama lo comprueba su pull request, que ejecuta los mismos jobs sobre la misma confirmación, y una etiqueta `v*` no ejecuta CI: apunta a una confirmación que `main` ya validó, y `release.yml` crea sus imágenes.
+## Releases y deployment desde CI [#releasing-and-deploying-from-ci]
 
-| Configuración | Amable |
-|---|---|
-| `COOLIFY_URL` | variable del repositorio |
-| `COOLIFY_TOKEN` | secreto del repositorio, un token API con permiso de deployment |
-| `COOLIFY_DEPLOY_MAP` | variable del repositorio |
+Hacer merge a `main` no despliega. CI revisa cada pull request y cada commit de `main` y publica las imágenes de `main`, así que varios merges al día se acumulan en `main` hasta que alguien crea una release:
 
-La forma de la entrada de una rama indica qué topología ejecuta: una cadena para un recurso de Compose, un objeto para un recurso por aplicación, donde solo se implementan las aplicaciones cuya imagen cambió:
-
-```json
-{
-  "main": { "gateway": "<uuid>", "dashboard": "<uuid>", "docs": "<uuid>" },
-  "staging": "<uuid>"
-}
+```bash
+git tag v1.2.3 origin/main
+git push origin v1.2.3
 ```
 
-Varias claves pueden apuntar al mismo recurso; se implementa una vez. El UUID es el último segmento de ruta de la URL de un recurso en Coolify.
+Entonces `release.yml`:
+
+1. Comprueba que la etiqueta sea semver, que apunte a un commit de `main` y que el CI de `main` haya pasado en ese commit; si la etiqueta se subió justo después de un merge, lo espera.
+2. Construye y publica las tres imágenes para amd64 y arm64.
+3. Con una etiqueta estable, llama a `deploy-production.yml`. Una prerelease (`v1.2.3-rc.1`) se detiene tras las imágenes.
+
+`deploy-production.yml` corre en el entorno `production` de GitHub, de uno en uno y sin cancelarse a medias. Apunta la etiqueta `production` de cada imagen a la release, le pide a Coolify desplegar los tres recursos y espera a que termine cada deployment. Si uno falla, devuelve `production` a las imágenes que servía antes y las despliega. Cuando la release ya sirve, publica la GitHub Release con notas generadas.
+
+Cada recurso de Coolify corre la etiqueta `production`, así que un redeploy o un reinicio en Coolify sigue sirviendo la release y no lo que haya en `main`.
+
+| Ajuste | Tipo |
+|---|---|
+| `COOLIFY_URL` | variable del repositorio |
+| `COOLIFY_TOKEN` | secreto del entorno `production`, un token API con `deploy` y `read` |
+| `COOLIFY_RESOURCES` | variable del entorno `production` |
+
+```json
+{ "gateway": "<uuid>", "dashboard": "<uuid>", "docs": "<uuid>" }
+```
+
+El UUID es el último segmento de la URL de un recurso en Coolify.
+
+### Rollback [#rolling-back]
+
+Ejecuta **Deploy production** desde la pestaña Actions con la versión a la que quieres volver, por ejemplo `v1.2.2`. Es el mismo camino que una release, así que se comprueba igual. La base de datos se queda donde está: la versión anterior corre sobre las migraciones publicadas después de ella, y por eso cada migración debe funcionar con la release anterior (ver arriba).
 
 ## Lo que esto no soluciona [#what-this-does-not-fix]
 

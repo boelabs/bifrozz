@@ -301,24 +301,32 @@ Fix cooldown reset on success
 
 ### Releases
 
-A release is a `v<semver>` tag. It publishes all three images — gateway, dashboard, docs — at **the
-same version**, even when only one of them changed. That is deliberate: the dashboard's API client
-is generated from the gateway's `openapi.yaml`, so independent version numbers would create a
+A release is a `v<semver>` tag on a commit of `main` whose CI passed, and it is **the only thing
+that deploys production**. It publishes all three images — gateway, dashboard, docs — at **the same
+version**, even when only one of them changed. That is deliberate: the dashboard's API client is
+generated from the gateway's `openapi.yaml`, so independent version numbers would create a
 compatibility matrix somebody has to maintain, and republishing an unchanged image costs nothing.
 
-Everyday pushes do not produce releases. CI publishes `sha-<commit>` and `<branch>` tags, but only
-for `main` and for branches named in `COOLIFY_DEPLOY_MAP` — the registry is public, and a feature
-branch has no business leaving a package behind. Every other branch still builds the images, so a
-broken Dockerfile fails on the pull request. `latest` and the semver tags belong to
-[`release.yml`](.github/workflows/release.yml) alone, because a registry tag that moves with every
-commit is not the promise `latest` is supposed to make.
+Merges accumulate on `main` until someone tags it. [`release.yml`](.github/workflows/release.yml)
+verifies the tag and builds the images; a stable tag then runs
+[`deploy-production.yml`](.github/workflows/deploy-production.yml), which moves the `production`
+registry tag that every Coolify resource runs, deploys, and moves it back if the deployment fails. A
+prerelease tag (`v1.2.3-rc.1`) publishes images only. Rolling back is running *Deploy production*
+with an earlier version. See
+[Rollouts](apps/docs/content/docs/(docs)/(operate)/rollouts.mdx#releasing-and-deploying-from-ci).
+
+CI publishes `sha-<commit>` and `main` for commits of `main` only — the registry is public, and a
+feature branch has no business leaving a package behind. Every other branch still builds the images,
+so a broken Dockerfile fails on the pull request. `latest` and the semver tags belong to
+`release.yml` alone, and `production` to `deploy-production.yml`.
 
 Agents never create a tag or a release unless a person asks for that specific release.
 
 ### Merging — the hard rule
 
-Merging to `main` deploys production. **Never merge to `main` while CI is not green.** `main` is branch-protected; auto-merge is disabled
-and admin bypass is off-limits. The required checks are the three CI jobs in
+Merging to `main` does not deploy, but `main` is what the next release ships. **Never merge to `main`
+while CI is not green.** `main` is branch-protected; auto-merge is disabled and admin bypass is
+off-limits. The required checks are the three CI jobs in
 [`.github/workflows/ci.yml`](.github/workflows/ci.yml): *Lint, typecheck & unit tests*,
 *Integration tests*, and *Build container images*.
 
