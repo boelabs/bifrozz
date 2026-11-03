@@ -11,7 +11,9 @@ import postgres from "postgres";
  * The explicit option matters: left to the URL, postgres-js reads `sslmode=verify-full` as verified
  * TLS, which Bun rejects against those certificates. SCRAM channel binding (`channel_binding`
  * defaults to `prefer`) works over the unverified connection — it hashes whatever certificate the
- * server presented.
+ * server presented. Adding `channel_binding=require` to the URL refuses to authenticate without it,
+ * which is what stops a man in the middle when the certificate itself is not verified; it is left to
+ * the URL because servers without TLS or SCRAM (and poolers such as PgBouncer) cannot offer it.
  */
 const wantsSsl = /sslmode=(require|verify-full|verify-ca|prefer)/i.test(
 	env.DATABASE_URL,
