@@ -33,11 +33,15 @@ at native resolution against the source, no pixel moves by more than 25 of 255 g
 decimal moves edges visibly, so two is the floor. Each app's `icon.svg` centres those paths in a
 padded square with the theme rule added.
 
-`bifrozz-logo.svg` is the kit's horizontal black logo made the same way: its group transforms folded
-into the paths, the viewBox cropped from 662.43 × 190.02 to the artwork's 639.5 × 109.75, and the
-paths at three decimals. Rasterised at 4× against the source, no pixel moves by more than 29 of 255;
-at two decimals some edges move by more than 32, so three is the floor for this smaller coordinate
-space. The apps' `BifrozzLogo` components carry the same paths.
+`bifrozz-logo.svg` is the kit's tight cut (`bifrozz-logo-horizontal-black-tight.svg`), its viewBox
+unchanged at 638.43 × 108.63, with the group transforms folded into the paths and the paths at three
+decimals. Rasterised at 4× against the kit's file, no pixel moves by more than 31 of 255; at two
+decimals some edges move by more than 32, so three is the floor for this coordinate space. The
+apps' `BifrozzLogo` components carry the same paths.
+
+The kit also has a normal cut, padded to a height shared by every Boelabs brand so that logos shown
+side by side at one height have letters of one size. The apps show the logotype alone, against an
+edge, which is what the kit's guide reserves the tight cut for.
 
 An `<img>` resolves `currentColor` to black, which is what the PNGs are rendered from.
 

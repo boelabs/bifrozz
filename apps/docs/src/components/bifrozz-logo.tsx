@@ -5,9 +5,9 @@
  * name is never set in the UI font beside a mark. Inlined rather than served as a file, because an
  * `<img>` is its own document and inherits no colour: inline, the logotype takes the colour of the
  * text around it and follows the theme with no filter and no second file. The paths are the brand
- * kit's horizontal logo at three decimals; brand/README.md says how they were made.
+ * kit's tight horizontal logo at three decimals; brand/README.md says how they were made.
  *
- * `size` is the HEIGHT; the artwork is 639.5 × 109.75, so the width follows.
+ * `size` is the HEIGHT; the artwork is 638.43 × 108.63, so the width follows.
  */
 export function BifrozzLogo({
 	size = 18,
@@ -23,8 +23,8 @@ export function BifrozzLogo({
 			fill="currentColor"
 			height={size}
 			role="img"
-			viewBox="11.5 38.75 639.5 109.75"
-			width={Math.round((size * 639.5) / 109.75)}
+			viewBox="12 39.29 638.43 108.63"
+			width={Math.round((size * 638.43) / 108.63)}
 			xmlns="http://www.w3.org/2000/svg"
 		>
 			<title>Bifrozz</title>
