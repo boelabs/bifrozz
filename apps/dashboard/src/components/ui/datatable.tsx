@@ -2,10 +2,10 @@
 
 import { TextSkeleton } from "#/shared/components/TextSkeleton";
 import { Select, SelectItem } from "./select";
+import { cn } from "#/shared/lib/classes";
 import { Button } from "./button";
 import { Input } from "./input";
 import Link from "next/link";
-import { cn } from "cn";
 
 import {
 	ChevronRight as IconChevronRight,

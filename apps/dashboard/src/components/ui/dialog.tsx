@@ -3,8 +3,8 @@
 import { Dialog as BaseDialog } from "@base-ui/react/dialog";
 import type { ComponentProps } from "react";
 import { X as IconX } from "lucide-react";
+import { cn } from "#/shared/lib/classes";
 import { Button } from "./button";
-import { cn } from "cn";
 
 import {
 	type AppearanceProps,

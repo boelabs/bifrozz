@@ -5,7 +5,7 @@ import "./composer.css";
 import type { MouseEventHandler, ReactNode } from "react";
 import { useMobileComposer } from "./useMobileComposer";
 import { motion, useReducedMotion } from "motion/react";
-import { cn } from "cn";
+import { cn } from "#/shared/lib/classes";
 
 import {
 	COMPOSER_REDUCED_MOTION_TRANSITION,

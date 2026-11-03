@@ -1,7 +1,6 @@
 "use client";
 
-import { staticClient } from "fumadocs-core/search/client/orama-static";
-import { useDocsSearch } from "fumadocs-core/search/client";
+import { useStaticSearch } from "fumadocs-core/search/client/orama-static";
 import { useI18n } from "fumadocs-ui/contexts/i18n";
 
 import {
@@ -18,14 +17,14 @@ import {
 
 export default function Search(props: SharedProps) {
 	const { locale } = useI18n();
-	const { search, setSearch, query } = useDocsSearch({
-		client: staticClient({ from: `/api/search/${locale ?? "en"}` }),
+	const { search, onSearchChange, isLoading, data } = useStaticSearch({
+		from: `/api/search/${locale ?? "en"}`,
 	});
 
 	return (
 		<SearchDialog
-			isLoading={query.isLoading}
-			onSearchChange={setSearch}
+			isLoading={isLoading}
+			onSearchChange={onSearchChange}
 			search={search}
 			{...props}
 		>
@@ -36,7 +35,7 @@ export default function Search(props: SharedProps) {
 					<SearchDialogInput />
 					<SearchDialogClose />
 				</SearchDialogHeader>
-				<SearchDialogList items={query.data === "empty" ? null : query.data} />
+				<SearchDialogList items={data?.items ?? null} />
 			</SearchDialogContent>
 		</SearchDialog>
 	);
