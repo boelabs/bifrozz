@@ -18,7 +18,7 @@ export const GENERATED_CATALOGS: ReadonlySet<string> = new Set([
 	"openrouter",
 ]);
 
-const CATALOG_PATH = /^apps\/gateway\/src\/adapters\/([^/]+)\/catalog\.json$/;
+const CATALOG_PATH = /^apps\/gateway\/src\/adapters\/([^/]+)\/catalog\.json$/u;
 
 /**
  * A price that moves by this factor or more, either way, needs a human. Aggregator errors come in exactly

@@ -1,16 +1,17 @@
-import type {
-	CanonicalRealtimeConversationConfig,
-	CanonicalRealtimeTranscriptionConfig,
-} from "#core/realtime.ts";
+import { resolveModelMetadata } from "#catalog/index.ts";
 import { GatewayError } from "#core/errors.ts";
+import assert from "node:assert/strict";
+import { test } from "node:test";
 
 import {
 	assertRealtimeConversationSupported,
 	assertRealtimeConfigSupported,
 } from "./realtimeRequestValidation.ts";
-import { resolveModelMetadata } from "#catalog/index.ts";
-import assert from "node:assert/strict";
-import { test } from "node:test";
+
+import type {
+	CanonicalRealtimeTranscriptionConfig,
+	CanonicalRealtimeConversationConfig,
+} from "#core/realtime.ts";
 
 const live = resolveModelMetadata(
 	"googleaistudio",
@@ -44,7 +45,7 @@ test("realtime gating: too many keywords, unknown modes and file-only models are
 				config({ keywords: Array.from({ length: 1001 }, (_, i) => `k${i}`) }),
 				live,
 			),
-		/at most 1000 keywords/,
+		/at most 1000 keywords/u,
 	);
 	const fileOnly = resolveModelMetadata(
 		"googleaistudio",
@@ -52,7 +53,7 @@ test("realtime gating: too many keywords, unknown modes and file-only models are
 	);
 	assert.throws(
 		() => assertRealtimeConfigSupported(config(), fileOnly),
-		/does not support realtime transcription/,
+		/does not support realtime transcription/u,
 	);
 	const verbatimManualOnly = resolveModelMetadata(
 		"openaicompatible",
@@ -69,11 +70,11 @@ test("realtime gating: too many keywords, unknown modes and file-only models are
 				config({ mode: "smart" }),
 				verbatimManualOnly,
 			),
-		/transcription_mode=smart/,
+		/transcription_mode=smart/u,
 	);
 	assert.throws(
 		() => assertRealtimeConfigSupported(config(), verbatimManualOnly),
-		/turn_detection to be null/,
+		/turn_detection to be null/u,
 	);
 });
 

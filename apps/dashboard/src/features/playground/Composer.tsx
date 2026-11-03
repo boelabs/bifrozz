@@ -207,7 +207,7 @@ export function Composer({
 				textarea={
 					<textarea
 						aria-label="Message"
-						className="mt-4 w-full min-w-0 resize-none bg-transparent pt-0 pb-4 align-bottom font-normal text-base text-fg leading-6.5 outline-none placeholder:truncate placeholder:text-fg-muted"
+						className="mt-4 w-full min-w-0 resize-none bg-transparent pt-0 pb-4 align-bottom text-base leading-6.5 font-normal text-fg outline-none placeholder:truncate placeholder:text-fg-muted"
 						dir="auto"
 						onChange={(event) => onPrompt(event.target.value)}
 						onKeyDown={(event) => {
@@ -249,7 +249,7 @@ export function Composer({
 				topSectionLayoutKey={files.map((file) => file.id).join(":")}
 			/>
 			{dragging ? (
-				<div className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center rounded-[28px] border-2 border-primary border-dashed bg-surface-2/95 text-fg text-sm">
+				<div className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center rounded-[28px] border-2 border-dashed border-primary bg-surface-2/95 text-sm text-fg">
 					{accepted.length
 						? "Drop files here"
 						: "This model does not support attachments"}

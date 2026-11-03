@@ -377,7 +377,7 @@ function SearchInput({
 	...props
 }: Omit<BaseCombobox.Input.Props, "size" | "width">) {
 	return (
-		<div className="border-border/60 border-b p-2">
+		<div className="border-b border-border/60 p-2">
 			<InputGroup>
 				<IconSearch aria-hidden className="size-4 shrink-0 text-fg-muted" />
 				<BareInput

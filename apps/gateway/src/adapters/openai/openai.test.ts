@@ -290,7 +290,7 @@ test("openai.buildRequest: extraBody does not overwrite managed fields", () => {
 				{ ...baseReq, extraBody: { reasoning: { effort: "low" } } },
 				reasoningCtx,
 			),
-		/extra_body.reasoning/,
+		/extra_body.reasoning/u,
 	);
 });
 
@@ -481,7 +481,7 @@ test("openai.buildRequest: upstream call is store:false and extra_body cannot ov
 				{ ...baseReq, extraBody: { store: true } },
 				ctx,
 			),
-		/extra_body.store/,
+		/extra_body.store/u,
 	);
 });
 
@@ -603,7 +603,7 @@ test("openai.parseStream: terminal failures throw instead of completing", async 
 		for await (const _chunk of responsesEventsToCanonicalChunks(events())) {
 			// consume
 		}
-	}, /terminal stream error/);
+	}, /terminal stream error/u);
 });
 
 test("openai.parseStream: preserves WebSocket continuation error details", async () => {
@@ -651,7 +651,7 @@ test("openai chat stream: in-band error objects throw", async () => {
 		})) {
 			// consume
 		}
-	}, /boom/);
+	}, /boom/u);
 });
 
 test("openai.parseStream: reasoning output_item.done -> delta.providerFields (deduped)", async () => {

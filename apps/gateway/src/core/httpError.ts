@@ -96,15 +96,15 @@ export function describeUnknownError(err: unknown): {
  * overflowed. Every phrasing here must be about the context, never about length alone.
  */
 const CONTEXT_PHRASES =
-	/context (?:length|window)|maximum context|input token (?:count|length)|token limit|exceed(?:s|ed)?[^.]*\btokens?\b|reduce the (?:length|number of (?:input )?tokens)|too many (?:input )?tokens/i;
+	/context (?:length|window)|maximum context|input token (?:count|length)|token limit|exceed(?:s|ed)?[^.]*\btokens?\b|reduce the (?:length|number of (?:input )?tokens)|too many (?:input )?tokens/iu;
 
 /**
  * "too long" on its own is how providers report *any* length violation — a schema array, a string
  * field ("array too long. Expected an array with maximum length 0"). It identifies the context
  * window only when the message is also about tokens or the context.
  */
-const TOO_LONG = /\btoo long\b/i;
-const TOKENS_OR_CONTEXT = /\btokens?\b|\bcontext\b/i;
+const TOO_LONG = /\btoo long\b/iu;
+const TOKENS_OR_CONTEXT = /\btokens?\b|\bcontext\b/iu;
 
 export function looksLikeContextWindowError(
 	message: string | undefined,

@@ -10,7 +10,7 @@ function cell(value: string | number | boolean | null | undefined): string {
 	}
 	const text = String(value);
 	// A model id with a comma, or an error message with a quote, must not shift every later column.
-	return /[",\n\r]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
+	return /[",\n\r]/u.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
 }
 
 export function toCsv<T>(rows: readonly T[], columns: CsvColumn<T>[]): string {

@@ -82,8 +82,8 @@ function Chosen({
 		<div className="playground-composer mb-2 flex items-center gap-3 rounded-[28px] border border-border bg-surface-2 px-4 py-3 max-sm:rounded-2xl">
 			<IconFileText aria-hidden className="size-5 shrink-0 text-fg-muted" />
 			<div className="min-w-0 flex-1">
-				<p className="truncate font-medium text-sm">{file.name}</p>
-				<p className="text-fg-muted text-xs">
+				<p className="truncate text-sm font-medium">{file.name}</p>
+				<p className="text-xs text-fg-muted">
 					{file.type || "audio"} · {bytes(file.size)}
 				</p>
 			</div>
@@ -121,7 +121,7 @@ function TranscriptText({
 		);
 	}
 	return (
-		<p className="wrap-anywhere whitespace-pre-wrap text-base leading-7">
+		<p className="text-base leading-7 wrap-anywhere whitespace-pre-wrap">
 			{text}
 		</p>
 	);
@@ -164,7 +164,7 @@ function TranscriptionRunView({
 			>
 				{run.state === "running" ? <ResponseLoader /> : null}
 				{run.state === "stopped" ? (
-					<div className="text-fg-muted text-xs">
+					<div className="text-xs text-fg-muted">
 						<Status tone="muted">Stopped</Status>
 					</div>
 				) : null}
@@ -179,10 +179,10 @@ function TranscriptionRunView({
 								// biome-ignore lint/suspicious/noArrayIndexKey: segments are a sequence, and their order is their identity
 								key={index}
 							>
-								<span className="shrink-0 font-mono text-fg-muted text-xs leading-6">
+								<span className="shrink-0 font-mono text-xs leading-6 text-fg-muted">
 									{segment.start === undefined ? "—" : timestamp(segment.start)}
 								</span>
-								<span className="wrap-anywhere min-w-0 flex-1">
+								<span className="min-w-0 flex-1 wrap-anywhere">
 									{segment.text}
 								</span>
 							</li>
@@ -212,7 +212,7 @@ function TranscriptionRunView({
 					>
 						<IconRotate2 aria-hidden className={MESSAGE_ACTION_ICON} />
 					</Button>
-					<p className="px-2 text-fg-muted text-xs">
+					<p className="px-2 text-xs text-fg-muted">
 						{[
 							run.model,
 							run.settings.responseFormat,
@@ -563,7 +563,7 @@ export function TranscriptionWorkspace({
 						>
 							<NumberField.ScrubArea>
 								<label
-									className="font-medium text-sm"
+									className="text-sm font-medium"
 									htmlFor="playground-transcription-temperature"
 								>
 									Temperature

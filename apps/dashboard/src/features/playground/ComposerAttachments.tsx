@@ -53,7 +53,7 @@ export function ComposerAttachments({
 		<div className="relative w-full">
 			<section
 				aria-label="Attachments"
-				className="scrollbar-none flex w-full gap-2 overflow-x-auto overscroll-x-contain rounded-[20px] p-2 pb-1 md:p-3 md:pb-1"
+				className="flex w-full scrollbar-none gap-2 overflow-x-auto overscroll-x-contain rounded-[20px] p-2 pb-1 md:p-3 md:pb-1"
 				data-composer-attachments="true"
 				ref={track}
 			>
@@ -72,7 +72,7 @@ export function ComposerAttachments({
 								// biome-ignore lint/performance/noImgElement: a data:/blob: attachment URL, which next/image has nothing to optimise
 								<img
 									alt={file.filename ?? "Attached image"}
-									className="h-30 w-auto min-w-24 max-w-38 rounded-2xl border border-border object-cover md:size-14 md:min-w-0 md:max-w-none md:rounded-[18px]"
+									className="h-30 w-auto max-w-38 min-w-24 rounded-2xl border border-border object-cover md:size-14 md:max-w-none md:min-w-0 md:rounded-[18px]"
 									draggable={false}
 									src={file.url}
 								/>
@@ -94,7 +94,7 @@ export function ComposerAttachments({
 							)}
 							<Button
 								aria-label={`Remove ${file.filename ?? "attachment"}`}
-								className="composer-attachment-action absolute top-1 right-1 z-20 size-6 bg-surface shadow-sm after:absolute after:-inset-2 sm:size-6 md:top-1.25 md:right-1.25 md:size-4 md:translate-x-1/2 md:-translate-y-1/2 md:opacity-0 md:group-hover/file-tile:opacity-100 md:group-focus-within/file-tile:opacity-100"
+								className="composer-attachment-action absolute top-1 right-1 z-20 size-6 bg-surface shadow-sm after:absolute after:-inset-2 sm:size-6 md:top-1.25 md:right-1.25 md:size-4 md:translate-x-1/2 md:-translate-y-1/2 md:opacity-0 md:group-focus-within/file-tile:opacity-100 md:group-hover/file-tile:opacity-100"
 								mode="icon"
 								onClick={() => onRemove(file.id)}
 								size="sm"

@@ -150,7 +150,7 @@ function withPartCacheControl(
 }
 
 function dataUrlSource(value: string): Record<string, unknown> | null {
-	const match = /^data:([^;,]+);base64,(.*)$/s.exec(value);
+	const match = /^data:([^;,]+);base64,(.*)$/su.exec(value);
 	if (!match) {
 		return null;
 	}
@@ -180,7 +180,7 @@ function partToAnthropic(part: CanonicalContentPart): Record<string, unknown> {
 	if (part.type === "image") {
 		const source =
 			dataUrlSource(part.url) ??
-			(/^https:\/\//i.test(part.url) ? { type: "url", url: part.url } : null);
+			(/^https:\/\//iu.test(part.url) ? { type: "url", url: part.url } : null);
 		if (source !== null) {
 			return withPartCacheControl(part, { type: "image", source });
 		}
@@ -645,13 +645,13 @@ function mapFinishReason(
 			return hasToolCalls ? "tool_calls" : null;
 		default: {
 			const normalized = reason.toLowerCase();
-			if (/max.?tokens?|context.?window|length/.test(normalized)) {
+			if (/max.?tokens?|context.?window|length/u.test(normalized)) {
 				return "length";
 			}
-			if (/tool.?use|function.?call/.test(normalized)) {
+			if (/tool.?use|function.?call/u.test(normalized)) {
 				return "tool_calls";
 			}
-			if (/filter|safety|guardrail|block|prohibit|refus/.test(normalized)) {
+			if (/filter|safety|guardrail|block|prohibit|refus/u.test(normalized)) {
 				return "content_filter";
 			}
 			return hasToolCalls ? "tool_calls" : "stop";
@@ -1332,7 +1332,7 @@ function requestHeaders(
 		addBetaHeader(headers, "files-api-2025-04-14");
 	}
 	return {
-		base: (c.baseUrl ?? DEFAULT_BASE).replace(/\/+$/, ""),
+		base: (c.baseUrl ?? DEFAULT_BASE).replace(/\/+$/u, ""),
 		headers,
 	};
 }

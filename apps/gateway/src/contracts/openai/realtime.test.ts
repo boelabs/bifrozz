@@ -126,7 +126,7 @@ test("realtime: session.update merges over the current session and keeps the mod
 	assert.equal(rendered.type, "transcription");
 	assert.deepEqual(rendered.audio.input.format, { type: "audio/pcmu" });
 	assert.equal(rendered.audio.input.turn_detection, null);
-	assert.match(rendered.id, /^sess_/);
+	assert.match(rendered.id, /^sess_/u);
 });
 
 /* ------------------------------------------------------------------ tracker */

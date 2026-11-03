@@ -1,12 +1,13 @@
+import { realtimeConversationSessionSchema } from "#contracts/openai/realtimeConversation.ts";
 import { assertRealtimeConfigSupported } from "#gateway/realtimeRequestValidation.ts";
 import { RealtimeTranscriptTracker } from "#contracts/openai/realtimeTranscript.ts";
 import { type AudioInputDecoder, createAudioInputDecoder } from "#audio/pcm.ts";
 import type { RealtimeTranscriptionSession } from "#adapters/types.ts";
+import { realtimeConversationSocket } from "./realtimeConversation.ts";
 import { candidateMetadata } from "#gateway/candidateMetadata.ts";
 import { completedTerminal } from "#gateway/streamLifecycle.ts";
 import { OperationLogDraft } from "./runtime/operationLog.ts";
 import { route, type RouteResult } from "#router/index.ts";
-import { realtimeConversationSocket } from "./realtimeConversation.ts";
 import { upgradeWebSocket } from "@hono/node-server";
 import { GatewayError } from "#core/errors.ts";
 import { getAuth } from "#auth/middleware.ts";
@@ -14,8 +15,6 @@ import type { AppEnv } from "#auth/types.ts";
 import { randomUUID } from "node:crypto";
 import type { WSEvents } from "hono/ws";
 import type { Context } from "hono";
-
-import { realtimeConversationSessionSchema } from "#contracts/openai/realtimeConversation.ts";
 import { z } from "zod/v4";
 
 import {
@@ -34,9 +33,21 @@ import {
 } from "#contracts/openai/realtime.ts";
 
 import {
+	type RealtimeSocketEntry,
+	unregisterRealtimeSocket,
+	registerRealtimeSocket,
+	eventQueueLimitError,
+	sessionExpiredError,
+	realtimeMessageJson,
+	sendRealtimeEvent,
+	MAX_QUEUED_EVENTS,
+	REALTIME_MAX_MS,
+} from "./realtimeSockets.ts";
+
+import {
 	type CanonicalRealtimeTranscriptionConfig,
-	type RealtimeUsage,
 	realtimeUsageToCore,
+	type RealtimeUsage,
 	addRealtimeUsage,
 } from "#core/realtime.ts";
 
@@ -53,18 +64,6 @@ import {
 	toGatewayError,
 	preflight,
 } from "./runtime/pipeline.ts";
-
-import {
-	type RealtimeSocketEntry,
-	unregisterRealtimeSocket,
-	registerRealtimeSocket,
-	eventQueueLimitError,
-	sessionExpiredError,
-	realtimeMessageJson,
-	sendRealtimeEvent,
-	MAX_QUEUED_EVENTS,
-	REALTIME_MAX_MS,
-} from "./realtimeSockets.ts";
 
 export { closeRealtimeWebSockets } from "./realtimeSockets.ts";
 

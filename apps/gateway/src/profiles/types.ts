@@ -1,8 +1,4 @@
 import type { TextCapabilities, ReasoningSpec } from "#core/reasoning.ts";
-import type {
-	RealtimeConversationProfile,
-	RealtimeTranscriptionProfile,
-} from "#core/realtime.ts";
 import type { ParameterSupportMap } from "#catalog/parameters.ts";
 import type { EmbeddingProfile } from "#core/embeddings.ts";
 import type { UpstreamTransport } from "#core/transport.ts";
@@ -11,6 +7,11 @@ import type { OperationId } from "#operations/registry.ts";
 import type { ImageModelProfile } from "#core/images.ts";
 import type { VideoModelProfile } from "#core/videos.ts";
 import type { RerankProfile } from "#core/rerank.ts";
+
+import type {
+	RealtimeTranscriptionProfile,
+	RealtimeConversationProfile,
+} from "#core/realtime.ts";
 
 interface TextGenerateProfile {
 	// Client contract.

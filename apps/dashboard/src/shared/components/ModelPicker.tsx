@@ -187,7 +187,7 @@ export function ModelListInput({
 							))}
 							<Combobox.InlineTrigger
 								aria-label={`Show models for ${label}`}
-								className="h-auto min-w-0 flex-1 justify-between gap-2 px-1 font-normal text-sm"
+								className="h-auto min-w-0 flex-1 justify-between gap-2 px-1 text-sm font-normal"
 							>
 								<span className="truncate">
 									{selected.length > 0 ? "Add a model" : null}

@@ -30,13 +30,13 @@ const vaults = new Map();
 const pending = new Map();
 
 const DETECTORS = {
-	email: /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g,
-	ipv4: /\b(?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}(?:25[0-5]|2[0-4]\d|1?\d?\d)\b/g,
-	creditcard: /\b\d{4}[ -]?\d{4}[ -]?\d{4}[ -]?\d{1,4}\b/g,
-	phone: /\b\+?\d[\d ().-]{7,}\d\b/g,
+	email: /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/gu,
+	ipv4: /\b(?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}(?:25[0-5]|2[0-4]\d|1?\d?\d)\b/gu,
+	creditcard: /\b\d{4}[ -]?\d{4}[ -]?\d{4}[ -]?\d{1,4}\b/gu,
+	phone: /\b\+?\d[\d ().-]{7,}\d\b/gu,
 };
 
-const TOKEN_RE = /«V\d+»/g;
+const TOKEN_RE = /«V\d+»/gu;
 
 const configSchema = {
 	safeParse(value) {

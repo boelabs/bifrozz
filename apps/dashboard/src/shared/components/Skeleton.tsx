@@ -177,16 +177,16 @@ export function StatGridSkeleton({
 				>
 					<FramePanel className="flex flex-1 flex-col gap-2 p-4">
 						<div className="flex items-start justify-between gap-2">
-							<span className="text-muted-foreground text-xs">
+							<span className="text-xs text-muted-foreground">
 								<TextSkeleton length={14} />
 							</span>
 							{icon ? <Skeleton className="size-4 shrink-0" /> : null}
 						</div>
-						<span className="font-semibold text-2xl tabular-nums">
+						<span className="text-2xl font-semibold tabular-nums">
 							<TextSkeleton length={7} />
 						</span>
 					</FramePanel>
-					<FrameFooter className="flex min-w-0 items-center gap-2 px-3 pt-2 pb-1.5 text-muted-foreground text-xs">
+					<FrameFooter className="flex min-w-0 items-center gap-2 px-3 pt-2 pb-1.5 text-xs text-muted-foreground">
 						{note ? (
 							<Skeleton className="h-4.5 w-14 shrink-0 rounded-sm" />
 						) : null}
@@ -213,10 +213,10 @@ export function ChartSkeleton({
 		>
 			{title ? (
 				<div className="flex flex-col gap-1">
-					<span className="font-semibold text-sm">
+					<span className="text-sm font-semibold">
 						<TextSkeleton length={18} />
 					</span>
-					<span className="text-muted-foreground text-xs">
+					<span className="text-xs text-muted-foreground">
 						<TextSkeleton length={30} />
 					</span>
 				</div>

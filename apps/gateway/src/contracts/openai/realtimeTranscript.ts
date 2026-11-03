@@ -1,7 +1,7 @@
 import {
 	type CanonicalRealtimeTranscriptionEvent,
-	type RealtimeUsage,
 	type RealtimeTurnDetection,
+	type RealtimeUsage,
 	addRealtimeUsage,
 } from "#core/realtime.ts";
 

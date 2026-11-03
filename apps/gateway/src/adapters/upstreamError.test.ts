@@ -78,11 +78,11 @@ test("upstream errors: public request detail redacts deployment secrets and is b
 	);
 	assert.doesNotMatch(
 		error.publicMessage,
-		/private-upstream-model|sk-sensitive/,
+		/private-upstream-model|sk-sensitive/u,
 	);
-	assert.doesNotMatch(error.param ?? "", /private-upstream-model/);
+	assert.doesNotMatch(error.param ?? "", /private-upstream-model/u);
 	assert.ok(error.publicMessage.length <= 4096);
-	assert.match(error.publicMessage, /\[redacted\]/);
+	assert.match(error.publicMessage, /\[redacted\]/u);
 });
 
 test("upstream errors: short sensitive values redact as tokens without corrupting prose", () => {

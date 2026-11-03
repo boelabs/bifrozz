@@ -284,7 +284,8 @@ test("live models declare strict tools where the provider's strict mode covers t
 		openai: (_model, structured) => structured,
 		azureopenai: (_model, structured) => structured,
 		anthropic: (_model, structured) => structured,
-		googleaistudio: (model) => /^gemini-(?:[3-9]|\d{2,})(?:[.-]|$)/.test(model),
+		googleaistudio: (model) =>
+			/^gemini-(?:[3-9]|\d{2,})(?:[.-]|$)/u.test(model),
 		deepseek: () => true,
 	};
 	for (const [adapterKey, covers] of Object.entries(coversModel)) {

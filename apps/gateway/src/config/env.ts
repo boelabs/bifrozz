@@ -26,9 +26,9 @@ const encryptionKeyringString = z.string().refine((raw) => {
 			Object.keys(parsed).length <= 32 &&
 			Object.entries(parsed).every(
 				([id, key]) =>
-					/^[A-Za-z0-9_-]{1,64}$/.test(id) &&
+					/^[A-Za-z0-9_-]{1,64}$/u.test(id) &&
 					typeof key === "string" &&
-					/^[0-9a-fA-F]{64}$/.test(key),
+					/^[0-9a-fA-F]{64}$/u.test(key),
 			)
 		);
 	} catch {
@@ -60,7 +60,7 @@ export const env = createEnv({
 			.string()
 			.min(32, "MASTER_KEY must contain at least 32 characters"),
 		ENCRYPTION_KEYRING: encryptionKeyringString,
-		ACTIVE_ENCRYPTION_KEY_ID: z.string().regex(/^[A-Za-z0-9_-]{1,64}$/),
+		ACTIVE_ENCRYPTION_KEY_ID: z.string().regex(/^[A-Za-z0-9_-]{1,64}$/u),
 
 		/**
 		 * Apply pending migrations at boot, before the server listens. On by default because the

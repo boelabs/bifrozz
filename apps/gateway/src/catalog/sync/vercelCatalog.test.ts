@@ -255,7 +255,7 @@ test("Vercel catalog rejects duplicate source ids", () => {
 				language("example/model"),
 				language("example/model"),
 			]),
-		/Duplicate Vercel model id/,
+		/Duplicate Vercel model id/u,
 	);
 });
 

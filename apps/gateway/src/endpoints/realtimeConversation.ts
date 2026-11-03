@@ -14,18 +14,6 @@ import type { WSEvents } from "hono/ws";
 import type { Context } from "hono";
 
 import {
-	type CanonicalRealtimeConversationConfig,
-	realtimeUsageToCore,
-	type RealtimeUsage,
-} from "#core/realtime.ts";
-
-import {
-	RealtimeClientEventError,
-	realtimeErrorEvent,
-	eventId,
-} from "#contracts/openai/realtime.ts";
-
-import {
 	type RealtimeConversationSessionUpdate,
 	type RealtimeConversationClientEvent,
 	applyConversationSessionUpdate,
@@ -35,6 +23,18 @@ import {
 	renderConversationSession,
 	conversationConfigOf,
 } from "#contracts/openai/realtimeConversation.ts";
+
+import {
+	type RealtimeSocketEntry,
+	unregisterRealtimeSocket,
+	registerRealtimeSocket,
+	eventQueueLimitError,
+	sessionExpiredError,
+	realtimeMessageJson,
+	sendRealtimeEvent,
+	MAX_QUEUED_EVENTS,
+	REALTIME_MAX_MS,
+} from "./realtimeSockets.ts";
 
 import {
 	finishDownstreamWriteObservation,
@@ -51,16 +51,16 @@ import {
 } from "./runtime/pipeline.ts";
 
 import {
-	type RealtimeSocketEntry,
-	unregisterRealtimeSocket,
-	registerRealtimeSocket,
-	eventQueueLimitError,
-	sessionExpiredError,
-	realtimeMessageJson,
-	sendRealtimeEvent,
-	MAX_QUEUED_EVENTS,
-	REALTIME_MAX_MS,
-} from "./realtimeSockets.ts";
+	type CanonicalRealtimeConversationConfig,
+	realtimeUsageToCore,
+	type RealtimeUsage,
+} from "#core/realtime.ts";
+
+import {
+	RealtimeClientEventError,
+	realtimeErrorEvent,
+	eventId,
+} from "#contracts/openai/realtime.ts";
 
 /**
  * GET /v1/realtime?model=… with Upgrade: websocket — OpenAI's Realtime API in conversation mode,

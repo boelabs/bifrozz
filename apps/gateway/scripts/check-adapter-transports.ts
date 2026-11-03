@@ -25,10 +25,10 @@ for (const file of await sourceFiles(
 	fileURLToPath(new URL("../src/adapters", import.meta.url)),
 )) {
 	const source = await readFile(file, "utf8");
-	if (/\bfetch\s*\(/.test(source)) {
+	if (/\bfetch\s*\(/u.test(source)) {
 		violations.push(`${file}: direct fetch()`);
 	}
-	if (/new\s+WebSocket\s*\(/.test(source)) {
+	if (/new\s+WebSocket\s*\(/u.test(source)) {
 		violations.push(`${file}: direct WebSocket construction`);
 	}
 }

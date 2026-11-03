@@ -197,14 +197,14 @@ function CellContent({
 			return (
 				<div className="flex min-w-0 flex-col gap-1">
 					<code
-						className="w-fit rounded-md bg-muted px-1.5 text-muted-foreground text-xs"
+						className="w-fit rounded-md bg-muted px-1.5 text-xs text-muted-foreground"
 						title={deployment.id}
 					>
 						{deployment.id.slice(0, 8)}…
 					</code>
 					{deployment.label ? (
 						<span
-							className="truncate text-muted-foreground text-xs"
+							className="truncate text-xs text-muted-foreground"
 							title={deployment.label}
 						>
 							{deployment.label}
@@ -224,7 +224,7 @@ function CellContent({
 						{deployment.publicModel}
 					</Link>
 					<span
-						className="truncate font-mono text-muted-foreground text-xs"
+						className="truncate font-mono text-xs text-muted-foreground"
 						title={deployment.upstreamModel}
 					>
 						{deployment.upstreamModel}
@@ -251,7 +251,7 @@ function CellContent({
 			return <Timestamp value={deployment[column]} />;
 		case "limits":
 			return (
-				<div className="flex flex-col gap-1 text-muted-foreground text-xs tabular-nums">
+				<div className="flex flex-col gap-1 text-xs text-muted-foreground tabular-nums">
 					{deployment.rpmLimit === null ? null : (
 						<span>{deployment.rpmLimit.toLocaleString("en-US")} rpm</span>
 					)}
@@ -409,7 +409,7 @@ export function ModelsTable({
 					selects={
 						<>
 							<Placeholder className={GROW} loading={loading}>
-								<div className="@min-[40rem]:w-44 min-w-0 @min-[40rem]:flex-none flex-1">
+								<div className="min-w-0 flex-1 @min-[40rem]:w-44 @min-[40rem]:flex-none">
 									<SearchableSelect
 										aria-label="Filter by provider"
 										className="w-full"
@@ -536,7 +536,7 @@ export function ModelsTable({
 												? "No matching deployments"
 												: "No deployments yet"}
 										</p>
-										<p className="mt-2 text-muted-foreground text-sm">
+										<p className="mt-2 text-sm text-muted-foreground">
 											{deployments.length
 												? "Try another search or clear the filters."
 												: "Create a deployment to make its public model available."}
@@ -546,7 +546,7 @@ export function ModelsTable({
 							) : null}
 						</TableBody>
 					</Table>
-					<FrameFooter className="flex flex-wrap items-center justify-between gap-3 p-2 text-muted-foreground text-sm">
+					<FrameFooter className="flex flex-wrap items-center justify-between gap-3 p-2 text-sm text-muted-foreground">
 						<Placeholder loading={loading}>
 							<div className="flex items-center gap-2">
 								<span>Rows per page</span>

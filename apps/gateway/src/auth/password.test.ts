@@ -55,7 +55,7 @@ test("the root password comparison accepts only an exact match", () => {
 
 test("session tokens are url-safe and carry 256 bits of entropy", () => {
 	const token = generateToken();
-	assert.match(token, /^[A-Za-z0-9_-]+$/);
+	assert.match(token, /^[A-Za-z0-9_-]+$/u);
 	assert.equal(Buffer.from(token, "base64url").length, 32);
 	const tokens = new Set(Array.from({ length: 200 }, generateToken));
 	assert.equal(tokens.size, 200);

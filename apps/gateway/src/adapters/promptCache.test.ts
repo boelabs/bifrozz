@@ -311,7 +311,7 @@ for (const source of ["chat", "responses"]) {
 					{ generate: true },
 				);
 				assert.deepEqual(ws.prompt_cache_options, options);
-				assert.match(JSON.stringify(ws.input), /prompt_cache_breakpoint/);
+				assert.match(JSON.stringify(ws.input), /prompt_cache_breakpoint/u);
 			});
 		}
 	}
@@ -342,7 +342,7 @@ test("cache controls accept the previous extra_body escape hatch and reject coll
 	] as const) {
 		assert.throws(
 			() => build(provider, canonical, transport),
-			/cannot preserve/,
+			/cannot preserve/u,
 		);
 	}
 });

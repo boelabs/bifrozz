@@ -517,8 +517,8 @@ adminApp.delete("/cache", async (c) => {
 
 /* ----------------------------------------------------------- extensions */
 
-const EXTENSION_KEY = /^[a-z0-9]+$/;
-const INSTANCE_ID = /^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$/;
+const EXTENSION_KEY = /^[a-z0-9]+$/u;
+const INSTANCE_ID = /^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$/u;
 
 const uploadArtifactSchema = z.object({
 	key: z.string().regex(EXTENSION_KEY, "key must match ^[a-z0-9]+$"),

@@ -117,9 +117,9 @@ export function ActivityChart({
 			}
 			title={<h2>Activity</h2>}
 		>
-			<p className="mb-6 font-semibold text-2xl tabular-nums">
+			<p className="mb-6 text-2xl font-semibold tabular-nums">
 				{formatValue(total, metric, true)}{" "}
-				<span className="font-normal text-fg-muted text-xs">
+				<span className="text-xs font-normal text-fg-muted">
 					{metrics[metric].label.toLowerCase()} in this period
 				</span>
 			</p>

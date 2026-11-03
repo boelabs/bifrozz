@@ -117,6 +117,6 @@ test("the gateway's own message survives a failure, instead of a bare status", a
 			{ model: "m", prompt: "a fox", files: [], settings: {} },
 			{ fetch: stub, csrf: () => undefined },
 		),
-		/size is not supported/,
+		/size is not supported/u,
 	);
 });

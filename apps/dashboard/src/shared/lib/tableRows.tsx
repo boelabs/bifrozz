@@ -22,12 +22,14 @@ export function createTableRows<T>() {
 		setRows: (rows: readonly T[] | null) => void;
 	} | null>(null);
 
+	// biome-ignore lint/correctness/noComponentHookFactories: createTableRows runs once per table at module scope, never in a render, so the identity is stable
 	function Provider({ children }: { children: ReactNode }) {
 		const [rows, setRows] = useState<readonly T[] | null>(null);
 		return <Context value={{ rows, setRows }}>{children}</Context>;
 	}
 
 	/** Called by the table with the rows it renders. */
+	// biome-ignore lint/correctness/noComponentHookFactories: see Provider
 	function usePublishRows(rows: readonly T[]) {
 		const setRows = useContext(Context)?.setRows;
 		useEffect(() => {
@@ -40,6 +42,7 @@ export function createTableRows<T>() {
 	}
 
 	/** The rows on screen, or `null` while there is no table. */
+	// biome-ignore lint/correctness/noComponentHookFactories: see Provider
 	function useTableRows(): readonly T[] | null {
 		return useContext(Context)?.rows ?? null;
 	}

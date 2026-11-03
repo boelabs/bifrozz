@@ -79,7 +79,7 @@ export function SessionsDialog({
 			key: "lastSeen",
 			header: "Last seen",
 			render: (session) => (
-				<span className="text-fg-muted text-xs">
+				<span className="text-xs text-fg-muted">
 					{new Date(session.lastSeenAt).toLocaleString()}
 				</span>
 			),
@@ -88,7 +88,7 @@ export function SessionsDialog({
 			key: "expires",
 			header: "Expires",
 			render: (session) => (
-				<span className="text-fg-muted text-xs">
+				<span className="text-xs text-fg-muted">
 					{new Date(session.expiresAt).toLocaleString()}
 				</span>
 			),
@@ -105,7 +105,7 @@ export function SessionsDialog({
 			render: (session) =>
 				session.userAgent ? (
 					<span
-						className="line-clamp-1 max-w-64 text-fg-muted text-xs"
+						className="line-clamp-1 max-w-64 text-xs text-fg-muted"
 						title={session.userAgent}
 					>
 						{session.userAgent}

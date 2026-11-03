@@ -160,7 +160,7 @@ function centsPerMillionToUsdPerToken(
 	if (normalized === 0) {
 		return "0";
 	}
-	return normalized.toFixed(12).replace(/\.?0+$/, "");
+	return normalized.toFixed(12).replace(/\.?0+$/u, "");
 }
 
 function minDefined(values: Array<number | undefined>): number | undefined {
@@ -208,7 +208,7 @@ function publicPricing(metas: ResolvedModelMetadata[]): Record<string, string> {
 		result.search_unit =
 			searchUnitCents === 0
 				? "0"
-				: (searchUnitCents / 100).toFixed(12).replace(/\.?0+$/, "");
+				: (searchUnitCents / 100).toFixed(12).replace(/\.?0+$/u, "");
 	}
 	return result;
 }

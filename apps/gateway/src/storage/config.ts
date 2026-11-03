@@ -44,7 +44,7 @@ export function parseObjectStorage(
 
 	// Parsed by hand rather than through `URL`, which rewrites a relative path into an absolute one.
 	if (value.startsWith("file:")) {
-		const root = value.slice("file:".length).replace(/^\/\//, "");
+		const root = value.slice("file:".length).replace(/^\/\//u, "");
 		if (!root) {
 			invalid("file: needs a path");
 		}
@@ -60,7 +60,7 @@ export function parseObjectStorage(
 	} catch {
 		return invalid(`could not parse "${value}"`);
 	}
-	const bucket = decodeURIComponent(url.pathname.replace(/^\//, ""));
+	const bucket = decodeURIComponent(url.pathname.replace(/^\//u, ""));
 	if (!bucket) {
 		invalid("no bucket in the path");
 	}

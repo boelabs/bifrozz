@@ -7,11 +7,11 @@
  * something inside the process can flip.
  */
 
-process.env.OBSERVABILITY_PAYLOAD_ACCESS = "sealed";
-
 import { randomUUID } from "node:crypto";
 import assert from "node:assert/strict";
 import { test } from "node:test";
+
+process.env.OBSERVABILITY_PAYLOAD_ACCESS = "sealed";
 
 const { payloadAccessAudit, payloadSamples } = await import("#db/schema.ts");
 const { getPayloadSample, payloadAccessIsOpen } = await import(

@@ -73,11 +73,11 @@ export function ConfirmProvider({ children }: { children: ReactNode }) {
 				open={request !== null}
 			>
 				<AlertDialogContent className="gap-4">
-					<AlertDialogTitle className="font-semibold text-fg text-lg">
+					<AlertDialogTitle className="text-lg font-semibold text-fg">
 						{request?.title}
 					</AlertDialogTitle>
 					{request?.description ? (
-						<AlertDialogDescription className="text-fg-muted text-sm">
+						<AlertDialogDescription className="text-sm text-fg-muted">
 							{request.description}
 						</AlertDialogDescription>
 					) : null}

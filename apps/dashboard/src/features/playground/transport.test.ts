@@ -405,7 +405,7 @@ test("chat completions streaming errors become UI errors without retries", async
 	}
 	assert.match(
 		JSON.stringify(chunks),
-		/upstream rejected|inference request failed/i,
+		/upstream rejected|inference request failed/iu,
 	);
 	assert.equal(calls, 1);
 });

@@ -69,7 +69,7 @@ function validateContentInputs(adapter: Adapter): void {
 			if (
 				support.mimeTypes?.some(
 					(mime: string) =>
-						!/^[-a-z0-9!#$&^_.+]+\/(?:\*|[-a-z0-9!#$&^_.+]+)$/i.test(mime),
+						!/^[-a-z0-9!#$&^_.+]+\/(?:\*|[-a-z0-9!#$&^_.+]+)$/iu.test(mime),
 				)
 			) {
 				throw new Error(

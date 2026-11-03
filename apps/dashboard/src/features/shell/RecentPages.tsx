@@ -97,7 +97,7 @@ export function PinnedPages({ onNavigate }: { onNavigate?: () => void }) {
 	}
 	return (
 		<div className="flex flex-col gap-0.5">
-			<p className="px-2 pb-1 font-medium text-muted-foreground text-xs">
+			<p className="px-2 pb-1 text-xs font-medium text-muted-foreground">
 				Pinned
 			</p>
 			{pinned.map((page) => (
@@ -109,13 +109,13 @@ export function PinnedPages({ onNavigate }: { onNavigate?: () => void }) {
 						onClick={onNavigate}
 					>
 						<span className="min-w-0 flex-1 truncate">{page.title}</span>
-						<span className="pointer-coarse:hidden shrink-0 text-muted-foreground/72 text-xs group-focus-within/pinned:opacity-0 group-hover/pinned:opacity-0">
+						<span className="shrink-0 text-xs text-muted-foreground/72 group-focus-within/pinned:opacity-0 group-hover/pinned:opacity-0 pointer-coarse:hidden">
 							{areaOf(page.href)}
 						</span>
 					</Link>
 					<Button
 						aria-label={`Unpin ${page.title}`}
-						className="absolute end-1 top-1/2 -translate-y-1/2 text-muted-foreground opacity-0 pointer-coarse:opacity-100 group-focus-within/pinned:opacity-100 group-hover/pinned:opacity-100"
+						className="absolute end-1 top-1/2 -translate-y-1/2 text-muted-foreground opacity-0 group-focus-within/pinned:opacity-100 group-hover/pinned:opacity-100 pointer-coarse:opacity-100"
 						mode="icon"
 						onClick={() =>
 							updateRecent(key, (current) => togglePin(current, page))

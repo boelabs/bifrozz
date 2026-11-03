@@ -65,7 +65,7 @@ export function ListSelect({
 			<SelectTrigger
 				aria-label={label}
 				className={cn(
-					"@min-[40rem]:w-44 min-w-0 @min-[40rem]:flex-none flex-1",
+					"min-w-0 flex-1 @min-[40rem]:w-44 @min-[40rem]:flex-none",
 					className,
 				)}
 			>
@@ -129,14 +129,14 @@ export function ListToolbar({
 		<div className="@container flex flex-col gap-3" data-slot="list-toolbar">
 			<div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
 				{selects ? (
-					<div className="@min-[40rem]:flex hidden min-w-0 flex-wrap items-center gap-2">
+					<div className="hidden min-w-0 flex-wrap items-center gap-2 @min-[40rem]:flex">
 						{selects}
 					</div>
 				) : (
-					<span aria-hidden="true" className="@min-[40rem]:block hidden" />
+					<span aria-hidden="true" className="hidden @min-[40rem]:block" />
 				)}
 				{controls || selects ? (
-					<div className="flex @min-[40rem]:w-auto w-full min-w-0 flex-wrap items-center gap-2">
+					<div className="flex w-full min-w-0 flex-wrap items-center gap-2 @min-[40rem]:w-auto">
 						{controls}
 						{selects ? <FiltersSheet>{selects}</FiltersSheet> : null}
 					</div>

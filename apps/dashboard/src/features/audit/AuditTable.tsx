@@ -36,7 +36,7 @@ const columns: Column<AuditEntry>[] = [
 		render: (row) => (
 			// The operator's own timezone, which the server does not have.
 			<span
-				className="whitespace-nowrap text-fg-muted text-xs"
+				className="text-xs whitespace-nowrap text-fg-muted"
 				suppressHydrationWarning
 			>
 				{new Date(row.at).toLocaleString()}
@@ -56,7 +56,7 @@ const columns: Column<AuditEntry>[] = [
 			return (
 				<div className="flex items-center gap-2">
 					{method ? (
-						<span className="font-semibold text-xs">{method}</span>
+						<span className="text-xs font-semibold">{method}</span>
 					) : null}
 					<Mono>{path}</Mono>
 				</div>
@@ -105,7 +105,7 @@ const columns: Column<AuditEntry>[] = [
 		header: "IP",
 		render: (row) =>
 			row.ip ? (
-				<span className="text-fg-muted text-xs">{row.ip}</span>
+				<span className="text-xs text-fg-muted">{row.ip}</span>
 			) : (
 				<Dash />
 			),

@@ -133,7 +133,7 @@ function deepSeekChatBaseUrl(
 		return baseUrl;
 	}
 	url.pathname = prefix;
-	return url.toString().replace(/\/+$/, "");
+	return url.toString().replace(/\/+$/u, "");
 }
 
 /**

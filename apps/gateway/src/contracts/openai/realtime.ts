@@ -23,7 +23,7 @@ export const INTERIM_INCLUDE = "item.input_audio_transcription.interim";
 
 const keyword = z
 	.string()
-	.regex(/^[^<>\r\n]*$/, "Keywords must not contain <, >, CR or LF");
+	.regex(/^[^<>\r\n]*$/u, "Keywords must not contain <, >, CR or LF");
 
 const formatSchema = z.discriminatedUnion("type", [
 	z.object({

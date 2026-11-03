@@ -134,7 +134,7 @@ export function shortId(id: string): string {
 }
 
 const OPERATION_ID =
-	/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+	/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/iu;
 
 /**
  * Whether a URL segment can name an operation. Anything else is a page that does not exist, not a

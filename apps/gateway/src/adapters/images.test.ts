@@ -119,7 +119,7 @@ test("OpenAI images: direct generation builds /images/generations and parses usa
 				},
 				ctx("images"),
 			),
-		/required b64_json/,
+		/required b64_json/u,
 	);
 });
 
@@ -233,7 +233,7 @@ test("OpenAI-compatible omni: uses chat/completions, modalities, and extensible 
 		assert.equal(body.image_config.strength, 0.7);
 		assert.match(
 			body.messages[0].content[1].image_url.url,
-			/^data:image\/png;base64,/,
+			/^data:image\/png;base64,/u,
 		);
 		const response = await must(
 			openaicompatibleAdapter,

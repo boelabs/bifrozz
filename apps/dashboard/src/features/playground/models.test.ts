@@ -173,7 +173,7 @@ test("malformed responses and request errors surface rather than becoming empty 
 		error: { error: { message: "Discovery unavailable" } },
 		response: new Response(null, { status: 503 }),
 	}));
-	await assert.rejects(fetchPublicModels(), /Discovery unavailable/);
+	await assert.rejects(fetchPublicModels(), /Discovery unavailable/u);
 });
 
 test("fetches only public model discovery and preserves successful empty responses", async () => {
@@ -186,12 +186,12 @@ test("fetches only public model discovery and preserves successful empty respons
 
 test("a missing response body and transport failures are not mistaken for no models", async () => {
 	mock.method(publicApi, "GET", async () => ({ response: new Response() }));
-	await assert.rejects(fetchPublicModels(), /empty response/);
+	await assert.rejects(fetchPublicModels(), /empty response/u);
 	mock.restoreAll();
 	mock.method(publicApi, "GET", async () => {
 		throw new Error("Network unavailable");
 	});
-	await assert.rejects(fetchPublicModels(), /Network unavailable/);
+	await assert.rejects(fetchPublicModels(), /Network unavailable/u);
 });
 
 test("incompatible numeric constraints and discrete enumerations never produce invalid sliders", () => {

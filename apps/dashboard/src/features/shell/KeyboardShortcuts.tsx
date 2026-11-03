@@ -192,7 +192,7 @@ function ShortcutList({
 }) {
 	return (
 		<section className="flex flex-col gap-1">
-			<h3 className="font-medium text-muted-foreground text-xs">{title}</h3>
+			<h3 className="text-xs font-medium text-muted-foreground">{title}</h3>
 			<ul className="flex flex-col">
 				{rows.map((row) => (
 					<li

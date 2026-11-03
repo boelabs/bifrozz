@@ -1318,7 +1318,7 @@ export function buildOpenApiDocument() {
 						"The module source is validated (imported and checked for a valid definition whose key matches) before it is stored, so an invalid upload is rejected with 400 and never reaches the fleet.",
 					requestBody: jsonBody(
 						z.object({
-							key: z.string().regex(/^[a-z0-9]+$/),
+							key: z.string().regex(/^[a-z0-9]+$/u),
 							code: z.string().meta({ description: "ESM module source" }),
 						}),
 					),
@@ -1408,8 +1408,8 @@ export function buildOpenApiDocument() {
 					],
 					requestBody: jsonBody(
 						z.object({
-							id: z.string().regex(/^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$/),
-							definition: z.string().regex(/^[a-z0-9]+$/),
+							id: z.string().regex(/^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$/u),
+							definition: z.string().regex(/^[a-z0-9]+$/u),
 							enabled: z.boolean().optional(),
 							critical: z.union([z.boolean(), z.null()]).optional(),
 							priority: z.int().optional(),
@@ -1439,7 +1439,7 @@ export function buildOpenApiDocument() {
 						z.object({
 							definition: z
 								.string()
-								.regex(/^[a-z0-9]+$/)
+								.regex(/^[a-z0-9]+$/u)
 								.optional(),
 							enabled: z.boolean().optional(),
 							critical: z.union([z.boolean(), z.null()]).optional(),

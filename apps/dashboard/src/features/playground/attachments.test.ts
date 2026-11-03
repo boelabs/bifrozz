@@ -72,12 +72,12 @@ test("validation rejects unsupported and empty files before reading them", () =>
 	const unsupported = new File(["data"], "notes.csv", { type: "text/csv" });
 	assert.throws(
 		() => validateAttachments([unsupported], ["text/plain"]),
-		/notes\.csv: this file type is not supported/,
+		/notes\.csv: this file type is not supported/u,
 	);
 	const empty = new File([], "empty.txt", { type: "text/plain" });
 	assert.throws(
 		() => validateAttachments([empty], ["text/plain;charset=utf-8"]),
-		/empty\.txt: the file is empty/,
+		/empty\.txt: the file is empty/u,
 	);
 });
 

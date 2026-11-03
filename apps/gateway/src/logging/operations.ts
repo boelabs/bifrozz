@@ -36,7 +36,8 @@ const finalizationQueue: Array<{
 	resolve: () => void;
 }> = [];
 let drainingFinalizations = false;
-const SENSITIVE_KEY = /authorization|api[-_]?key|token|secret|password|cookie/i;
+const SENSITIVE_KEY =
+	/authorization|api[-_]?key|token|secret|password|cookie/iu;
 const OPERATION_LEASE_TTL_SECONDS =
 	Math.ceil(EXECUTION_POLICY_MAX_TOTAL_MS / 1000) + 300;
 const operationLeaseKey = (operationId: string) =>
@@ -132,9 +133,9 @@ function semanticByteCounts(value: unknown): {
 		}
 		if (typeof child === "string") {
 			const bytes = Buffer.byteLength(child);
-			if (/reasoning|thinking/i.test(key)) {
+			if (/reasoning|thinking/iu.test(key)) {
 				reasoningBytes += bytes;
-			} else if (/content|text|output|arguments|transcript/i.test(key)) {
+			} else if (/content|text|output|arguments|transcript/iu.test(key)) {
 				outputBytes += bytes;
 			}
 			return;

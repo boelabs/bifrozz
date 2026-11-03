@@ -141,7 +141,7 @@ test("checkAzureListing: a page missing a tab is incomplete, never 'nothing new'
 		() => checkAzureListing(new Map()),
 	);
 	assert.equal(findings.complete, false);
-	assert.match(findings.error ?? "", /azureopenai, azurefoundry/);
+	assert.match(findings.error ?? "", /azureopenai, azurefoundry/u);
 	assert.deepEqual(findings.missing, []);
 });
 
@@ -151,5 +151,5 @@ test("checkAzureListing: a failed fetch is incomplete", async () => {
 		() => checkAzureListing(new Map()),
 	);
 	assert.equal(findings.complete, false);
-	assert.match(findings.error ?? "", /status 404/);
+	assert.match(findings.error ?? "", /status 404/u);
 });

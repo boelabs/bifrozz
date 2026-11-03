@@ -1,7 +1,7 @@
 import { summaryVisible, toUpstreamReasoningEffort } from "#core/reasoning.ts";
+import { makeGeminiRealtimeConversationHandler } from "./liveConversation.ts";
 import { mergeExtraBody, mergeExtraBodyDeep } from "#core/extraBody.ts";
 import { type BaseCreds, requireApiKeyCreds } from "#adapters/creds.ts";
-import { makeGeminiRealtimeConversationHandler } from "./liveConversation.ts";
 import { makeGeminiRealtimeTranscriptionHandler } from "./live.ts";
 import { mapUpstreamHttpError } from "#adapters/upstreamError.ts";
 import { upstreamFetch } from "#gateway/instrumentedTransport.ts";
@@ -161,7 +161,7 @@ function creds(ctx: AdapterContext): GoogleCreds & { apiKey: string } {
 function dataUrlToInline(
 	url: string,
 ): { mimeType: string; data: string } | null {
-	const [, mimeType, data] = /^data:([^;]+);base64,(.*)$/s.exec(url) ?? [];
+	const [, mimeType, data] = /^data:([^;]+);base64,(.*)$/su.exec(url) ?? [];
 	if (mimeType === undefined || data === undefined) {
 		return null;
 	}
@@ -294,7 +294,7 @@ const MISSING_THOUGHT_SIGNATURE = "skip_thought_signature_validator";
 
 function isGemini3OrNewerModel(ctx: AdapterContext): boolean {
 	const model = ctx.upstreamModel.toLowerCase();
-	return /(?:^|[/_-])gemini-(?:[3-9]|[1-9]\d)(?:[._-]|$)/.test(model);
+	return /(?:^|[/_-])gemini-(?:[3-9]|[1-9]\d)(?:[._-]|$)/u.test(model);
 }
 
 function requiresThoughtSignature(ctx: AdapterContext): boolean {
@@ -702,11 +702,11 @@ function mapGeminiFinish(
 			return null;
 		default: {
 			const normalized = String(reason).toLowerCase();
-			if (/max.?tokens?|context.?window|length/.test(normalized)) {
+			if (/max.?tokens?|context.?window|length/u.test(normalized)) {
 				return "length";
 			}
 			if (
-				/filter|safety|guardrail|block|prohibit|refus|recitation/.test(
+				/filter|safety|guardrail|block|prohibit|refus|recitation/u.test(
 					normalized,
 				)
 			) {
@@ -1065,7 +1065,7 @@ function googleRetryAfterMs(
 		) {
 			continue;
 		}
-		const match = /^(\d+(?:\.\d+)?)s$/.exec(entry.retryDelay);
+		const match = /^(\d+(?:\.\d+)?)s$/u.exec(entry.retryDelay);
 		if (!match) {
 			continue;
 		}
@@ -1245,7 +1245,7 @@ function parseGeminiResponse(
 const chat: ChatHandler = {
 	buildRequest(req, ctx) {
 		const c = creds(ctx);
-		const base = (c.baseUrl ?? DEFAULT_BASE).replace(/\/+$/, "");
+		const base = (c.baseUrl ?? DEFAULT_BASE).replace(/\/+$/u, "");
 		const method = req.stream
 			? "streamGenerateContent?alt=sse"
 			: "generateContent";
@@ -1439,7 +1439,7 @@ const chat: ChatHandler = {
 const imageHandler: ImageHandler = {
 	async buildRequest(req, ctx) {
 		const c = creds(ctx);
-		const base = (c.baseUrl ?? DEFAULT_BASE).replace(/\/+$/, "");
+		const base = (c.baseUrl ?? DEFAULT_BASE).replace(/\/+$/u, "");
 		return {
 			method: "POST",
 			url: `${base}/models/${encodeURIComponent(ctx.upstreamModel)}:generateContent`,
@@ -1797,7 +1797,7 @@ function googleInteractionVideo(
 }
 
 function googleInteractionPath(base: string, interactionId: string): string {
-	const id = interactionId.replace(/^interactions\//, "");
+	const id = interactionId.replace(/^interactions\//u, "");
 	return `${base}/interactions/${encodeURIComponent(id)}`;
 }
 
@@ -1906,7 +1906,7 @@ function googleInteractionInput(req: CanonicalVideoRequest): unknown[] {
 		}
 	}
 
-	const hasExplicitBindings = /\[#\s*(?:Sources|References)\b/i.test(
+	const hasExplicitBindings = /\[#\s*(?:Sources|References)\b/iu.test(
 		req.prompt,
 	);
 	const prefix = hasExplicitBindings
@@ -2028,7 +2028,7 @@ async function getGoogleInteraction(
 	ctx: AdapterContext,
 ): Promise<unknown> {
 	const c = creds(ctx);
-	const base = (c.baseUrl ?? DEFAULT_BASE).replace(/\/+$/, "");
+	const base = (c.baseUrl ?? DEFAULT_BASE).replace(/\/+$/u, "");
 	return googleFetchJson(
 		googleInteractionPath(base, job.upstreamJobId),
 		{
@@ -2080,7 +2080,7 @@ const videoGeneration: VideoHandler = {
 	async submit(req, ctx) {
 		if (ctx.transport === "interactions") {
 			const c = creds(ctx);
-			const base = (c.baseUrl ?? DEFAULT_BASE).replace(/\/+$/, "");
+			const base = (c.baseUrl ?? DEFAULT_BASE).replace(/\/+$/u, "");
 			return parseGoogleInteractionJob(
 				await googleFetchJson(
 					`${base}/interactions`,
@@ -2105,7 +2105,7 @@ const videoGeneration: VideoHandler = {
 			});
 		}
 		const c = creds(ctx);
-		const base = (c.baseUrl ?? DEFAULT_BASE).replace(/\/+$/, "");
+		const base = (c.baseUrl ?? DEFAULT_BASE).replace(/\/+$/u, "");
 		return parseGoogleVideoJob(
 			await googleFetchJson(
 				`${base}/models/${encodeURIComponent(ctx.upstreamModel)}:predictLongRunning`,
@@ -2131,7 +2131,7 @@ const videoGeneration: VideoHandler = {
 			);
 		}
 		const c = creds(ctx);
-		const base = (c.baseUrl ?? DEFAULT_BASE).replace(/\/+$/, "");
+		const base = (c.baseUrl ?? DEFAULT_BASE).replace(/\/+$/u, "");
 		return parseGoogleVideoJob(
 			await googleFetchJson(
 				`${base}/${job.upstreamJobId}`,
@@ -2206,7 +2206,7 @@ const videoGeneration: VideoHandler = {
 			return;
 		}
 		const c = creds(ctx);
-		const base = (c.baseUrl ?? DEFAULT_BASE).replace(/\/+$/, "");
+		const base = (c.baseUrl ?? DEFAULT_BASE).replace(/\/+$/u, "");
 		const path = googleInteractionPath(base, job.upstreamJobId);
 		await googleFetchJson(
 			`${path}/cancel`,
@@ -2241,7 +2241,7 @@ const embeddings: EmbeddingsHandler = {
 			});
 		}
 		const c = creds(ctx);
-		const base = (c.baseUrl ?? DEFAULT_BASE).replace(/\/+$/, "");
+		const base = (c.baseUrl ?? DEFAULT_BASE).replace(/\/+$/u, "");
 		const { body, method } = googleEmbeddingRequestBody(req, ctx);
 		return {
 			method: "POST",
@@ -2273,7 +2273,7 @@ const audioTranscription: TranscriptionHandler = {
 			});
 		}
 		const c = creds(ctx);
-		const base = (c.baseUrl ?? DEFAULT_BASE).replace(/\/+$/, "");
+		const base = (c.baseUrl ?? DEFAULT_BASE).replace(/\/+$/u, "");
 		const audio = (await readFile(req.file.path)).toString("base64");
 		return {
 			method: "POST",

@@ -23,10 +23,10 @@ describe("styled control composition", () => {
 				/>
 			</Form>,
 		);
-		assert.match(html, /name="adapterKey"/);
-		assert.match(html, /value="openai"/);
-		assert.match(html, /required=""/);
-		assert.match(html, /OpenAI/);
+		assert.match(html, /name="adapterKey"/u);
+		assert.match(html, /value="openai"/u);
+		assert.match(html, /required=""/u);
+		assert.match(html, /OpenAI/u);
 	});
 	test("standalone labelled toggles do not require a field context", () => {
 		const html = renderToStaticMarkup(
@@ -39,11 +39,11 @@ describe("styled control composition", () => {
 				</Switch>
 			</>,
 		);
-		assert.match(html, /role="checkbox"/);
-		assert.match(html, /role="switch"/);
-		assert.match(html, /name="analytics"/);
-		assert.match(html, /name="routing"/);
-		assert.match(html, /aria-checked="true"/);
+		assert.match(html, /role="checkbox"/u);
+		assert.match(html, /role="switch"/u);
+		assert.match(html, /name="analytics"/u);
+		assert.match(html, /name="routing"/u);
+		assert.match(html, /aria-checked="true"/u);
 	});
 
 	test("native form names, required flags and initial values survive wrappers", () => {
@@ -61,15 +61,15 @@ describe("styled control composition", () => {
 				<Textarea defaultValue="Local notes" label="Notes" name="notes" />
 			</Form>,
 		);
-		assert.match(html, /name="email"/);
-		assert.match(html, /value="local@example.com"/);
-		assert.match(html, /required=""/);
-		assert.match(html, /name="region"/);
-		assert.match(html, /value="eu"/);
-		assert.match(html, /Europe/);
+		assert.match(html, /name="email"/u);
+		assert.match(html, /value="local@example.com"/u);
+		assert.match(html, /required=""/u);
+		assert.match(html, /name="region"/u);
+		assert.match(html, /value="eu"/u);
+		assert.match(html, /Europe/u);
 		assert.match(
 			html,
-			/<textarea[^>]*name="notes"[^>]*>Local notes<\/textarea>/,
+			/<textarea[^>]*name="notes"[^>]*>Local notes<\/textarea>/u,
 		);
 	});
 
@@ -80,8 +80,8 @@ describe("styled control composition", () => {
 				<Input required />
 			</Field.Root>,
 		);
-		assert.match(html, /<label[^>]*for="[^"]+"/);
-		assert.match(html, /<input[^>]*name="name"/);
+		assert.match(html, /<label[^>]*for="[^"]+"/u);
+		assert.match(html, /<input[^>]*name="name"/u);
 	});
 
 	test("unlabelled convenience fields consume form errors and preserve layout", () => {
@@ -99,20 +99,23 @@ describe("styled control composition", () => {
 					/>
 				</Form>,
 			);
-			assert.match(html, /<form[^>]*noValidate=""/);
-			assert.match(html, /<div[^>]*class="[^"]*contents[^"]*"/);
-			const control = html.match(/<(?:input|textarea)\b[^>]*>/)?.[0] ?? "";
-			assert.match(control, /name="email"/);
-			assert.match(control, /required=""/);
-			assert.match(control, /aria-invalid="true"/);
-			assert.match(control, /custom-control/);
-			assert.match(html, /data-slot="input-control"[^>]*style="[^"]*width:50%/);
+			assert.match(html, /<form[^>]*noValidate=""/u);
+			assert.match(html, /<div[^>]*class="[^"]*contents[^"]*"/u);
+			const control = html.match(/<(?:input|textarea)\b[^>]*>/u)?.[0] ?? "";
+			assert.match(control, /name="email"/u);
+			assert.match(control, /required=""/u);
+			assert.match(control, /aria-invalid="true"/u);
+			assert.match(control, /custom-control/u);
 			assert.match(
 				html,
-				/data-slot="input-control"[^>]*style="[^"]*border-radius:3px/,
+				/data-slot="input-control"[^>]*style="[^"]*width:50%/u,
 			);
-			assert.match(control, /margin-left:4px/);
-			assert.equal(html.match(/width:50%/g)?.length, 1);
+			assert.match(
+				html,
+				/data-slot="input-control"[^>]*style="[^"]*border-radius:3px/u,
+			);
+			assert.match(control, /margin-left:4px/u);
+			assert.equal(html.match(/width:50%/gu)?.length, 1);
 		}
 	});
 
@@ -134,28 +137,28 @@ describe("styled control composition", () => {
 					</Form>,
 				);
 				assert.equal(
-					html.match(/<div[^>]*class="[^"]*flex-col items-start gap-2[^"]*"/g)
+					html.match(/<div[^>]*class="[^"]*flex-col items-start gap-2[^"]*"/gu)
 						?.length,
 					1,
 				);
-				const control = html.match(/<(?:input|textarea)\b[^>]*>/)?.[0] ?? "";
-				assert.match(control, /name="outer"/);
-				assert.match(control, /data-invalid=""/);
+				const control = html.match(/<(?:input|textarea)\b[^>]*>/u)?.[0] ?? "";
+				assert.match(control, /name="outer"/u);
+				assert.match(control, /data-invalid=""/u);
 				if (labelled) {
-					assert.match(control, /aria-invalid="true"/);
+					assert.match(control, /aria-invalid="true"/u);
 				} else {
-					assert.match(control, /disabled=""/);
+					assert.match(control, /disabled=""/u);
 				}
 				assert.match(
 					html,
-					/data-slot="input-control"[^>]*style="[^"]*width:50%/,
+					/data-slot="input-control"[^>]*style="[^"]*width:50%/u,
 				);
-				const labelId = html.match(/<label[^>]*for="([^"]+)"/)?.[1];
+				const labelId = html.match(/<label[^>]*for="([^"]+)"/u)?.[1];
 				assert.ok(labelId);
 				assert.ok(control.includes(`id="${labelId}"`));
 				if (labelled) {
-					assert.match(html, /Help text/);
-					assert.match(html, /Server validation failed/);
+					assert.match(html, /Help text/u);
+					assert.match(html, /Server validation failed/u);
 				}
 			}
 		}
@@ -173,9 +176,9 @@ describe("styled control composition", () => {
 				width="50%"
 			/>,
 		);
-		assert.match(html, /<input[^>]*class="[^"]*custom-disabled[^"]*"/);
-		assert.match(html, /<input[^>]*style="[^"]*width:240px/);
-		assert.doesNotMatch(html, /width:50%/);
+		assert.match(html, /<input[^>]*class="[^"]*custom-disabled[^"]*"/u);
+		assert.match(html, /<input[^>]*style="[^"]*width:240px/u);
+		assert.doesNotMatch(html, /width:50%/u);
 	});
 
 	test("percentage widths apply once to labelled control layout", () => {
@@ -186,9 +189,9 @@ describe("styled control composition", () => {
 			</Select>,
 		]) {
 			const html = renderToStaticMarkup(control);
-			assert.equal(html.match(/width:50%/g)?.length, 1);
-			assert.match(html, /border-radius:3px/);
-			assert.doesNotMatch(html, /borderRadius=/);
+			assert.equal(html.match(/width:50%/gu)?.length, 1);
+			assert.match(html, /border-radius:3px/u);
+			assert.doesNotMatch(html, /borderRadius=/u);
 		}
 	});
 
@@ -198,8 +201,8 @@ describe("styled control composition", () => {
 				Save
 			</Button>,
 		);
-		assert.match(html, /<button[^>]*disabled=""/);
-		assert.match(html, /aria-busy="true"/);
+		assert.match(html, /<button[^>]*disabled=""/u);
+		assert.match(html, /aria-busy="true"/u);
 	});
 
 	test("icon mode squares the button at its size and drops label padding", () => {
@@ -210,11 +213,11 @@ describe("styled control composition", () => {
 			["lg", "size-10"],
 		] as const) {
 			const styles = buttonStyles({ size, mode: "icon" });
-			assert.match(styles, new RegExp(`\\b${square}\\b`));
-			assert.match(styles, /\bp-0\b/);
+			assert.match(styles, new RegExp(`\\b${square}\\b`, "u"));
+			assert.match(styles, /\bp-0\b/u);
 			// The padding that sizes a labelled button is exactly what makes an icon-only one wide.
-			assert.doesNotMatch(styles, /\bpx-\d/);
+			assert.doesNotMatch(styles, /\bpx-\d/u);
 		}
-		assert.match(buttonStyles({ size: "sm" }), /px-\[calc/);
+		assert.match(buttonStyles({ size: "sm" }), /px-\[calc/u);
 	});
 });

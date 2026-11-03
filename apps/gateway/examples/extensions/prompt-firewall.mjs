@@ -17,11 +17,11 @@ import { defineExtension } from "#extensions/sdk.ts";
 // Curated default heuristics. These are intentionally conservative (high precision, low recall): a
 // firewall that mangles legitimate prompts is worse than one that misses an exotic attack.
 const DEFAULT_PATTERNS = [
-	/ignore\s+(?:all\s+|any\s+)?(?:previous|prior|above)\s+(?:instructions?|prompts?|messages?)/i,
-	/disregard\s+(?:the\s+)?(?:above|previous|earlier|system)\b/i,
-	/(?:reveal|print|repeat|show|leak)\s+(?:your\s+|the\s+)?(?:system\s+prompt|hidden\s+instructions?|initial\s+prompt)/i,
-	/you\s+are\s+now\s+(?:DAN|in\s+developer\s+mode|an?\s+unrestricted)/i,
-	/pretend\s+(?:you\s+are|to\s+be)\s+(?:an?\s+)?(?:unfiltered|jailbroken|uncensored)/i,
+	/ignore\s+(?:all\s+|any\s+)?(?:previous|prior|above)\s+(?:instructions?|prompts?|messages?)/iu,
+	/disregard\s+(?:the\s+)?(?:above|previous|earlier|system)\b/iu,
+	/(?:reveal|print|repeat|show|leak)\s+(?:your\s+|the\s+)?(?:system\s+prompt|hidden\s+instructions?|initial\s+prompt)/iu,
+	/you\s+are\s+now\s+(?:DAN|in\s+developer\s+mode|an?\s+unrestricted)/iu,
+	/pretend\s+(?:you\s+are|to\s+be)\s+(?:an?\s+)?(?:unfiltered|jailbroken|uncensored)/iu,
 ];
 
 // Per-instance compiled state, cached by the (stable) config object identity so we compile once.
@@ -56,7 +56,7 @@ const configSchema = {
 		const validated = [];
 		for (const p of extra) {
 			try {
-				validated.push(new RegExp(p, "i").source);
+				validated.push(new RegExp(p, "iu").source);
 			} catch (err) {
 				return {
 					success: false,
@@ -98,7 +98,7 @@ function patternsFor(config) {
 	if (!compiled) {
 		compiled = [
 			...DEFAULT_PATTERNS,
-			...config.extraPatterns.map((p) => new RegExp(p, "gi")),
+			...config.extraPatterns.map((p) => new RegExp(p, "giu")),
 		].map(
 			(re) =>
 				new RegExp(
@@ -116,11 +116,13 @@ function scan(text, patterns, replacement) {
 	let out = text;
 	let hits = 0;
 	for (const re of patterns) {
-		re.lastIndex = 0;
-		out = out.replace(re, () => {
-			hits += 1;
-			return replacement;
-		});
+		// Every pattern carries the g flag (patternsFor), so match() counts and replace() covers
+		// all of them; both reset lastIndex themselves.
+		const matches = out.match(re);
+		if (matches) {
+			hits += matches.length;
+			out = out.replace(re, () => replacement);
+		}
 	}
 	return { text: out, hits };
 }

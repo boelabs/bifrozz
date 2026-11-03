@@ -1,15 +1,7 @@
-import {
-	REALTIME_SECRET_PREFIX,
-	resolveRealtimeSecret,
-} from "./realtimeSecrets.ts";
-import {
-	getCachedVirtualKeyByHash,
-	getCachedVirtualKey,
-} from "./virtualKeyCache.ts";
+import type { AppEnv, Auth, VirtualKeyAuth } from "./types.ts";
 import { createHash, timingSafeEqual } from "node:crypto";
 import type { Context, MiddlewareHandler } from "hono";
 import { type Permission, roleHas } from "./roles.ts";
-import type { AppEnv, Auth, VirtualKeyAuth } from "./types.ts";
 import { GatewayError } from "#core/errors.ts";
 import { assertCsrfToken } from "./csrf.ts";
 import { getCookie } from "hono/cookie";
@@ -21,6 +13,16 @@ import {
 	CSRF_COOKIE,
 	CSRF_HEADER,
 } from "./session.ts";
+
+import {
+	getCachedVirtualKeyByHash,
+	getCachedVirtualKey,
+} from "./virtualKeyCache.ts";
+
+import {
+	REALTIME_SECRET_PREFIX,
+	resolveRealtimeSecret,
+} from "./realtimeSecrets.ts";
 
 const MASTER_KEY_DIGEST = createHash("sha256").update(env.MASTER_KEY).digest();
 
@@ -35,7 +37,7 @@ const INSECURE_KEY_PROTOCOL = "openai-insecure-api-key.";
 function extractKey(c: Context): string | undefined {
 	const auth = c.req.header("authorization");
 	if (auth) {
-		const bearer = /^Bearer\s+(.+)$/i.exec(auth.trim())?.[1];
+		const bearer = /^Bearer\s+(.+)$/iu.exec(auth.trim())?.[1];
 		if (bearer !== undefined) {
 			return bearer.trim();
 		}

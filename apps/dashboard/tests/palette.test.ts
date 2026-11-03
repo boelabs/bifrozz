@@ -19,7 +19,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 
 function luminance(color: string) {
-	const values = /^oklch\(([\d.]+)% ([\d.]+) ([\d.]+)\)$/.exec(color);
+	const values = /^oklch\(([\d.]+)% ([\d.]+) ([\d.]+)\)$/u.exec(color);
 	assert.ok(values, `Expected an OKLCH token: ${color}`);
 	const lightness = Number(values[1]) / 100;
 	const chroma = Number(values[2]);
@@ -51,7 +51,7 @@ test("light and dark palette text and focus retain accessible contrast", async (
 		const block = css.split(`${theme} {`)[1]?.split("}")[0];
 		assert.ok(block, `Missing ${theme}`);
 		const tokens = new Map(
-			[...block.matchAll(/--([\w-]+):\s*(oklch\([^;]+\));/g)].map((match) => [
+			[...block.matchAll(/--([\w-]+):\s*(oklch\([^;]+\));/gu)].map((match) => [
 				match[1],
 				match[2],
 			]),

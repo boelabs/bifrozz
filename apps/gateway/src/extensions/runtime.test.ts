@@ -222,7 +222,7 @@ test("extensions: a malformed instance spec is rejected", async (t) => {
 
 	await assert.rejects(
 		extensionRuntime.loadFromSource(source, tmpdir()),
-		/extensions manifest/,
+		/extensions manifest/u,
 	);
 });
 
@@ -323,7 +323,7 @@ test("extensions: hook failures trip the circuit breaker", async (t) => {
 				messages: [],
 				stream: false,
 			}),
-			/Extension "broken"/,
+			/Extension "broken"/u,
 		);
 	}
 
@@ -363,7 +363,7 @@ test("extensions: a hook that ignores cancellation is aborted, not awaited forev
 	});
 	setTimeout(() => controller.abort(new Error("client disconnected")), 10);
 
-	await assert.rejects(pending, /client disconnected/);
+	await assert.rejects(pending, /client disconnected/u);
 	const status = extensionRuntime.status();
 	assert.equal(status.instances[0]!.failureCount, 1);
 });
@@ -428,7 +428,7 @@ test("extensions: a breaker-disabled instance can be reset at runtime", async (t
 		});
 
 	for (let i = 0; i < 3; i += 1) {
-		await assert.rejects(fire(), /Extension "broken"/);
+		await assert.rejects(fire(), /Extension "broken"/u);
 	}
 	assert.equal(
 		extensionRuntime.status().instances[0]!.status,
@@ -446,7 +446,7 @@ test("extensions: a breaker-disabled instance can be reset at runtime", async (t
 	assert.equal(afterReset.instances[0]!.lastError, null);
 
 	// The breaker counts from zero again after a reset.
-	await assert.rejects(fire(), /Extension "broken"/);
+	await assert.rejects(fire(), /Extension "broken"/u);
 	assert.equal(extensionRuntime.status().instances[0]!.failureCount, 1);
 
 	// Unknown ids and non-breaker disables are reported, not silently reset.

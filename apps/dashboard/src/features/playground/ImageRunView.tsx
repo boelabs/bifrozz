@@ -81,7 +81,7 @@ export function ImageRunView({
 			>
 				{run.state === "running" ? <ResponseLoader /> : null}
 				{run.state === "stopped" ? (
-					<div className="text-fg-muted text-xs">
+					<div className="text-xs text-fg-muted">
 						<Status tone="muted">Stopped</Status>
 					</div>
 				) : null}
@@ -102,7 +102,7 @@ export function ImageRunView({
 								/>
 								<a
 									aria-label={`Download image ${index + 1}`}
-									className="absolute top-2 right-2 inline-flex size-9 items-center justify-center rounded-xl bg-surface/80 text-fg opacity-0 backdrop-blur transition-opacity focus-visible:opacity-100 group-hover/image:opacity-100"
+									className="absolute top-2 right-2 inline-flex size-9 items-center justify-center rounded-xl bg-surface/80 text-fg opacity-0 backdrop-blur transition-opacity group-hover/image:opacity-100 focus-visible:opacity-100"
 									download={`image-${index + 1}.${image.mediaType.split("/")[1] ?? "png"}`}
 									href={image.url}
 									title="Download"
@@ -114,7 +114,7 @@ export function ImageRunView({
 					</div>
 				) : null}
 				{run.revisedPrompt ? (
-					<p className="text-fg-muted text-sm">
+					<p className="text-sm text-fg-muted">
 						<span className="font-medium text-fg">Revised prompt: </span>
 						{run.revisedPrompt}
 					</p>
@@ -136,7 +136,7 @@ export function ImageRunView({
 					>
 						<IconRotate2 aria-hidden className={MESSAGE_ACTION_ICON} />
 					</Button>
-					<p className="px-2 text-fg-muted text-xs">
+					<p className="px-2 text-xs text-fg-muted">
 						{[
 							run.model,
 							detail,

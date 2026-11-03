@@ -142,7 +142,7 @@ function toWebReadable(body: unknown): ReadableStream<Uint8Array> {
 function parseContentRange(
 	value: string | undefined,
 ): StoredObject["range"] | undefined {
-	const match = /^bytes (\d+)-(\d+)\/(\d+)$/.exec(value ?? "");
+	const match = /^bytes (\d+)-(\d+)\/(\d+)$/u.exec(value ?? "");
 	if (!match) {
 		return undefined;
 	}

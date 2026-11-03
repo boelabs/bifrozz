@@ -115,7 +115,7 @@ export function SettingsFrame({
 				</FramePanel>
 			) : null}
 			<FrameFooter className="flex min-h-14 items-center justify-between gap-4 py-3">
-				<p className="text-muted-foreground text-xs">{note}</p>
+				<p className="text-xs text-muted-foreground">{note}</p>
 				{action}
 			</FrameFooter>
 		</Frame>

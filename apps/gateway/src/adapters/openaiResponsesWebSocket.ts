@@ -83,7 +83,7 @@ class AsyncEventQueue {
 function websocketUrl(httpUrl: string): string {
 	const url = new URL(httpUrl);
 	url.protocol = url.protocol === "https:" ? "wss:" : "ws:";
-	url.pathname = `${url.pathname.replace(/\/+$/, "")}/responses`;
+	url.pathname = `${url.pathname.replace(/\/+$/u, "")}/responses`;
 	url.search = "";
 	url.hash = "";
 	return url.toString();

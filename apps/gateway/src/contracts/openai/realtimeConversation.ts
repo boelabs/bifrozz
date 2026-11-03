@@ -1,3 +1,4 @@
+import { RealtimeClientEventError, eventId } from "./realtime.ts";
 import type { RealtimeOutputAudioFormat } from "#audio/pcm.ts";
 import { randomBytes } from "node:crypto";
 import { z } from "zod/v4";
@@ -8,8 +9,6 @@ import type {
 	RealtimeVadConfig,
 	RealtimeUsage,
 } from "#core/realtime.ts";
-
-import { RealtimeClientEventError, eventId } from "./realtime.ts";
 
 /**
  * OpenAI's Realtime API in conversation mode (`/v1/realtime?model=`), the GA shape: a session of
@@ -22,7 +21,7 @@ import { RealtimeClientEventError, eventId } from "./realtime.ts";
 
 const keyword = z
 	.string()
-	.regex(/^[^<>\r\n]*$/, "Keywords must not contain <, >, CR or LF");
+	.regex(/^[^<>\r\n]*$/u, "Keywords must not contain <, >, CR or LF");
 
 const audioFormatSchema = z.discriminatedUnion("type", [
 	z.object({

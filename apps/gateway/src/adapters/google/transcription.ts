@@ -144,7 +144,7 @@ function offsetSeconds(value: unknown): number | undefined {
 	if (typeof value !== "string") {
 		return undefined;
 	}
-	const seconds = Number(value.trim().replace(/s$/, ""));
+	const seconds = Number(value.trim().replace(/s$/u, ""));
 	return Number.isFinite(seconds) ? seconds : undefined;
 }
 
@@ -172,7 +172,7 @@ function utf8ToUtf16Offsets(text: string): Map<number, number> {
 
 /** Gemini numbers speakers `spk:0`, `spk:1`, …; OpenAI's diarization labels them `A`, `B`, …. */
 function speakerLabel(speaker: string): string {
-	const match = /^spk[:_](\d+)$/.exec(speaker);
+	const match = /^spk[:_](\d+)$/u.exec(speaker);
 	const index = match ? Number(match[1]) : Number.NaN;
 	return index >= 0 && index < 26 ? String.fromCharCode(65 + index) : speaker;
 }
@@ -363,7 +363,7 @@ export function subtitleCues(
 			current = [];
 		}
 		current.push(word);
-		if (/[.!?…]["')\]]?$/.test(word.text)) {
+		if (/[.!?…]["')\]]?$/u.test(word.text)) {
 			cues.push(current);
 			current = [];
 		}

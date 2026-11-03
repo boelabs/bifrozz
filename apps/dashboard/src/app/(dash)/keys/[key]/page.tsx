@@ -14,7 +14,7 @@ type Params = PageProps<"/keys/[key]">["params"];
 
 /** Keys are identified by a UUID; anything else is not a key, and is not looked for. */
 const KEY_ID =
-	/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+	/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/iu;
 
 /**
  * One virtual key: its name, status and actions in the header, and the same form that created it.

@@ -12,7 +12,7 @@ import type {
 const extraBodySchema = z.record(z.string(), z.unknown());
 const sizeSchema = z
 	.string()
-	.regex(/^(?:auto|[1-9]\d*x[1-9]\d*)$/, "must be 'auto' or WIDTHxHEIGHT");
+	.regex(/^(?:auto|[1-9]\d*x[1-9]\d*)$/u, "must be 'auto' or WIDTHxHEIGHT");
 
 export const imageGenerationRequestSchema = z
 	.object({

@@ -92,6 +92,6 @@ test("the request goes to the relay and failures keep the gateway's message", as
 			{ model: "m", query: "q", documents, settings: {} },
 			{ fetch: failing, csrf: () => undefined },
 		),
-		/no rerank deployment/,
+		/no rerank deployment/u,
 	);
 });

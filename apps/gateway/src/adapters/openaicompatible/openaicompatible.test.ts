@@ -62,7 +62,7 @@ test("compatible: baseUrl is required", () => {
 		assert.fail("should have thrown");
 	} catch (err) {
 		assert.ok(GatewayError.is(err));
-		assert.match((err as GatewayError).message, /baseUrl/);
+		assert.match((err as GatewayError).message, /baseUrl/u);
 	}
 });
 
@@ -251,6 +251,6 @@ test("compatible: extraBody does not overwrite managed fields", () => {
 				{ ...req, extraBody: { temperature: 0.2 } },
 				reasoningCtx({ apiKey: "k", baseUrl: "https://api.x.ai/v1" }),
 			),
-		/extra_body.temperature/,
+		/extra_body.temperature/u,
 	);
 });

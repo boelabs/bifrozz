@@ -52,7 +52,7 @@ test("openapi: document is a structurally valid 3.1 spec with resolving refs", (
 
 	// Every local $ref must resolve to a defined component.
 	const text = JSON.stringify(doc);
-	const refs = [...text.matchAll(/"#\/components\/([^"]+)"/g)].map(
+	const refs = [...text.matchAll(/"#\/components\/([^"]+)"/gu)].map(
 		(m) => m[1]!,
 	);
 	const flat = JSON.parse(text) as Record<string, unknown>;
@@ -115,7 +115,7 @@ test("openapi: every management 2xx response carries a schema", () => {
 	>;
 	const bare: string[] = [];
 	for (const [path, operations] of Object.entries(paths)) {
-		if (!/^\/(admin|auth)\b/.test(path)) {
+		if (!/^\/(admin|auth)\b/u.test(path)) {
 			continue;
 		}
 		for (const [method, operation] of Object.entries(operations)) {

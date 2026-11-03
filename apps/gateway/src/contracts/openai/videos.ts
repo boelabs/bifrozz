@@ -23,7 +23,7 @@ import {
 const extraBodySchema = z.record(z.string(), z.unknown());
 const sizeSchema = z
 	.string()
-	.regex(/^[1-9]\d*x[1-9]\d*$/, "must be WIDTHxHEIGHT");
+	.regex(/^[1-9]\d*x[1-9]\d*$/u, "must be WIDTHxHEIGHT");
 const secondsSchema = z.union([z.string().min(1), z.number().int().positive()]);
 
 const urlObjectSchema = z.object({ url: z.string().min(1) }).strict();

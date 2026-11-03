@@ -95,6 +95,6 @@ test("the request goes to the relay, and a failure keeps the gateway's message",
 			{ model: "m", inputs: ["x"], settings: {} },
 			{ fetch: failing, csrf: () => undefined },
 		),
-		/dimensions is not supported/,
+		/dimensions is not supported/u,
 	);
 });

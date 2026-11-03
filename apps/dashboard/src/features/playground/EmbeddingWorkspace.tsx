@@ -271,7 +271,7 @@ export function EmbeddingWorkspace({
 						>
 							<NumberField.ScrubArea>
 								<label
-									className="font-medium text-sm"
+									className="text-sm font-medium"
 									htmlFor="playground-embedding-dimensions"
 								>
 									Dimensions
@@ -285,7 +285,7 @@ export function EmbeddingWorkspace({
 								/>
 								<NumberField.Increment aria-label="More dimensions" />
 							</NumberField.Group>
-							<p className="text-fg-muted text-xs">
+							<p className="text-xs text-fg-muted">
 								Only models that support shortening accept this.
 							</p>
 						</NumberField.Root>

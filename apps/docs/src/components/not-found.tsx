@@ -8,8 +8,8 @@ export default function NotFound({ locale }: { locale: Locale }) {
 	return (
 		<HomeLayout {...getHomeOptions(locale)}>
 			<main className="mx-auto flex w-full max-w-2xl flex-1 flex-col items-center justify-center gap-4 px-4 py-24 text-center">
-				<p className="font-mono text-fd-muted-foreground text-sm">404</p>
-				<h1 className="font-semibold text-3xl">
+				<p className="font-mono text-sm text-fd-muted-foreground">404</p>
+				<h1 className="text-3xl font-semibold">
 					{locale === "es" ? "Página no encontrada" : "Page not found"}
 				</h1>
 				<p className="text-fd-muted-foreground">
@@ -18,7 +18,7 @@ export default function NotFound({ locale }: { locale: Locale }) {
 						: "The page may have moved, or the address may be incorrect."}
 				</p>
 				<Link
-					className="mt-2 rounded-lg bg-fd-primary px-4 py-2 font-medium text-fd-primary-foreground text-sm"
+					className="mt-2 rounded-lg bg-fd-primary px-4 py-2 text-sm font-medium text-fd-primary-foreground"
 					href={localizedPath("/docs", locale)}
 				>
 					{locale === "es"

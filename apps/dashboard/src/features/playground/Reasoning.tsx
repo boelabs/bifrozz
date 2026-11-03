@@ -105,7 +105,7 @@ export function Reasoning({
 									text={step.text}
 								/>
 							) : (
-								<p className="text-fg-muted leading-7">
+								<p className="leading-7 text-fg-muted">
 									{emptyStepText(
 										step.state === "streaming",
 										streaming,

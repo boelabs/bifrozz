@@ -45,10 +45,10 @@ describe("sidebar", () => {
 		for (const dir of await folders()) {
 			const listed = ((await meta(dir)).pages ?? [])
 				.filter((item) => !item.startsWith("---"))
-				.map((item) => item.replace(/^\.\.\./, ""))
+				.map((item) => item.replace(/^\.\.\./u, ""))
 				.sort();
 			const present = [
-				...(await entries(dir, "*.mdx")).map((f) => f.replace(/\.mdx$/, "")),
+				...(await entries(dir, "*.mdx")).map((f) => f.replace(/\.mdx$/u, "")),
 				// A nested group is listed by its folder name, parentheses included.
 				...(await entries(dir, "(*)/meta.json")).map((f) => f.split("/")[0]),
 			].sort();
@@ -91,8 +91,8 @@ describe("urls", () => {
 				continue;
 			}
 			const parts = entry.replaceAll("\\", "/").split("/");
-			const name = parts.pop()?.replace(/\.mdx$/, "") as string;
-			const kept = parts.filter((part) => !/^\(.+\)$/.test(part));
+			const name = parts.pop()?.replace(/\.mdx$/u, "") as string;
+			const kept = parts.filter((part) => !/^\(.+\)$/u.test(part));
 			urls.add(
 				name === "index" ? "/docs" : `/docs/${[...kept, name].join("/")}`,
 			);

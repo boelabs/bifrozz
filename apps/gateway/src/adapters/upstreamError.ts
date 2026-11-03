@@ -100,7 +100,7 @@ function collectSensitiveStrings(
 }
 
 function identifierCharacter(value: string | undefined): boolean {
-	return value !== undefined && /[A-Za-z0-9_./-]/.test(value);
+	return value !== undefined && /[A-Za-z0-9_./-]/u.test(value);
 }
 
 function redactSensitiveValue(input: string, sensitive: string): string {

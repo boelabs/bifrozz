@@ -9,15 +9,18 @@ import { Form } from "./form";
 test("sectioned dialogs leave scrolling and padding to the body", () => {
 	const popup = DialogPopup({ layout: "sectioned", borderRadius: 12 });
 	assert.equal(typeof popup.props.className, "string");
-	assert.match(popup.props.className, /overflow-hidden/);
-	assert.match(popup.props.className, /\bp-0\b/);
-	assert.match(popup.props.className, /\bgap-0\b/);
-	assert.doesNotMatch(popup.props.className, /overflow-auto|\bp-6\b|\bgap-6\b/);
+	assert.match(popup.props.className, /overflow-hidden/u);
+	assert.match(popup.props.className, /\bp-0\b/u);
+	assert.match(popup.props.className, /\bgap-0\b/u);
+	assert.doesNotMatch(
+		popup.props.className,
+		/overflow-auto|\bp-6\b|\bgap-6\b/u,
+	);
 	assert.equal(popup.props.layout, undefined);
 	assert.equal(popup.props.style.borderRadius, 12);
 	const defaultPopup = DialogPopup({});
-	assert.match(defaultPopup.props.className, /overflow-auto/);
-	assert.match(defaultPopup.props.className, /\bp-6\b/);
+	assert.match(defaultPopup.props.className, /overflow-auto/u);
+	assert.match(defaultPopup.props.className, /\bp-6\b/u);
 });
 
 test("dialog sections keep footer outside the scroll region but inside the form", () => {
@@ -36,23 +39,23 @@ test("dialog sections keep footer outside the scroll region but inside the form"
 	);
 	assert.match(
 		html,
-		/<div(?=[^>]*data-slot="dialog-header")(?=[^>]*class="[^"]*shrink-0)[^>]*>/,
+		/<div(?=[^>]*data-slot="dialog-header")(?=[^>]*class="[^"]*shrink-0)[^>]*>/u,
 	);
 	assert.match(
 		html,
-		/<div(?=[^>]*data-slot="dialog-body")(?=[^>]*class="[^"]*min-h-0)(?=[^>]*class="[^"]*overflow-y-auto)(?=[^>]*class="[^"]*[\s"]scroll-p-6[\s"])(?=[^>]*class="[^"]*[\s"]p-6[\s"])[^>]*>/,
+		/<div(?=[^>]*data-slot="dialog-body")(?=[^>]*class="[^"]*min-h-0)(?=[^>]*class="[^"]*overflow-y-auto)(?=[^>]*class="[^"]*[\s"]scroll-p-6[\s"])(?=[^>]*class="[^"]*[\s"]p-6[\s"])[^>]*>/u,
 	);
-	assert.match(html, /<input[^>]*name="name"/);
+	assert.match(html, /<input[^>]*name="name"/u);
 	assert.match(
 		html,
-		/<\/div><\/div><div(?=[^>]*data-slot="dialog-footer")[^>]*>/,
-	);
-	assert.match(
-		html,
-		/<div(?=[^>]*data-slot="dialog-footer")(?=[^>]*class="[^"]*shrink-0)(?=[^>]*class="[^"]*flex-wrap)[^>]*>/,
+		/<\/div><\/div><div(?=[^>]*data-slot="dialog-footer")[^>]*>/u,
 	);
 	assert.match(
 		html,
-		/<button[^>]*type="submit"[^>]*>Save<\/button><\/div><\/form>/,
+		/<div(?=[^>]*data-slot="dialog-footer")(?=[^>]*class="[^"]*shrink-0)(?=[^>]*class="[^"]*flex-wrap)[^>]*>/u,
+	);
+	assert.match(
+		html,
+		/<button[^>]*type="submit"[^>]*>Save<\/button><\/div><\/form>/u,
 	);
 });

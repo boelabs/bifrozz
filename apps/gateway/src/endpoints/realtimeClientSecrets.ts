@@ -1,19 +1,11 @@
-import { getVirtualKeyById } from "#db/repos/virtualKeys.ts";
-import { mintRealtimeSecret } from "#auth/realtimeSecrets.ts";
 import { assertFinalModelAllowed } from "./runtime/pipeline.ts";
+import { mintRealtimeSecret } from "#auth/realtimeSecrets.ts";
+import { getVirtualKeyById } from "#db/repos/virtualKeys.ts";
 import { GatewayError } from "#core/errors.ts";
 import { getAuth } from "#auth/middleware.ts";
 import type { AppEnv } from "#auth/types.ts";
 import type { Context } from "hono";
 import { z } from "zod/v4";
-
-import {
-	realtimeTranscriptionSessionSchema,
-	RealtimeClientEventError,
-	newRealtimeSessionState,
-	applySessionUpdate,
-	renderSession,
-} from "#contracts/openai/realtime.ts";
 
 import {
 	realtimeConversationSessionSchema,
@@ -22,6 +14,14 @@ import {
 	renderConversationSession,
 	conversationConfigOf,
 } from "#contracts/openai/realtimeConversation.ts";
+
+import {
+	realtimeTranscriptionSessionSchema,
+	RealtimeClientEventError,
+	newRealtimeSessionState,
+	applySessionUpdate,
+	renderSession,
+} from "#contracts/openai/realtime.ts";
 
 /**
  * POST /v1/realtime/client_secrets — mints a short-lived `ek_…` key for a browser or app to open

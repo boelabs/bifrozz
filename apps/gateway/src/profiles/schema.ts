@@ -12,7 +12,7 @@ export const pricingSchema = z
 		cacheReadCentsPerMTokens: z.number().nonnegative().optional(),
 		cacheWriteCentsPerMTokens: z.number().nonnegative().optional(),
 		cacheWriteCentsPerMTokensByTtl: z
-			.record(z.string().regex(/^[1-9][0-9]*$/), z.number().nonnegative())
+			.record(z.string().regex(/^[1-9][0-9]*$/u), z.number().nonnegative())
 			.optional(),
 		imageInputCentsPerMTokens: z.number().nonnegative().optional(),
 		imageOutputCentsPerMTokens: z.number().nonnegative().optional(),
@@ -30,7 +30,7 @@ export const pricingSchema = z
 						cacheWriteCentsPerMTokens: z.number().nonnegative().optional(),
 						cacheWriteCentsPerMTokensByTtl: z
 							.record(
-								z.string().regex(/^[1-9][0-9]*$/),
+								z.string().regex(/^[1-9][0-9]*$/u),
 								z.number().nonnegative(),
 							)
 							.optional(),

@@ -67,7 +67,7 @@ test("multipart edits: validates PNG mask and dimensions", async () => {
 				body: form,
 			}),
 		),
-		/mask dimensions/,
+		/mask dimensions/u,
 	);
 });
 
@@ -87,6 +87,6 @@ test("multipart edits: rejects unexpected file and invalid extra_body", async ()
 				body: form,
 			}),
 		),
-		/Unexpected file field|JSON object/,
+		/Unexpected file field|JSON object/u,
 	);
 });

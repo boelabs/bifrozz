@@ -41,7 +41,7 @@ test("image profile: accepts exact parameters", () => {
 test("image profile: rejects approximations and unsupported parameters", () => {
 	assert.throws(
 		() => assertImageRequestSupported({ ...baseReq, size: "1024x1536" }, meta),
-		/does not support size/,
+		/does not support size/u,
 	);
 	assert.throws(
 		() =>
@@ -49,7 +49,7 @@ test("image profile: rejects approximations and unsupported parameters", () => {
 				{ ...baseReq, background: "transparent" },
 				meta,
 			),
-		/transparent/,
+		/transparent/u,
 	);
 	assert.throws(
 		() =>
@@ -57,7 +57,7 @@ test("image profile: rejects approximations and unsupported parameters", () => {
 				{ ...baseReq, partialImages: 1, stream: true },
 				meta,
 			),
-		/partial/,
+		/partial/u,
 	);
 	assert.throws(
 		() =>
@@ -68,7 +68,7 @@ test("image profile: rejects approximations and unsupported parameters", () => {
 					image: { ...meta.image, maxN: 10 },
 				},
 			),
-		/requires n=1/,
+		/requires n=1/u,
 	);
 	assert.throws(
 		() =>
@@ -76,7 +76,7 @@ test("image profile: rejects approximations and unsupported parameters", () => {
 				...meta,
 				image: { ...meta.image, responseFormats: [] },
 			}),
-		/does not support response_format=b64_json/,
+		/does not support response_format=b64_json/u,
 	);
 });
 
@@ -101,12 +101,12 @@ test("image profile: validates arbitrary divisible size, ratio, and pixels", () 
 	assert.throws(
 		() =>
 			assertImageRequestSupported({ ...baseReq, size: "3840x3840" }, arbitrary),
-		/does not support/,
+		/does not support/u,
 	);
 	assert.throws(
 		() =>
 			assertImageRequestSupported({ ...baseReq, size: "1000x1000" }, arbitrary),
-		/does not support/,
+		/does not support/u,
 	);
 });
 
@@ -118,11 +118,11 @@ test("image profile: missing allow-list means unsupported, not permissive", () =
 	assert.throws(
 		() =>
 			assertImageRequestSupported({ ...baseReq, outputFormat: "png" }, strict),
-		/does not support output_format/,
+		/does not support output_format/u,
 	);
 	assert.throws(
 		() => assertImageRequestSupported({ ...baseReq, quality: "high" }, strict),
-		/does not support quality/,
+		/does not support quality/u,
 	);
 	// A model that declares rungs still rejects one it does not name, but only under `error`.
 	const withRungs: ResolvedModelMetadata = {
@@ -132,7 +132,7 @@ test("image profile: missing allow-list means unsupported, not permissive", () =
 	assert.throws(
 		() =>
 			assertImageRequestSupported({ ...baseReq, quality: "max" }, withRungs),
-		/does not support quality/,
+		/does not support quality/u,
 	);
 	// `auto` expresses no choice, so it is accepted for every model - like `size: "auto"`.
 	assertImageRequestSupported({ ...baseReq, quality: "auto" }, withRungs);

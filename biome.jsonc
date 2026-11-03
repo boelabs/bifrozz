@@ -1,5 +1,5 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.5.13/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.6.4/schema.json",
 	"root": true,
 
 	// Ultracite is a pinned rule set on top of Biome, not a second tool: it only supplies
@@ -29,6 +29,13 @@
 	"json": {
 		"formatter": {
 			"indentStyle": "tab"
+		}
+	},
+	// Biome 2.6 formats YAML too, which brings the workflows and compose files into
+	// `bun run check`. Flow sequences stay `[a, b]`, the way every one of them is written.
+	"yaml": {
+		"formatter": {
+			"bracketSpacing": false
 		}
 	},
 	"javascript": {
@@ -82,7 +89,26 @@
 				// interactive role to give it. (A plain `<form onSubmit>` is not affected;
 				// the rule reads the drag handlers, not the submit.) The trade is real:
 				// a `<div onClick>` with no keyboard path elsewhere now goes uncaught.
-				"noNoninteractiveElementInteractions": "off"
+				"noNoninteractiveElementInteractions": "off",
+				// Ultracite 8 adds "Label" to labelComponents, and Biome matches the last segment of a
+				// member name, so every Base UI part (Field.Label, Meter.Label, Progress.Label, …) reads
+				// as an unlabelled <label> — 15 findings, none real: those parts are associated with
+				// their control through the Field/Meter context, and Meter and Progress labels are not
+				// <label> elements at all. The rule still checks every lowercase <label>, as it did
+				// under Ultracite 7; inputComponents stay as the preset sets them.
+				"noLabelWithoutControl": {
+					"level": "error",
+					"options": {
+						"inputComponents": [
+							"Input",
+							"Select",
+							"Textarea",
+							"Checkbox",
+							"Radio"
+						],
+						"labelComponents": []
+					}
+				}
 			},
 			"complexity": {
 				// `void promise` is the deliberate marker for a floating promise; the rule
@@ -124,6 +150,13 @@
 				// Components are PascalCase, modules camelCase. Renaming every file would
 				// break every import and every blame.
 				"useFilenamingConvention": "off",
+				// A class that `implements` an interface keeps the interface's methods on the instance
+				// even when one does not read `this` (DisabledObjectStore's throwing stubs, the DB
+				// extension source). Private helpers that do not use `this` are still caught.
+				"useThisInClassMethods": {
+					"level": "error",
+					"options": { "ignoreClassesWithImplements": "public-fields" }
+				},
 				// The one class component is MarkdownBoundary, and an error boundary needs
 				// componentDidCatch, which has no hook equivalent. Off rather than
 				// suppressed at the site, so a stray class component will not be caught.
@@ -137,7 +170,14 @@
 				 * Production code carries none: where an invariant holds, it is now the
 				 * type that says so. Tests are exempt below.
 				 */
-				"noNonNullAssertion": "error"
+				"noNonNullAssertion": "error",
+				/*
+				 * 48 findings across 25 files (Ultracite 8). Each one is a parser — Content-Range,
+				 * data: URLs, Azure listings, error records — whose callers read `match[1]`; naming
+				 * the group means rewriting those reads, and a group nobody reads should become
+				 * `(?:…)` instead. Per-site work, not a codemod.
+				 */
+				"useNamedCaptureGroup": "info"
 			},
 			"suspicious": {
 				// `x == null` is the correct null-or-undefined test; the rule's fix drops

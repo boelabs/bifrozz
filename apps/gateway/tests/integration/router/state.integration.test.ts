@@ -361,7 +361,7 @@ test("circuit: allowed failures are honored before cooldown, half-open admits on
 		const causes = await getCircuitCauses([deployment]);
 		const cause = causes.get(`deployment:${id}`);
 		assert.equal(cause?.message, "Upstream server failure");
-		assert.match(cause?.fingerprint ?? "", /^[a-f0-9]{24}$/);
+		assert.match(cause?.fingerprint ?? "", /^[a-f0-9]{24}$/u);
 		assert.equal(cause?.body, undefined);
 
 		await wait(1250);

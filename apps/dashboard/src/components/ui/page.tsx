@@ -122,7 +122,7 @@ export function ErrorNote({
 /** Neutral placeholder while a route loader resolves. */
 export function Loading({ label = "Loading…" }: { label?: string }) {
 	return (
-		<div className="flex items-center justify-center py-16 text-fg-muted text-sm">
+		<div className="flex items-center justify-center py-16 text-sm text-fg-muted">
 			{label}
 		</div>
 	);

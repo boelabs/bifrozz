@@ -436,7 +436,7 @@ test("toCanonical: extra_body cannot overwrite chat managed parameters", () => {
 					extra_body: { temperature: 0.2 },
 				}),
 			),
-		/extra_body.temperature/,
+		/extra_body.temperature/u,
 	);
 });
 

@@ -36,7 +36,7 @@ test("restricted virtual key: allows listed models, rejects the rest", () => {
 	);
 	assert.throws(
 		() => assertModelAllowed(vk(["gpt"]), "gemini"),
-		/does not have access/,
+		/does not have access/u,
 	);
 });
 

@@ -130,7 +130,7 @@ function Ghost({
 	}
 	return (
 		<GhostSkeleton
-			className={grow ? "min-w-0 @min-[40rem]:flex-none flex-1" : undefined}
+			className={grow ? "min-w-0 flex-1 @min-[40rem]:flex-none" : undefined}
 		>
 			{children}
 		</GhostSkeleton>
@@ -243,7 +243,7 @@ export function LogsToolbar({
 					{/* While loading, the model list is not known yet; most roles get the filter. */}
 					{loading || models.length > 0 ? (
 						<Ghost grow loading={loading}>
-							<div className="@min-[40rem]:w-44 min-w-0 @min-[40rem]:flex-none flex-1">
+							<div className="min-w-0 flex-1 @min-[40rem]:w-44 @min-[40rem]:flex-none">
 								<SearchableSelect
 									aria-label="Filter by public model"
 									className="w-full"

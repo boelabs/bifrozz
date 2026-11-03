@@ -141,6 +141,6 @@ test("rerank adapters map nested and Cohere errors with Retry-After without leak
 		);
 		assert.ok(GatewayError.is(error));
 		assert.equal(error.retryAfterMs, 2000);
-		assert.doesNotMatch(error.publicMessage, /secret-key/);
+		assert.doesNotMatch(error.publicMessage, /secret-key/u);
 	}
 });

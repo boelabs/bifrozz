@@ -88,7 +88,7 @@ function Breakdown({ data }: { data: DetailedMetrics }) {
 									</span>
 								</span>
 							</div>
-							<div aria-hidden className="h-4 border-border/50 border-l">
+							<div aria-hidden className="h-4 border-l border-border/50">
 								<div
 									className={`h-full rounded-r ${row.color}`}
 									style={{
@@ -120,7 +120,7 @@ function Breakdown({ data }: { data: DetailedMetrics }) {
 								<span>{label}</span>
 								<span className="tabular-nums">{tokenCount(value)}</span>
 							</div>
-							<div aria-hidden className="h-6 border-border/50 border-l">
+							<div aria-hidden className="h-6 border-l border-border/50">
 								<div
 									className={`h-full rounded-r ${color}`}
 									style={{
@@ -152,7 +152,7 @@ function Breakdown({ data }: { data: DetailedMetrics }) {
 						</div>
 					))}
 				</dl>
-				<p className="mt-3 text-fg-muted text-xs">
+				<p className="mt-3 text-xs text-fg-muted">
 					Token totals reported by {count.format(tokens.usageReported)} of{" "}
 					{count.format(tokens.attempts)} attempts. Unreported usage is not
 					estimated.
@@ -230,7 +230,7 @@ export function Metrics({
 					>
 						{row.label ?? row.key?.slice(0, 8) ?? "Unattributed"}
 					</Button>
-					<p className="mt-0.5 text-fg-muted text-xs">
+					<p className="mt-0.5 text-xs text-fg-muted">
 						{row.adapter ?? "Unknown adapter"} ·{" "}
 						{row.key?.slice(0, 8) ?? "No deployment"}
 					</p>
@@ -265,7 +265,7 @@ export function Metrics({
 			render: (row) => (
 				<div className="tabular-nums">
 					<div>{tokenCount(row.cacheReadTokens)}</div>
-					<div className="mt-1 text-fg-muted text-xs">
+					<div className="mt-1 text-xs text-fg-muted">
 						{cacheReuseRate(row) === null
 							? "—"
 							: rate(
@@ -506,7 +506,7 @@ export function Metrics({
 						>
 							Apply dates
 						</Button>
-						<p className="pb-2 text-fg-muted text-xs">
+						<p className="pb-2 text-xs text-fg-muted">
 							Up to 31 days. End date is included.
 						</p>
 					</form>
@@ -528,14 +528,14 @@ export function Metrics({
 						Clear filters
 					</Button>
 				) : null}
-				<p className="mt-3 text-fg-muted text-xs" role="status">
+				<p className="mt-3 text-xs text-fg-muted" role="status">
 					{new Date(data.start).toLocaleString("en-US", { timeZone: "UTC" })} –{" "}
 					{new Date(data.end).toLocaleString("en-US", { timeZone: "UTC" })} UTC
 					· retained records, grouped by request start
 				</p>
 			</Card>
 			{search.deploymentId ? (
-				<p className="rounded-lg border border-border bg-secondary/40 p-3 text-fg-muted text-sm">
+				<p className="rounded-lg border border-border bg-secondary/40 p-3 text-sm text-fg-muted">
 					Request metrics cover requests that used this deployment, including
 					any fallback. Deployment tokens and errors cover only its own
 					attempts.

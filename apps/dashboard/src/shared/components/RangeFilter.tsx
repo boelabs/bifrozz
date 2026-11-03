@@ -143,7 +143,7 @@ export function RangeFilter({
 								type="date"
 								value={to}
 							/>
-							<p className="text-fg-muted text-xs">
+							<p className="text-xs text-fg-muted">
 								Up to {MAX_RANGE_DAYS} days. The end date is included.
 							</p>
 							<Button disabled={!valid} size="sm" type="submit">

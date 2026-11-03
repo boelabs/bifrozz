@@ -429,7 +429,7 @@ test("request->canonical: extra_body cannot overwrite responses managed paramete
 					extra_body: { reasoning: { effort: "low" } },
 				}),
 			),
-		/extra_body.reasoning/,
+		/extra_body.reasoning/u,
 	);
 });
 

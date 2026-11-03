@@ -62,7 +62,7 @@ test("transport per operation: incompatible config fails explicitly", () => {
 	c.row.transportOverrides = { "image.generate": "responses" };
 	assert.throws(
 		() => resolveTransport(c, "images.generations"),
-		/does not support/,
+		/does not support/u,
 	);
 });
 
@@ -104,10 +104,10 @@ test("a declared transport the adapter cannot run names the model, not a setting
 	assert.throws(
 		() => resolveTransport(c, "images.generations"),
 		(error: Error) => {
-			assert.match(error.message, /declares transport "responses"/);
-			assert.match(error.message, /"image"/);
+			assert.match(error.message, /declares transport "responses"/u);
+			assert.match(error.message, /"image"/u);
 			// The operator has configured nothing here; saying otherwise sends them hunting.
-			assert.doesNotMatch(error.message, /is configured with/);
+			assert.doesNotMatch(error.message, /is configured with/u);
 			return true;
 		},
 	);
@@ -123,6 +123,6 @@ test("nothing declared or configured falls back, and says so when it cannot run"
 	};
 	assert.throws(
 		() => resolveTransport(c, "images.generations"),
-		/falls back to the default transport "images"/,
+		/falls back to the default transport "images"/u,
 	);
 });

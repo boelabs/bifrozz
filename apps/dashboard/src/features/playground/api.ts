@@ -133,7 +133,7 @@ export function createSessionFetch(
  * survive it, so resolving here keeps all three on the same address.
  */
 function absoluteBaseURL(baseURL: string): string {
-	if (/^[a-z][a-z\d+.-]*:\/\//i.test(baseURL)) {
+	if (/^[a-z][a-z\d+.-]*:\/\//iu.test(baseURL)) {
 		return baseURL;
 	}
 	if (typeof window === "undefined") {

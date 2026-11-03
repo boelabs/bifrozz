@@ -131,7 +131,7 @@ test("key secrets: a private key is never stored and cannot be copied", {
 	const issued = await issue(t, { private: true });
 	assert.equal(issued.private, true);
 	assert.equal(issued.copyable, false);
-	assert.match(issued.key, /^sk-/);
+	assert.match(issued.key, /^sk-/u);
 
 	const [stored] = await db
 		.select({ secret: virtualKeys.secret })

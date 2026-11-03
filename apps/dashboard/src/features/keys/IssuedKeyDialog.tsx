@@ -65,7 +65,7 @@ export function IssuedKeyDialog({
 					</DialogDescription>
 				</DialogHeader>
 				<DialogBody>
-					<pre className="overflow-x-auto rounded-xl border border-border/50 bg-surface-2 px-3 py-2.5 font-mono text-fg text-xs">
+					<pre className="overflow-x-auto rounded-xl border border-border/50 bg-surface-2 px-3 py-2.5 font-mono text-xs text-fg">
 						{issued?.key}
 					</pre>
 				</DialogBody>

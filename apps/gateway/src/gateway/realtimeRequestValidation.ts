@@ -1,13 +1,15 @@
-import type {
-	CanonicalRealtimeConversationConfig,
-	CanonicalRealtimeTranscriptionConfig,
-} from "#core/realtime.ts";
-import {
-	realtimeConversationProfileFor,
-	realtimeTranscriptionProfileFor,
-} from "#catalog/types.ts";
 import type { ResolvedModelMetadata } from "#catalog/types.ts";
 import { GatewayError } from "#core/errors.ts";
+
+import type {
+	CanonicalRealtimeTranscriptionConfig,
+	CanonicalRealtimeConversationConfig,
+} from "#core/realtime.ts";
+
+import {
+	realtimeTranscriptionProfileFor,
+	realtimeConversationProfileFor,
+} from "#catalog/types.ts";
 
 function unsupported(param: string, message: string): never {
 	throw new GatewayError({

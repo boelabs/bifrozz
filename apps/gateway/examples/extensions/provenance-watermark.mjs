@@ -66,7 +66,7 @@ function encode(tag) {
 
 function insert(text, watermark, position) {
 	if (position === "afterFirstWord") {
-		const space = text.search(/\s/);
+		const space = text.search(/\s/u);
 		if (space > 0) {
 			return text.slice(0, space) + watermark + text.slice(space);
 		}

@@ -15,7 +15,7 @@ const publicDir = resolve(import.meta.dir, "../public");
 
 /** `.next/server/app/docs/quickstart.html` -> `/docs/quickstart`; `index.html` -> `/`. */
 function routeOf(entry: string): string {
-	const path = entry.replaceAll("\\", "/").replace(/\.html$/, "");
+	const path = entry.replaceAll("\\", "/").replace(/\.html$/u, "");
 	return path === "index" ? "/" : `/${path}`;
 }
 
@@ -70,7 +70,7 @@ for await (const entry of new Bun.Glob("**/*").scan(publicDir)) {
  * here, which is the point of checking the output rather than the source.
  */
 for await (const entry of new Bun.Glob("**/*.body").scan(app)) {
-	assets.add(`/${entry.replaceAll("\\", "/").replace(/\.body$/, "")}`);
+	assets.add(`/${entry.replaceAll("\\", "/").replace(/\.body$/u, "")}`);
 }
 
 const failures = new Set<string>();
@@ -81,7 +81,7 @@ for (const [route, page] of pages) {
 		if (target.origin !== origin) {
 			continue;
 		}
-		const path = decodeURIComponent(target.pathname).replace(/\/$/, "") || "/";
+		const path = decodeURIComponent(target.pathname).replace(/\/$/u, "") || "/";
 		// Hashed build output: the bundler emitted the filename, so it exists by construction.
 		if (path.startsWith("/_next/")) {
 			continue;

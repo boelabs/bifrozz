@@ -1,5 +1,5 @@
-import { EventQueue, closeStatus, rawText } from "./google/live.ts";
 import { upstreamWebSocket } from "#gateway/instrumentedTransport.ts";
+import { EventQueue, closeStatus, rawText } from "./google/live.ts";
 import { abortGatewayError } from "#gateway/abortReason.ts";
 import { createPcmResampler } from "#audio/pcm.ts";
 import { GatewayError } from "#core/errors.ts";
@@ -59,7 +59,7 @@ function count(value: unknown): number | undefined {
 export function openAIRealtimeUrl(base: string, model: string): string {
 	const url = new URL(base);
 	url.protocol = url.protocol === "http:" ? "ws:" : "wss:";
-	url.pathname = `${url.pathname.replace(/\/+$/, "")}/realtime`;
+	url.pathname = `${url.pathname.replace(/\/+$/u, "")}/realtime`;
 	url.search = new URLSearchParams({ model }).toString();
 	url.hash = "";
 	return url.toString();

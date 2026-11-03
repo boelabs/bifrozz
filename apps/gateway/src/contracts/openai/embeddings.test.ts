@@ -48,7 +48,7 @@ test("embeddings request rejects extra_body collisions", () => {
 	});
 	assert.throws(
 		() => embeddingsRequestToCanonical(parsed),
-		/extra_body.dimensions/,
+		/extra_body.dimensions/u,
 	);
 });
 

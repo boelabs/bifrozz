@@ -122,6 +122,6 @@ test("the request is multipart to the relay, and failures keep the gateway's mes
 			{ model: "whisper", file, settings: {} },
 			{ fetch: failing, csrf: () => undefined },
 		),
-		/file is too large/,
+		/file is too large/u,
 	);
 });

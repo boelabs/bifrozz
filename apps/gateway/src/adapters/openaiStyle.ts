@@ -1,5 +1,5 @@
-import { makeOpenAIRealtimeConversationHandler } from "./openaiRealtime.ts";
 import { makeOpenAIResponsesWebSocketHandler } from "./openaiResponsesWebSocket.ts";
+import { makeOpenAIRealtimeConversationHandler } from "./openaiRealtime.ts";
 import { upstreamFetch } from "#gateway/instrumentedTransport.ts";
 import { looksLikeContextWindowError } from "#core/httpError.ts";
 import { GatewayError, type ErrorClass } from "#core/errors.ts";
@@ -270,7 +270,7 @@ export function makeOpenAIStyleAdapter(config: OpenAIStyleConfig): Adapter {
 		}
 		const normalizedBase = config.normalizeBaseUrl
 			? config.normalizeBaseUrl(base)
-			: base.replace(/\/+$/, "");
+			: base.replace(/\/+$/u, "");
 		const resolved: ResolvedCreds = { apiKey: c.apiKey, base: normalizedBase };
 		if (c.organization !== undefined) {
 			resolved.organization = c.organization;

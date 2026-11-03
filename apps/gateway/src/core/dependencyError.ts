@@ -26,7 +26,7 @@ const DEPENDENCY_ERROR_CODES = new Set([
 ]);
 
 const DEPENDENCY_MESSAGE_RE =
-	/(Connection is closed|Reached the max retries|Stream isn't writeable|Connection ended|Connection terminated|getaddrinfo)/i;
+	/(Connection is closed|Reached the max retries|Stream isn't writeable|Connection ended|Connection terminated|getaddrinfo)/iu;
 
 /** True if `err` looks like a transient dependency-connectivity failure rather than a request bug. */
 export function isDependencyError(err: unknown): boolean {

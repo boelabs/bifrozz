@@ -94,7 +94,7 @@ function DeploymentPageSkeleton() {
 			/>
 			<header className="flex flex-wrap items-start justify-between gap-4">
 				<div className="flex min-w-0 flex-col gap-1">
-					<h1 className="font-semibold text-xl">
+					<h1 className="text-xl font-semibold">
 						<TextSkeleton length={18} />
 					</h1>
 					<p className="text-sm">

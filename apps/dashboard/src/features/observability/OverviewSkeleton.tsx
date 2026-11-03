@@ -114,13 +114,13 @@ export function CacheUsageSkeleton({
 			}
 		>
 			<div className="@container">
-				<p className="font-semibold text-2xl tabular-nums">
+				<p className="text-2xl font-semibold tabular-nums">
 					<TextSkeleton length={5} />{" "}
-					<span className="font-normal text-xs">
+					<span className="text-xs font-normal">
 						<TextSkeleton length={30} />
 					</span>
 				</p>
-				<div className="mt-6 grid @min-[40rem]:grid-cols-[14rem_minmax(0,1fr)] items-center @min-[40rem]:gap-8 gap-6">
+				<div className="mt-6 grid items-center gap-6 @min-[40rem]:grid-cols-[14rem_minmax(0,1fr)] @min-[40rem]:gap-8">
 					<div
 						aria-hidden
 						className="mx-auto my-2 size-52 animate-pulse rounded-full border-[24px] border-fg/10 motion-reduce:animate-none"
@@ -137,7 +137,7 @@ export function CacheUsageSkeleton({
 								</div>
 								<div className="flex items-baseline gap-x-3 font-semibold tabular-nums">
 									<TextSkeleton length={6} />
-									<span className="font-normal text-xs">
+									<span className="text-xs font-normal">
 										<TextSkeleton length={5} />
 									</span>
 								</div>
@@ -148,7 +148,7 @@ export function CacheUsageSkeleton({
 						))}
 					</div>
 				</div>
-				<div className="mt-6 flex flex-wrap justify-between gap-3 border-border/50 border-t pt-4 text-xs">
+				<div className="mt-6 flex flex-wrap justify-between gap-3 border-t border-border/50 pt-4 text-xs">
 					<p>
 						<TextSkeleton length={64} />
 					</p>

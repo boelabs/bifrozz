@@ -11,8 +11,8 @@ test("credential-shaped strings never reach the log", () => {
 	const scrubbed = scrubSecrets(
 		'Incorrect API key provided: sk-proj-abcdefghijklmnop. Header was "Bearer eyJhbGciOiJIUzI1NiJ9.x.y", api_key=AIzaSyA1234567890abcdefghij',
 	);
-	assert.doesNotMatch(scrubbed, /abcdefghijklmnop|eyJhbGci|AIzaSy/);
-	assert.match(scrubbed, /Incorrect API key provided/);
+	assert.doesNotMatch(scrubbed, /abcdefghijklmnop|eyJhbGci|AIzaSy/u);
+	assert.match(scrubbed, /Incorrect API key provided/u);
 });
 
 test("reads the provider's own error from the shapes providers use", () => {

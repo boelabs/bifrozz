@@ -82,9 +82,9 @@ export function ActivitySkeleton({
 			title={<h2>{title}</h2>}
 		>
 			{overview ? (
-				<p className="mb-6 font-semibold text-2xl tabular-nums">
+				<p className="mb-6 text-2xl font-semibold tabular-nums">
 					<TextSkeleton length={5} />{" "}
-					<span className="font-normal text-xs">
+					<span className="text-xs font-normal">
 						<TextSkeleton length={21} />
 					</span>
 				</p>
@@ -163,7 +163,7 @@ export function OutcomesSkeleton() {
 			title={<h2>Request outcomes</h2>}
 		>
 			<div className="flex items-baseline gap-2">
-				<span className="font-semibold text-[2rem] tabular-nums leading-none tracking-tight">
+				<span className="text-[2rem] leading-none font-semibold tracking-tight tabular-nums">
 					<TextSkeleton length={5} />
 				</span>
 				<span className="text-xs">
@@ -185,7 +185,7 @@ export function OutcomesSkeleton() {
 					</div>
 				))}
 			</div>
-			<div className="mt-5 flex flex-wrap items-center justify-between gap-2 border-border/50 border-t pt-3 text-xs">
+			<div className="mt-5 flex flex-wrap items-center justify-between gap-2 border-t border-border/50 pt-3 text-xs">
 				<TextSkeleton length={14} />
 				<TextSkeleton length={13} />
 			</div>

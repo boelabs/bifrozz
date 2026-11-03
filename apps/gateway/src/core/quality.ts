@@ -60,7 +60,7 @@ export function normalizeQuality(value: PublicQuality): Quality {
 
 function levelIndex(level: QualityLevel): number {
 	const index = QUALITY_ORDER.indexOf(level);
-	return index < 0 ? 0 : index;
+	return Math.max(index, 0);
 }
 
 /**

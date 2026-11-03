@@ -7,14 +7,6 @@ import { randomBytes } from "node:crypto";
 import type WebSocket from "ws";
 
 import {
-	geminiLiveUsage,
-	geminiLiveUrl,
-	closeStatus,
-	EventQueue,
-	rawText,
-} from "./live.ts";
-
-import {
 	type CanonicalRealtimeConversationConfig,
 	type CanonicalRealtimeConversationEvent,
 	type RealtimeConversationProfile,
@@ -28,6 +20,14 @@ import type {
 	RealtimeConversationSession,
 	AdapterContext,
 } from "#adapters/types.ts";
+
+import {
+	geminiLiveUsage,
+	geminiLiveUrl,
+	closeStatus,
+	EventQueue,
+	rawText,
+} from "./live.ts";
 
 /**
  * Gemini Live conversations (`BidiGenerateContent`): native-audio models that listen, speak, call
@@ -77,7 +77,7 @@ function durationMs(value: unknown): number | undefined {
 	if (typeof value !== "string") {
 		return undefined;
 	}
-	const seconds = Number(value.trim().replace(/s$/, ""));
+	const seconds = Number(value.trim().replace(/s$/u, ""));
 	return Number.isFinite(seconds) ? seconds * 1000 : undefined;
 }
 

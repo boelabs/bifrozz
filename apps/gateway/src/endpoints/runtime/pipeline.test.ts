@@ -31,8 +31,8 @@ test("request validation exposes the field and cause for invalid scalar types", 
 		max_output_tokens: "many",
 	});
 	assert.equal(error.param, "max_output_tokens");
-	assert.match(error.publicMessage, /max_output_tokens/);
-	assert.match(error.publicMessage, /expected number, received string/);
+	assert.match(error.publicMessage, /max_output_tokens/u);
+	assert.match(error.publicMessage, /expected number, received string/u);
 	assert.notEqual(error.publicMessage, "The request is invalid.");
 });
 

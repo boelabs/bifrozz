@@ -182,7 +182,7 @@ export function InstanceDialog({
 								<Switch checked={critical} onCheckedChange={setCritical}>
 									Critical
 								</Switch>
-								<p className="max-w-xl text-fg-muted text-xs">
+								<p className="max-w-xl text-xs text-fg-muted">
 									A critical instance failing takes the request down with it. A
 									non-critical one is skipped after repeated failures and the
 									request continues without it.

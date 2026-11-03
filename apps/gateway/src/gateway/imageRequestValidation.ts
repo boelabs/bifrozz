@@ -161,7 +161,7 @@ export function assertImageRequestSupported(
 	if (req.size && req.size !== "auto") {
 		const direct = profile.sizes?.[req.size];
 		if (!direct) {
-			const match = /^(\d+)x(\d+)$/.exec(req.size);
+			const match = /^(\d+)x(\d+)$/u.exec(req.size);
 			const arbitrary = profile.arbitrarySize;
 			if (!(match && arbitrary)) {
 				unsupported(

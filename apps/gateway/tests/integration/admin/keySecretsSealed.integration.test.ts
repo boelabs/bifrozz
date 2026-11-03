@@ -6,10 +6,10 @@
  * same shape as the guarantee: sealing is a deployment decision, not a runtime toggle.
  */
 
-process.env.VIRTUAL_KEY_SECRET_ACCESS = "sealed";
-
 import assert from "node:assert/strict";
 import { test } from "node:test";
+
+process.env.VIRTUAL_KEY_SECRET_ACCESS = "sealed";
 
 await import("#adapters/index.ts");
 const { pgAvailable, redisAvailable } = await import("#test-support/infra.ts");

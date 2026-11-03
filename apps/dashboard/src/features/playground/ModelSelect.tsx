@@ -70,7 +70,7 @@ export function ModelSelect({
 		>
 			<Combobox.Trigger
 				aria-label="Model"
-				className="composer-model max-w-52 justify-between gap-1 font-medium text-sm"
+				className="composer-model max-w-52 justify-between gap-1 text-sm font-medium"
 				size="sm"
 				variant="ghost"
 			>
@@ -82,7 +82,7 @@ export function ModelSelect({
 			<Combobox.Portal>
 				<Combobox.Positioner align="start" className="z-50" sideOffset={6}>
 					<Combobox.Popup className="w-80 max-w-[calc(100vw-2rem)] p-0">
-						<div className="flex items-center gap-2 border-border/60 border-b px-3">
+						<div className="flex items-center gap-2 border-b border-border/60 px-3">
 							<IconSearch
 								aria-hidden
 								className="size-4 shrink-0 text-fg-muted"
@@ -104,7 +104,7 @@ export function ModelSelect({
 								>
 									{/* One group is no grouping: the label would only repeat the page. */}
 									{multipleGroups ? (
-										<Combobox.GroupLabel className="px-3 py-1.5 text-fg-muted text-xs">
+										<Combobox.GroupLabel className="px-3 py-1.5 text-xs text-fg-muted">
 											{group.label}
 										</Combobox.GroupLabel>
 									) : null}

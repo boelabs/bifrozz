@@ -78,7 +78,8 @@ button {
 		color: var(--fg-muted);
 		font-size: 13px;
 		text-align: right;
-		user-select: none;
+		/* Tailwind's utility also emits the -webkit- prefix Safari still needs. */
+		@apply select-none;
 	}
 }
 

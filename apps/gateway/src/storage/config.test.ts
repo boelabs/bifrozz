@@ -49,8 +49,11 @@ test("a secret with reserved characters survives the round trip", () => {
 });
 
 test("an incomplete url names what is missing rather than failing later", () => {
-	assert.throws(() => parseObjectStorage("s3://key:secret@host"), /no bucket/);
-	assert.throws(() => parseObjectStorage("s3://host/bucket"), /no credentials/);
-	assert.throws(() => parseObjectStorage("file:"), /needs a path/);
-	assert.throws(() => parseObjectStorage("postgres://x"), /unknown scheme/);
+	assert.throws(() => parseObjectStorage("s3://key:secret@host"), /no bucket/u);
+	assert.throws(
+		() => parseObjectStorage("s3://host/bucket"),
+		/no credentials/u,
+	);
+	assert.throws(() => parseObjectStorage("file:"), /needs a path/u);
+	assert.throws(() => parseObjectStorage("postgres://x"), /unknown scheme/u);
 });

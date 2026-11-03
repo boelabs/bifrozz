@@ -44,9 +44,9 @@ export async function* parseSSE(
 			return undefined; // comment/keep-alive
 		}
 		if (line.startsWith("data:")) {
-			dataLines.push(line.slice(5).replace(/^ /, ""));
+			dataLines.push(line.slice(5).replace(/^ /u, ""));
 		} else if (line.startsWith("event:")) {
-			eventName = line.slice(6).replace(/^ /, "");
+			eventName = line.slice(6).replace(/^ /u, "");
 		}
 		// other fields (id:, retry:) are ignored for now
 		return undefined;

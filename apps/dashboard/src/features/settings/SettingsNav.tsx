@@ -93,7 +93,7 @@ function SectionList({ groups }: { groups: ReturnType<typeof visibleGroups> }) {
 	return (
 		<nav
 			aria-label="Settings sections"
-			className="-mx-4 overflow-x-auto px-4 [scrollbar-width:none] sm:-mx-6 sm:px-6 lg:sticky lg:top-6 lg:mx-0 lg:self-start lg:overflow-visible lg:px-0"
+			className="-mx-4 [scrollbar-width:none] overflow-x-auto px-4 sm:-mx-6 sm:px-6 lg:sticky lg:top-6 lg:mx-0 lg:self-start lg:overflow-visible lg:px-0"
 		>
 			{/* Phones: one row, groups apart by a hairline. Wide screens: a column of titled groups. */}
 			<div className="flex gap-1 lg:flex-col lg:gap-5">
@@ -102,7 +102,7 @@ function SectionList({ groups }: { groups: ReturnType<typeof visibleGroups> }) {
 						className="flex gap-1 border-s ps-1 first:border-s-0 first:ps-0 lg:flex-col lg:border-s-0 lg:ps-0"
 						key={group.label}
 					>
-						<h2 className="hidden px-2.5 pb-1 font-medium text-muted-foreground text-xs lg:block">
+						<h2 className="hidden px-2.5 pb-1 text-xs font-medium text-muted-foreground lg:block">
 							{group.label}
 						</h2>
 						<ul className="flex gap-1 lg:flex-col">
@@ -141,7 +141,7 @@ function SectionLink({
 	return (
 		<Link
 			aria-current={active ? "page" : undefined}
-			className="flex items-center gap-2 whitespace-nowrap rounded-lg px-2.5 py-2 text-muted-foreground text-sm outline-none transition-colors hover:bg-accent/50 hover:text-accent-foreground/80 hover:transition-none focus-visible:ring-2 focus-visible:ring-ring aria-[current=page]:bg-primary/10 aria-[current=page]:text-primary [&_svg]:size-4 [&_svg]:shrink-0"
+			className="flex items-center gap-2 rounded-lg px-2.5 py-2 text-sm whitespace-nowrap text-muted-foreground transition-colors outline-none hover:bg-accent/50 hover:text-accent-foreground/80 hover:transition-none focus-visible:ring-2 focus-visible:ring-ring aria-[current=page]:bg-primary/10 aria-[current=page]:text-primary [&_svg]:size-4 [&_svg]:shrink-0"
 			href={section.href}
 			ref={ref}
 		>

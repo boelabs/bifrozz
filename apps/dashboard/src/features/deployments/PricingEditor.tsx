@@ -119,16 +119,17 @@ export function PricingEditor({
 			</div>
 			<div className="flex items-center justify-between gap-3">
 				<div>
-					<h4 className="font-medium text-fg text-sm">Context tiers</h4>
-					<p className="text-fg-muted text-xs">
+					<h4 className="text-sm font-medium text-fg">Context tiers</h4>
+					<p className="text-xs text-fg-muted">
 						Whole-request rates above an input-token threshold. Blank tier rates
 						use the base override rate.
 					</p>
 				</div>
 				<Button
 					onClick={() => {
+						const taken = new Set(tiers.map((tier) => tier.aboveInputTokens));
 						let threshold = 1;
-						while (tiers.some((tier) => tier.aboveInputTokens === threshold)) {
+						while (taken.has(threshold)) {
 							threshold++;
 						}
 						setTierIds([...tierIds, nextId.current++]);
@@ -148,7 +149,7 @@ export function PricingEditor({
 					className="flex min-w-0 flex-col gap-3 rounded-lg border border-border p-4"
 					key={tierIds[index]}
 				>
-					<legend className="px-1 font-medium text-fg text-sm">
+					<legend className="px-1 text-sm font-medium text-fg">
 						Context tier {index + 1}
 					</legend>
 					<NumberInput

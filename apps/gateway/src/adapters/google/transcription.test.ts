@@ -228,7 +228,7 @@ test("google transcription: extra_body cannot override managed transcription fie
 				generation_config: { transcription_config: { mode: "smart" } },
 			},
 		}),
-		/collides with managed request parameter/,
+		/collides with managed request parameter/u,
 	);
 	assert.deepEqual(
 		(
@@ -340,7 +340,7 @@ test("google transcription: srt and vtt are built from word timestamps", () => {
 test("google transcription: a failed interaction is an upstream error, not an empty transcript", () => {
 	assert.throws(
 		() => parse({ id: "interactions/x", status: "failed", steps: [] }),
-		/ended with status failed/,
+		/ended with status failed/u,
 	);
-	assert.throws(() => parse("not json"), /not a JSON object/);
+	assert.throws(() => parse("not json"), /not a JSON object/u);
 });

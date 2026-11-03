@@ -29,7 +29,7 @@ const DEFAULT_CAPABILITIES: TextCapabilities = {
  * "gpt-4.1-nano" against "gpt-4.1", because they can be deprecated even if they share a prefix.
  */
 function isSnapshotSuffix(suffix: string): boolean {
-	return /^\d{4}-\d{2}-\d{2}$/.test(suffix) || /^\d{2}-\d{4}$/.test(suffix);
+	return /^\d{4}-\d{2}-\d{2}$/u.test(suffix) || /^\d{2}-\d{4}$/u.test(suffix);
 }
 
 interface AdapterCatalogIndex {

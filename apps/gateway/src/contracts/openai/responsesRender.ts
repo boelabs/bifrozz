@@ -208,7 +208,7 @@ function mapInputPart(
 				f.fileUrl = part.file_url;
 			}
 			if (typeof part.file_data === "string") {
-				if (/^https:\/\//i.test(part.file_data)) {
+				if (/^https:\/\//iu.test(part.file_data)) {
 					f.fileUrl = part.file_data;
 				} else {
 					f.fileData = part.file_data;

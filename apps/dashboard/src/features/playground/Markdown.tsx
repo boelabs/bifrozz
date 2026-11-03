@@ -41,10 +41,10 @@ export class MarkdownBoundary extends Component<
 	render() {
 		return this.state.failed ? (
 			<div className="w-full min-w-0">
-				<p className="mb-2 text-fg-muted text-xs" role="status">
+				<p className="mb-2 text-xs text-fg-muted" role="status">
 					Formatting could not load. Showing the original text.
 				</p>
-				<pre className="wrap-break-word whitespace-pre-wrap font-mono text-sm">
+				<pre className="font-mono text-sm wrap-break-word whitespace-pre-wrap">
 					{this.props.text}
 				</pre>
 			</div>
@@ -92,7 +92,7 @@ export const Markdown = memo(function MarkdownBody({
 		<MarkdownBoundary text={text}>
 			<Streamdown
 				BlockComponent={MarkdownBlock}
-				className="playground-markdown wrap-break-word w-full min-w-0 leading-7"
+				className="playground-markdown w-full min-w-0 leading-7 wrap-break-word"
 				components={components}
 				controls={false}
 				dir="auto"
