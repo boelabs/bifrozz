@@ -37,6 +37,26 @@
 				"searchUnitCents": 0.25
 			}
 		},
+		"cohere/rerank-5-fast": {
+			"operations": {
+				"rerank": {
+					"documentModalities": ["text"],
+					"maxDocuments": 1000,
+					"maxTokensPerDocument": 32768,
+					"documentsPerSearchUnit": 100
+				}
+			}
+		},
+		"cohere/rerank-5-pro": {
+			"operations": {
+				"rerank": {
+					"documentModalities": ["text"],
+					"maxDocuments": 1000,
+					"maxTokensPerDocument": 32768,
+					"documentsPerSearchUnit": 100
+				}
+			}
+		},
 		"cohere/rerank-v3.5": {
 			"operations": {
 				"rerank": {
@@ -48,6 +68,42 @@
 			},
 			"pricing": {
 				"searchUnitCents": 0.1
+			}
+		},
+		"mongodb/rerank-2.5": {
+			"operations": {
+				"rerank": {
+					"documentModalities": ["text"],
+					"maxDocuments": 1000,
+					"maxTokensPerDocument": 32000
+				}
+			}
+		},
+		"mongodb/rerank-2.5-lite": {
+			"operations": {
+				"rerank": {
+					"documentModalities": ["text"],
+					"maxDocuments": 1000,
+					"maxTokensPerDocument": 32000
+				}
+			}
+		},
+		"mongodb/rerank-3": {
+			"operations": {
+				"rerank": {
+					"documentModalities": ["text"],
+					"maxDocuments": 1000,
+					"maxTokensPerDocument": 32000
+				}
+			}
+		},
+		"mongodb/rerank-3-lite": {
+			"operations": {
+				"rerank": {
+					"documentModalities": ["text"],
+					"maxDocuments": 1000,
+					"maxTokensPerDocument": 32000
+				}
 			}
 		},
 		"nvidia/llama-nemotron-rerank-vl-1b-v2:free": {
@@ -80,42 +136,6 @@
 					"documentModalities": ["text"],
 					"maxDocuments": 1000,
 					"maxTokensPerDocument": 40960
-				}
-			}
-		},
-		"voyageai/rerank-2.5": {
-			"operations": {
-				"rerank": {
-					"documentModalities": ["text"],
-					"maxDocuments": 1000,
-					"maxTokensPerDocument": 32000
-				}
-			}
-		},
-		"voyageai/rerank-2.5-lite": {
-			"operations": {
-				"rerank": {
-					"documentModalities": ["text"],
-					"maxDocuments": 1000,
-					"maxTokensPerDocument": 32000
-				}
-			}
-		},
-		"voyageai/rerank-3": {
-			"operations": {
-				"rerank": {
-					"documentModalities": ["text"],
-					"maxDocuments": 1000,
-					"maxTokensPerDocument": 32000
-				}
-			}
-		},
-		"voyageai/rerank-3-lite": {
-			"operations": {
-				"rerank": {
-					"documentModalities": ["text"],
-					"maxDocuments": 1000,
-					"maxTokensPerDocument": 32000
 				}
 			}
 		}
