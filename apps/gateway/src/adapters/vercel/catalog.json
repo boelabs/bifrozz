@@ -3246,9 +3246,9 @@
 				}
 			},
 			"pricing": {
-				"inputCentsPerMTokens": 7.6,
-				"outputCentsPerMTokens": 15.3,
-				"cacheReadCentsPerMTokens": 1.4
+				"inputCentsPerMTokens": 13,
+				"outputCentsPerMTokens": 26,
+				"cacheReadCentsPerMTokens": 2.8
 			}
 		},
 		"deepseek/deepseek-v4-flash-vision-exp": {
@@ -3300,8 +3300,8 @@
 						"reasoning": true,
 						"structuredOutputs": true
 					},
-					"maxInputTokens": 1000000,
-					"maxOutputTokens": 384000,
+					"maxInputTokens": 1048600,
+					"maxOutputTokens": 1048600,
 					"modalities": {
 						"input": ["text"],
 						"output": ["text"]
@@ -3326,9 +3326,9 @@
 				}
 			},
 			"pricing": {
-				"inputCentsPerMTokens": 66,
-				"outputCentsPerMTokens": 198,
-				"cacheReadCentsPerMTokens": 2.2
+				"inputCentsPerMTokens": 132,
+				"outputCentsPerMTokens": 396,
+				"cacheReadCentsPerMTokens": 13.2
 			}
 		},
 		"deepseek/deepseek-v4-pro-0813": {
@@ -14656,6 +14656,46 @@
 				"cacheReadCentsPerMTokens": 3.5
 			}
 		},
+		"tencent/hy4": {
+			"operations": {
+				"text.generate": {
+					"capabilities": {
+						"tools": true,
+						"vision": true,
+						"reasoning": true,
+						"structuredOutputs": true
+					},
+					"maxInputTokens": 1024000,
+					"maxOutputTokens": 64000,
+					"modalities": {
+						"input": ["image", "text"],
+						"output": ["text"]
+					},
+					"contracts": ["chat.completions", "responses"],
+					"parameters": {
+						"include_reasoning": true,
+						"max_tokens": true,
+						"reasoning": true,
+						"reasoning_effort": true,
+						"response_format": true,
+						"stop": true,
+						"structured_outputs": true,
+						"temperature": true,
+						"tool_choice": true,
+						"tools": true
+					},
+					"reasoning": {
+						"kind": "openai_effort",
+						"levels": ["none", "high"]
+					}
+				}
+			},
+			"pricing": {
+				"inputCentsPerMTokens": 41.7,
+				"outputCentsPerMTokens": 125.05,
+				"cacheReadCentsPerMTokens": 2.1
+			}
+		},
 		"tencent/hy4-preview": {
 			"operations": {
 				"text.generate": {
@@ -15510,9 +15550,9 @@
 				}
 			},
 			"pricing": {
-				"inputCentsPerMTokens": 80,
-				"outputCentsPerMTokens": 255,
-				"cacheReadCentsPerMTokens": 16
+				"inputCentsPerMTokens": 140,
+				"outputCentsPerMTokens": 440,
+				"cacheReadCentsPerMTokens": 14
 			}
 		},
 		"zai/glm-5.2-fast": {
