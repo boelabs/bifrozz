@@ -7070,8 +7070,9 @@
 				}
 			},
 			"pricing": {
-				"inputCentsPerMTokens": 0,
-				"outputCentsPerMTokens": 0
+				"inputCentsPerMTokens": 30,
+				"outputCentsPerMTokens": 90,
+				"cacheReadCentsPerMTokens": 6
 			}
 		},
 		"inference-net/schematron-v2-small": {
@@ -7215,7 +7216,7 @@
 				"cacheReadCentsPerMTokens": 2.5
 			}
 		},
-		"meituan/longcat-2.5-preview": {
+		"meituan/longcat-2.5": {
 			"operations": {
 				"text.generate": {
 					"capabilities": {
@@ -7245,7 +7246,7 @@
 					},
 					"reasoning": {
 						"kind": "openai_effort",
-						"levels": ["none", "high"]
+						"levels": ["none", "low", "medium", "high"]
 					}
 				}
 			},
@@ -14961,86 +14962,6 @@
 				"inputCentsPerMTokens": 12
 			}
 		},
-		"xiaomi/mimo-v2.5": {
-			"operations": {
-				"text.generate": {
-					"capabilities": {
-						"tools": true,
-						"vision": true,
-						"reasoning": true,
-						"structuredOutputs": true
-					},
-					"maxInputTokens": 1050000,
-					"maxOutputTokens": 131100,
-					"modalities": {
-						"input": ["image", "text"],
-						"output": ["text"]
-					},
-					"contracts": ["chat.completions", "responses"],
-					"parameters": {
-						"include_reasoning": true,
-						"max_tokens": true,
-						"reasoning": true,
-						"reasoning_effort": true,
-						"response_format": true,
-						"stop": true,
-						"structured_outputs": true,
-						"temperature": true,
-						"tool_choice": true,
-						"tools": true
-					},
-					"reasoning": {
-						"kind": "openai_effort",
-						"levels": ["none", "high"]
-					}
-				}
-			},
-			"pricing": {
-				"inputCentsPerMTokens": 11.9,
-				"outputCentsPerMTokens": 23.8,
-				"cacheReadCentsPerMTokens": 0.25
-			}
-		},
-		"xiaomi/mimo-v2.5-pro": {
-			"operations": {
-				"text.generate": {
-					"capabilities": {
-						"tools": true,
-						"vision": false,
-						"reasoning": true,
-						"structuredOutputs": true
-					},
-					"maxInputTokens": 1050000,
-					"maxOutputTokens": 131000,
-					"modalities": {
-						"input": ["text"],
-						"output": ["text"]
-					},
-					"contracts": ["chat.completions", "responses"],
-					"parameters": {
-						"include_reasoning": true,
-						"max_tokens": true,
-						"reasoning": true,
-						"reasoning_effort": true,
-						"response_format": true,
-						"stop": true,
-						"structured_outputs": true,
-						"temperature": true,
-						"tool_choice": true,
-						"tools": true
-					},
-					"reasoning": {
-						"kind": "openai_effort",
-						"levels": ["none", "high"]
-					}
-				}
-			},
-			"pricing": {
-				"inputCentsPerMTokens": 30.45,
-				"outputCentsPerMTokens": 60.9,
-				"cacheReadCentsPerMTokens": 0.28
-			}
-		},
 		"xiaomi/mimo-v2.6-flash": {
 			"operations": {
 				"text.generate": {
@@ -15755,6 +15676,46 @@
 			}
 		},
 		"zai/glm-5.3-flashx": {
+			"operations": {
+				"text.generate": {
+					"capabilities": {
+						"tools": true,
+						"vision": true,
+						"reasoning": true,
+						"structuredOutputs": true
+					},
+					"maxInputTokens": 1000000,
+					"maxOutputTokens": 131072,
+					"modalities": {
+						"input": ["image", "text"],
+						"output": ["text"]
+					},
+					"contracts": ["chat.completions", "responses"],
+					"parameters": {
+						"include_reasoning": true,
+						"max_tokens": true,
+						"reasoning": true,
+						"reasoning_effort": true,
+						"response_format": true,
+						"stop": true,
+						"structured_outputs": true,
+						"temperature": true,
+						"tool_choice": true,
+						"tools": true
+					},
+					"reasoning": {
+						"kind": "openai_effort",
+						"levels": ["low", "high", "max"]
+					}
+				}
+			},
+			"pricing": {
+				"inputCentsPerMTokens": 37,
+				"outputCentsPerMTokens": 125,
+				"cacheReadCentsPerMTokens": 7.5
+			}
+		},
+		"zai/glm-5.3-flashx-legal": {
 			"operations": {
 				"text.generate": {
 					"capabilities": {
