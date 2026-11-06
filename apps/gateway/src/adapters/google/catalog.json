@@ -19,7 +19,7 @@
 		]
 	},
 	"models": {
-		"gemini-omni-1.1-flash": {
+		"gemini-omni-1.2-flash": {
 			"operations": {
 				"video.generate": {
 					"transport": "interactions",
@@ -59,6 +59,48 @@
 				}
 			},
 			"notes": "Output is limited to inline-safe 360p and 720p because this integration does not use the Files API. Pricing is intentionally omitted until async terminal video usage can be reconciled with operation accounting."
+		},
+		"gemini-omni-1.1-flash": {
+			"operations": {
+				"video.generate": {
+					"transport": "interactions",
+					"maxPromptChars": 32000,
+					"tasks": [
+						"text_to_video",
+						"image_to_video",
+						"reference_to_video",
+						"edit",
+						"extend"
+					],
+					"durations": ["3", "4", "5", "6", "7", "8", "9", "10"],
+					"supportsImageUrl": true,
+					"supportsVideoUrl": true,
+					"supportsFrameImages": true,
+					"maxInputReferences": 6,
+					"contentVariants": ["video"],
+					"pollIntervalSeconds": 10,
+					"sizes": {
+						"640x360": {
+							"aspectRatio": "16:9",
+							"resolution": "360p"
+						},
+						"360x640": {
+							"aspectRatio": "9:16",
+							"resolution": "360p"
+						},
+						"1280x720": {
+							"aspectRatio": "16:9",
+							"resolution": "720p"
+						},
+						"720x1280": {
+							"aspectRatio": "9:16",
+							"resolution": "720p"
+						}
+					}
+				}
+			},
+			"notes": "Output is limited to inline-safe 360p and 720p because this integration does not use the Files API. Pricing is intentionally omitted until async terminal video usage can be reconciled with operation accounting. Google announced on 2026-11-05 that requests to gemini-omni-1.1-flash are routed to gemini-omni-1.2-flash from 2026-12-03 (replacement: gemini-omni-1.2-flash).",
+			"deprecated": true
 		},
 		"veo-3.1-generate-preview": {
 			"operations": {
