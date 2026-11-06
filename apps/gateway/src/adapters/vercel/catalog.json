@@ -864,8 +864,8 @@
 						"reasoning": true,
 						"structuredOutputs": true
 					},
-					"maxInputTokens": 1000000,
-					"maxOutputTokens": 131072,
+					"maxInputTokens": 262144,
+					"maxOutputTokens": 262144,
 					"modalities": {
 						"input": ["image", "pdf", "text", "video"],
 						"output": ["text"]
@@ -890,10 +890,9 @@
 				}
 			},
 			"pricing": {
-				"inputCentsPerMTokens": 50,
-				"outputCentsPerMTokens": 300,
-				"cacheReadCentsPerMTokens": 10,
-				"cacheWriteCentsPerMTokens": 62.5
+				"inputCentsPerMTokens": 6,
+				"outputCentsPerMTokens": 230,
+				"cacheReadCentsPerMTokens": 5.9
 			}
 		},
 		"alibaba/qwen3.8-flash": {
@@ -4898,515 +4897,6 @@
 				"imageOutputCentsPerMTokens": 6000
 			}
 		},
-		"google/gemini-3.1-flash-image-preview": {
-			"operations": {
-				"text.generate": {
-					"capabilities": {
-						"tools": false,
-						"vision": true,
-						"reasoning": true,
-						"structuredOutputs": true
-					},
-					"maxInputTokens": 131072,
-					"maxOutputTokens": 32768,
-					"modalities": {
-						"input": ["image", "text"],
-						"output": ["image", "text"]
-					},
-					"contracts": ["chat.completions", "responses"],
-					"parameters": {
-						"include_reasoning": true,
-						"max_tokens": true,
-						"reasoning": true,
-						"reasoning_effort": true,
-						"response_format": true,
-						"stop": true,
-						"structured_outputs": true,
-						"temperature": true
-					},
-					"reasoning": {
-						"kind": "openai_effort",
-						"levels": ["low", "high"]
-					}
-				},
-				"image.generate": {
-					"outputFormats": ["png", "jpeg", "webp"],
-					"responseFormats": ["b64_json"],
-					"autoSize": {},
-					"nativeOutputFormat": false,
-					"nativeOutputCompression": false,
-					"maxPromptChars": 32000,
-					"maxInputImages": 14,
-					"maxImageBytes": 20000000,
-					"maxTotalInputBytes": 20000000,
-					"maxN": 1,
-					"qualities": ["low", "high"],
-					"sizes": {
-						"512x512": {
-							"aspectRatio": "1:1",
-							"imageSize": "512"
-						},
-						"1024x1024": {
-							"aspectRatio": "1:1",
-							"imageSize": "1K"
-						},
-						"2048x2048": {
-							"aspectRatio": "1:1",
-							"imageSize": "2K"
-						},
-						"4096x4096": {
-							"aspectRatio": "1:1",
-							"imageSize": "4K"
-						},
-						"848x1264": {
-							"aspectRatio": "2:3",
-							"imageSize": "1K"
-						},
-						"1264x848": {
-							"aspectRatio": "3:2",
-							"imageSize": "1K"
-						},
-						"1376x768": {
-							"aspectRatio": "16:9",
-							"imageSize": "1K"
-						},
-						"768x1376": {
-							"aspectRatio": "9:16",
-							"imageSize": "1K"
-						},
-						"256x1024": {
-							"aspectRatio": "1:4",
-							"imageSize": "512"
-						},
-						"512x2048": {
-							"aspectRatio": "1:4",
-							"imageSize": "1K"
-						},
-						"1024x4096": {
-							"aspectRatio": "1:4",
-							"imageSize": "2K"
-						},
-						"2048x8192": {
-							"aspectRatio": "1:4",
-							"imageSize": "4K"
-						},
-						"192x1536": {
-							"aspectRatio": "1:8",
-							"imageSize": "512"
-						},
-						"384x3072": {
-							"aspectRatio": "1:8",
-							"imageSize": "1K"
-						},
-						"768x6144": {
-							"aspectRatio": "1:8",
-							"imageSize": "2K"
-						},
-						"1536x12288": {
-							"aspectRatio": "1:8",
-							"imageSize": "4K"
-						},
-						"424x632": {
-							"aspectRatio": "2:3",
-							"imageSize": "512"
-						},
-						"1696x2528": {
-							"aspectRatio": "2:3",
-							"imageSize": "2K"
-						},
-						"3392x5056": {
-							"aspectRatio": "2:3",
-							"imageSize": "4K"
-						},
-						"632x424": {
-							"aspectRatio": "3:2",
-							"imageSize": "512"
-						},
-						"2528x1696": {
-							"aspectRatio": "3:2",
-							"imageSize": "2K"
-						},
-						"5056x3392": {
-							"aspectRatio": "3:2",
-							"imageSize": "4K"
-						},
-						"448x600": {
-							"aspectRatio": "3:4",
-							"imageSize": "512"
-						},
-						"896x1200": {
-							"aspectRatio": "3:4",
-							"imageSize": "1K"
-						},
-						"1792x2400": {
-							"aspectRatio": "3:4",
-							"imageSize": "2K"
-						},
-						"3584x4800": {
-							"aspectRatio": "3:4",
-							"imageSize": "4K"
-						},
-						"1024x256": {
-							"aspectRatio": "4:1",
-							"imageSize": "512"
-						},
-						"2048x512": {
-							"aspectRatio": "4:1",
-							"imageSize": "1K"
-						},
-						"4096x1024": {
-							"aspectRatio": "4:1",
-							"imageSize": "2K"
-						},
-						"8192x2048": {
-							"aspectRatio": "4:1",
-							"imageSize": "4K"
-						},
-						"600x448": {
-							"aspectRatio": "4:3",
-							"imageSize": "512"
-						},
-						"1200x896": {
-							"aspectRatio": "4:3",
-							"imageSize": "1K"
-						},
-						"2400x1792": {
-							"aspectRatio": "4:3",
-							"imageSize": "2K"
-						},
-						"4800x3584": {
-							"aspectRatio": "4:3",
-							"imageSize": "4K"
-						},
-						"464x576": {
-							"aspectRatio": "4:5",
-							"imageSize": "512"
-						},
-						"928x1152": {
-							"aspectRatio": "4:5",
-							"imageSize": "1K"
-						},
-						"1856x2304": {
-							"aspectRatio": "4:5",
-							"imageSize": "2K"
-						},
-						"3712x4608": {
-							"aspectRatio": "4:5",
-							"imageSize": "4K"
-						},
-						"576x464": {
-							"aspectRatio": "5:4",
-							"imageSize": "512"
-						},
-						"1152x928": {
-							"aspectRatio": "5:4",
-							"imageSize": "1K"
-						},
-						"2304x1856": {
-							"aspectRatio": "5:4",
-							"imageSize": "2K"
-						},
-						"4608x3712": {
-							"aspectRatio": "5:4",
-							"imageSize": "4K"
-						},
-						"1536x192": {
-							"aspectRatio": "8:1",
-							"imageSize": "512"
-						},
-						"3072x384": {
-							"aspectRatio": "8:1",
-							"imageSize": "1K"
-						},
-						"6144x768": {
-							"aspectRatio": "8:1",
-							"imageSize": "2K"
-						},
-						"12288x1536": {
-							"aspectRatio": "8:1",
-							"imageSize": "4K"
-						},
-						"384x688": {
-							"aspectRatio": "9:16",
-							"imageSize": "512"
-						},
-						"1536x2752": {
-							"aspectRatio": "9:16",
-							"imageSize": "2K"
-						},
-						"3072x5504": {
-							"aspectRatio": "9:16",
-							"imageSize": "4K"
-						},
-						"688x384": {
-							"aspectRatio": "16:9",
-							"imageSize": "512"
-						},
-						"2752x1536": {
-							"aspectRatio": "16:9",
-							"imageSize": "2K"
-						},
-						"5504x3072": {
-							"aspectRatio": "16:9",
-							"imageSize": "4K"
-						},
-						"1584x672": {
-							"aspectRatio": "21:9",
-							"imageSize": "1K"
-						},
-						"3168x1344": {
-							"aspectRatio": "21:9",
-							"imageSize": "2K"
-						},
-						"6336x2688": {
-							"aspectRatio": "21:9",
-							"imageSize": "4K"
-						}
-					}
-				},
-				"image.edit": {
-					"outputFormats": ["png", "jpeg", "webp"],
-					"responseFormats": ["b64_json"],
-					"autoSize": {},
-					"nativeOutputFormat": false,
-					"nativeOutputCompression": false,
-					"maxPromptChars": 32000,
-					"maxInputImages": 14,
-					"maxImageBytes": 20000000,
-					"maxTotalInputBytes": 20000000,
-					"maxN": 1,
-					"qualities": ["low", "high"],
-					"sizes": {
-						"512x512": {
-							"aspectRatio": "1:1",
-							"imageSize": "512"
-						},
-						"1024x1024": {
-							"aspectRatio": "1:1",
-							"imageSize": "1K"
-						},
-						"2048x2048": {
-							"aspectRatio": "1:1",
-							"imageSize": "2K"
-						},
-						"4096x4096": {
-							"aspectRatio": "1:1",
-							"imageSize": "4K"
-						},
-						"848x1264": {
-							"aspectRatio": "2:3",
-							"imageSize": "1K"
-						},
-						"1264x848": {
-							"aspectRatio": "3:2",
-							"imageSize": "1K"
-						},
-						"1376x768": {
-							"aspectRatio": "16:9",
-							"imageSize": "1K"
-						},
-						"768x1376": {
-							"aspectRatio": "9:16",
-							"imageSize": "1K"
-						},
-						"256x1024": {
-							"aspectRatio": "1:4",
-							"imageSize": "512"
-						},
-						"512x2048": {
-							"aspectRatio": "1:4",
-							"imageSize": "1K"
-						},
-						"1024x4096": {
-							"aspectRatio": "1:4",
-							"imageSize": "2K"
-						},
-						"2048x8192": {
-							"aspectRatio": "1:4",
-							"imageSize": "4K"
-						},
-						"192x1536": {
-							"aspectRatio": "1:8",
-							"imageSize": "512"
-						},
-						"384x3072": {
-							"aspectRatio": "1:8",
-							"imageSize": "1K"
-						},
-						"768x6144": {
-							"aspectRatio": "1:8",
-							"imageSize": "2K"
-						},
-						"1536x12288": {
-							"aspectRatio": "1:8",
-							"imageSize": "4K"
-						},
-						"424x632": {
-							"aspectRatio": "2:3",
-							"imageSize": "512"
-						},
-						"1696x2528": {
-							"aspectRatio": "2:3",
-							"imageSize": "2K"
-						},
-						"3392x5056": {
-							"aspectRatio": "2:3",
-							"imageSize": "4K"
-						},
-						"632x424": {
-							"aspectRatio": "3:2",
-							"imageSize": "512"
-						},
-						"2528x1696": {
-							"aspectRatio": "3:2",
-							"imageSize": "2K"
-						},
-						"5056x3392": {
-							"aspectRatio": "3:2",
-							"imageSize": "4K"
-						},
-						"448x600": {
-							"aspectRatio": "3:4",
-							"imageSize": "512"
-						},
-						"896x1200": {
-							"aspectRatio": "3:4",
-							"imageSize": "1K"
-						},
-						"1792x2400": {
-							"aspectRatio": "3:4",
-							"imageSize": "2K"
-						},
-						"3584x4800": {
-							"aspectRatio": "3:4",
-							"imageSize": "4K"
-						},
-						"1024x256": {
-							"aspectRatio": "4:1",
-							"imageSize": "512"
-						},
-						"2048x512": {
-							"aspectRatio": "4:1",
-							"imageSize": "1K"
-						},
-						"4096x1024": {
-							"aspectRatio": "4:1",
-							"imageSize": "2K"
-						},
-						"8192x2048": {
-							"aspectRatio": "4:1",
-							"imageSize": "4K"
-						},
-						"600x448": {
-							"aspectRatio": "4:3",
-							"imageSize": "512"
-						},
-						"1200x896": {
-							"aspectRatio": "4:3",
-							"imageSize": "1K"
-						},
-						"2400x1792": {
-							"aspectRatio": "4:3",
-							"imageSize": "2K"
-						},
-						"4800x3584": {
-							"aspectRatio": "4:3",
-							"imageSize": "4K"
-						},
-						"464x576": {
-							"aspectRatio": "4:5",
-							"imageSize": "512"
-						},
-						"928x1152": {
-							"aspectRatio": "4:5",
-							"imageSize": "1K"
-						},
-						"1856x2304": {
-							"aspectRatio": "4:5",
-							"imageSize": "2K"
-						},
-						"3712x4608": {
-							"aspectRatio": "4:5",
-							"imageSize": "4K"
-						},
-						"576x464": {
-							"aspectRatio": "5:4",
-							"imageSize": "512"
-						},
-						"1152x928": {
-							"aspectRatio": "5:4",
-							"imageSize": "1K"
-						},
-						"2304x1856": {
-							"aspectRatio": "5:4",
-							"imageSize": "2K"
-						},
-						"4608x3712": {
-							"aspectRatio": "5:4",
-							"imageSize": "4K"
-						},
-						"1536x192": {
-							"aspectRatio": "8:1",
-							"imageSize": "512"
-						},
-						"3072x384": {
-							"aspectRatio": "8:1",
-							"imageSize": "1K"
-						},
-						"6144x768": {
-							"aspectRatio": "8:1",
-							"imageSize": "2K"
-						},
-						"12288x1536": {
-							"aspectRatio": "8:1",
-							"imageSize": "4K"
-						},
-						"384x688": {
-							"aspectRatio": "9:16",
-							"imageSize": "512"
-						},
-						"1536x2752": {
-							"aspectRatio": "9:16",
-							"imageSize": "2K"
-						},
-						"3072x5504": {
-							"aspectRatio": "9:16",
-							"imageSize": "4K"
-						},
-						"688x384": {
-							"aspectRatio": "16:9",
-							"imageSize": "512"
-						},
-						"2752x1536": {
-							"aspectRatio": "16:9",
-							"imageSize": "2K"
-						},
-						"5504x3072": {
-							"aspectRatio": "16:9",
-							"imageSize": "4K"
-						},
-						"1584x672": {
-							"aspectRatio": "21:9",
-							"imageSize": "1K"
-						},
-						"3168x1344": {
-							"aspectRatio": "21:9",
-							"imageSize": "2K"
-						},
-						"6336x2688": {
-							"aspectRatio": "21:9",
-							"imageSize": "4K"
-						}
-					}
-				}
-			},
-			"pricing": {
-				"inputCentsPerMTokens": 50,
-				"outputCentsPerMTokens": 300,
-				"cacheReadCentsPerMTokens": 5,
-				"imageOutputCentsPerMTokens": 6000
-			}
-		},
 		"google/gemini-3.1-flash-lite": {
 			"operations": {
 				"text.generate": {
@@ -5760,7 +5250,7 @@
 					},
 					"reasoning": {
 						"kind": "openai_effort",
-						"levels": ["low", "high"]
+						"levels": ["none", "low", "medium", "high"]
 					}
 				}
 			},
@@ -5768,46 +5258,6 @@
 				"inputCentsPerMTokens": 150,
 				"outputCentsPerMTokens": 900,
 				"cacheReadCentsPerMTokens": 15
-			}
-		},
-		"google/gemini-3.5-flash-batch": {
-			"operations": {
-				"text.generate": {
-					"capabilities": {
-						"tools": true,
-						"vision": true,
-						"reasoning": true,
-						"structuredOutputs": true
-					},
-					"maxInputTokens": 1000000,
-					"maxOutputTokens": 64000,
-					"modalities": {
-						"input": ["image", "pdf", "text", "video"],
-						"output": ["text"]
-					},
-					"contracts": ["chat.completions", "responses"],
-					"parameters": {
-						"include_reasoning": true,
-						"max_tokens": true,
-						"reasoning": true,
-						"reasoning_effort": true,
-						"response_format": true,
-						"stop": true,
-						"structured_outputs": true,
-						"temperature": true,
-						"tool_choice": true,
-						"tools": true
-					},
-					"reasoning": {
-						"kind": "openai_effort",
-						"levels": ["low", "high"]
-					}
-				}
-			},
-			"pricing": {
-				"inputCentsPerMTokens": 75,
-				"outputCentsPerMTokens": 450,
-				"cacheReadCentsPerMTokens": 7.5
 			}
 		},
 		"google/gemini-3.5-flash-lite": {
@@ -6000,7 +5450,7 @@
 					},
 					"reasoning": {
 						"kind": "openai_effort",
-						"levels": ["low", "high"]
+						"levels": ["none", "low", "medium", "high"]
 					}
 				}
 			},
@@ -6008,46 +5458,6 @@
 				"inputCentsPerMTokens": 75,
 				"outputCentsPerMTokens": 375,
 				"cacheReadCentsPerMTokens": 7.5
-			}
-		},
-		"google/gemini-3.7-flash-batch": {
-			"operations": {
-				"text.generate": {
-					"capabilities": {
-						"tools": true,
-						"vision": true,
-						"reasoning": true,
-						"structuredOutputs": true
-					},
-					"maxInputTokens": 1000000,
-					"maxOutputTokens": 65535,
-					"modalities": {
-						"input": ["image", "pdf", "text", "video"],
-						"output": ["text"]
-					},
-					"contracts": ["chat.completions", "responses"],
-					"parameters": {
-						"include_reasoning": true,
-						"max_tokens": true,
-						"reasoning": true,
-						"reasoning_effort": true,
-						"response_format": true,
-						"stop": true,
-						"structured_outputs": true,
-						"temperature": true,
-						"tool_choice": true,
-						"tools": true
-					},
-					"reasoning": {
-						"kind": "openai_effort",
-						"levels": ["low", "high"]
-					}
-				}
-			},
-			"pricing": {
-				"inputCentsPerMTokens": 37.5,
-				"outputCentsPerMTokens": 187.5,
-				"cacheReadCentsPerMTokens": 3.75
 			}
 		},
 		"google/gemini-3.8-flash": {
@@ -6555,6 +5965,41 @@
 				"outputCentsPerMTokens": 750,
 				"cacheReadCentsPerMTokens": 15,
 				"imageOutputCentsPerMTokens": 3000
+			}
+		},
+		"google/gemini-omni-1.2-flash": {
+			"operations": {
+				"text.generate": {
+					"capabilities": {
+						"tools": false,
+						"vision": true,
+						"reasoning": true,
+						"structuredOutputs": false
+					},
+					"maxInputTokens": 131072,
+					"maxOutputTokens": 260640,
+					"modalities": {
+						"input": ["image", "pdf", "text", "video"],
+						"output": ["text", "video"]
+					},
+					"contracts": ["chat.completions", "responses"],
+					"parameters": {
+						"include_reasoning": true,
+						"max_tokens": true,
+						"reasoning": true,
+						"reasoning_effort": true,
+						"stop": true,
+						"temperature": true
+					},
+					"reasoning": {
+						"kind": "openai_effort",
+						"levels": ["none", "low", "medium", "high"]
+					}
+				}
+			},
+			"pricing": {
+				"inputCentsPerMTokens": 150,
+				"outputCentsPerMTokens": 900
 			}
 		},
 		"google/gemini-omni-flash-preview": {
