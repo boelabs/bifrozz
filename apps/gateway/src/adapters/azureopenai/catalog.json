@@ -1020,7 +1020,7 @@
 			"pricing": {
 				"inputCentsPerMTokens": 175,
 				"outputCentsPerMTokens": 1400,
-				"cacheReadCentsPerMTokens": 18
+				"cacheReadCentsPerMTokens": 17.5
 			}
 		},
 		"gpt-5.2-chat": {
@@ -1307,7 +1307,7 @@
 			"pricing": {
 				"inputCentsPerMTokens": 25,
 				"outputCentsPerMTokens": 200,
-				"cacheReadCentsPerMTokens": 3,
+				"cacheReadCentsPerMTokens": 2.5,
 				"cacheWriteCentsPerMTokens": 0
 			}
 		},
@@ -1347,7 +1347,7 @@
 			"pricing": {
 				"inputCentsPerMTokens": 5,
 				"outputCentsPerMTokens": 40,
-				"cacheReadCentsPerMTokens": 1,
+				"cacheReadCentsPerMTokens": 0.5,
 				"cacheWriteCentsPerMTokens": 0
 			}
 		},
@@ -1572,7 +1572,7 @@
 			"pricing": {
 				"inputCentsPerMTokens": 10,
 				"outputCentsPerMTokens": 40,
-				"cacheReadCentsPerMTokens": 3,
+				"cacheReadCentsPerMTokens": 2.5,
 				"cacheWriteCentsPerMTokens": 0
 			},
 			"deprecated": true,
@@ -2171,6 +2171,21 @@
 						"levels": ["low", "medium", "high", "xhigh", "max"]
 					}
 				}
+			},
+			"pricing": {
+				"inputCentsPerMTokens": 100,
+				"outputCentsPerMTokens": 500,
+				"cacheReadCentsPerMTokens": 5,
+				"cacheWriteCentsPerMTokens": 125,
+				"tiers": [
+					{
+						"aboveInputTokens": 272000,
+						"inputCentsPerMTokens": 200,
+						"outputCentsPerMTokens": 750,
+						"cacheReadCentsPerMTokens": 10,
+						"cacheWriteCentsPerMTokens": 250
+					}
+				]
 			}
 		},
 		"gpt-6-sol": {
