@@ -1,23 +1,13 @@
 import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "@boelabs/postgres";
 import { env } from "#config/env.ts";
-import postgres from "postgres";
 
-/**
- * Does the URL request TLS? (sslmode=require|verify-*|prefer). Some hosts (e.g. Coolify) expose
- * Postgres with self-signed certificates whose SAN does not include the IP, so we use postgres-js's
- * `ssl: "require"`: it encrypts but does not verify the certificate. On an internal network (no
- * sslmode) the connection is plaintext.
- */
-const wantsSsl = /sslmode=(require|verify-full|verify-ca|prefer)/iu.test(
-	env.DATABASE_URL,
-);
-
+// TLS comes from the URL's `sslmode`, read as libpq does; without one the connection is plaintext.
 export const sql = postgres(env.DATABASE_URL, {
 	max: env.DATABASE_POOL_MAX,
 	onnotice: () => {
 		/* intentionally empty */
 	},
-	ssl: wantsSsl ? "require" : false,
 });
 
 export const db = drizzle(sql);

@@ -14,7 +14,7 @@ deployment. Gateway and dashboard processes read separate environment files.
 | `MASTER_KEY` | String, 32+ chars | Full-access operator key. Generate with `openssl rand -base64 48`. |
 | `ENCRYPTION_KEYRING` | JSON object | Maps key ids to 64-character hex AES keys. Keep old ids during rotation. |
 | `ACTIVE_ENCRYPTION_KEY_ID` | Key id | Must exist in `ENCRYPTION_KEYRING`; encrypts every new envelope. |
-| `DATABASE_URL` | Postgres connection URL | |
+| `DATABASE_URL` | Postgres connection URL | TLS follows `sslmode` as in libpq; without it the connection is plaintext. |
 | `REDIS_URL` | Redis connection URL | |
 
 ## Server

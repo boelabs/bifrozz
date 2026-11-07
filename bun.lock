@@ -81,6 +81,7 @@
       "dependencies": {
         "@aws-sdk/client-s3": "3.1161.0",
         "@aws-sdk/lib-storage": "3.1161.0",
+        "@boelabs/postgres": "1.0.0",
         "@hono/node-server": "2.1.6",
         "@opentelemetry/api": "1.10.0",
         "@opentelemetry/exporter-metrics-otlp-http": "0.300.0",
@@ -94,7 +95,7 @@
         "drizzle-orm": "0.45.4",
         "hono": "4.13.16",
         "ioredis": "6.0.0",
-        "postgres": "3.4.9",
+        "postgres": "npm:@boelabs/postgres@1.0.0",
         "sharp": "0.35.5",
         "unpdf": "2.1.0",
         "ws": "8.22.0",
@@ -266,6 +267,8 @@
     "@boelabs/dashboard": ["@boelabs/dashboard@workspace:apps/dashboard"],
 
     "@boelabs/docs": ["@boelabs/docs@workspace:apps/docs"],
+
+    "@boelabs/postgres": ["@boelabs/postgres@1.0.0", "", {}, "sha512-eJrEV48INhvHwt6+58d2RI/gOfd2L3soBMaoag8U227fitZgdSyKAQCg/cjU0/jdoDt9becYRD9PNZ11VCIKSw=="],
 
     "@boelabs/tsconfig": ["@boelabs/tsconfig@workspace:packages/tsconfig"],
 
@@ -1465,7 +1468,7 @@
 
     "postcss-selector-parser": ["postcss-selector-parser@7.1.6", "", { "dependencies": { "cssesc": "^3.0.0", "util-deprecate": "^1.0.2" } }, "sha512-7qASPzhKF2l2KLboRZux8CCTRMdGiV08vWmyKzPz22qZ7ZjQBOeY7rNzNoCLSUiftJ7HUq0GERHmxw/t0dCdMw=="],
 
-    "postgres": ["postgres@3.4.9", "", {}, "sha512-GD3qdB0x1z9xgFI6cdRD6xu2Sp2WCOEoe3mtnyB5Ee0XrrL5Pe+e4CCnJrRMnL1zYtRDZmQQVbvOttLnKDLnaw=="],
+    "postgres": ["@boelabs/postgres@1.0.0", "", {}, "sha512-eJrEV48INhvHwt6+58d2RI/gOfd2L3soBMaoag8U227fitZgdSyKAQCg/cjU0/jdoDt9becYRD9PNZ11VCIKSw=="],
 
     "powershell-utils": ["powershell-utils@0.2.1", "", {}, "sha512-C+y9x90UElAddDZmV4qOx9W53B61PO7cIqWz2dQsWlwswuq4mr8NEwytdGKboYbQlGZ3awrkTeNvcZiZNHnQ8A=="],
 
