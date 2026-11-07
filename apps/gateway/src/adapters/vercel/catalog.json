@@ -3490,6 +3490,46 @@
 				"cacheReadCentsPerMTokens": 1.4
 			}
 		},
+		"deepseek/deepseek-v4.1-flash-1017-ultrafast": {
+			"operations": {
+				"text.generate": {
+					"capabilities": {
+						"tools": true,
+						"vision": true,
+						"reasoning": true,
+						"structuredOutputs": true
+					},
+					"maxInputTokens": 1048576,
+					"maxOutputTokens": 1048576,
+					"modalities": {
+						"input": ["image", "text"],
+						"output": ["text"]
+					},
+					"contracts": ["chat.completions", "responses"],
+					"parameters": {
+						"include_reasoning": true,
+						"max_tokens": true,
+						"reasoning": true,
+						"reasoning_effort": true,
+						"response_format": true,
+						"stop": true,
+						"structured_outputs": true,
+						"temperature": true,
+						"tool_choice": true,
+						"tools": true
+					},
+					"reasoning": {
+						"kind": "openai_effort",
+						"levels": ["none", "low", "high", "max"]
+					}
+				}
+			},
+			"pricing": {
+				"inputCentsPerMTokens": 240,
+				"outputCentsPerMTokens": 960,
+				"cacheReadCentsPerMTokens": 4.8
+			}
+		},
 		"deepseek/deepseek-v4.1-flash-fast": {
 			"operations": {
 				"text.generate": {
@@ -6136,6 +6176,43 @@
 			},
 			"pricing": {
 				"inputCentsPerMTokens": 2.5
+			}
+		},
+		"humansand/ampersand-v0.1": {
+			"operations": {
+				"text.generate": {
+					"capabilities": {
+						"tools": true,
+						"vision": false,
+						"reasoning": true,
+						"structuredOutputs": false
+					},
+					"maxInputTokens": 1000000,
+					"maxOutputTokens": 32768,
+					"modalities": {
+						"input": ["text"],
+						"output": ["text"]
+					},
+					"contracts": ["chat.completions", "responses"],
+					"parameters": {
+						"include_reasoning": true,
+						"max_tokens": true,
+						"reasoning": true,
+						"reasoning_effort": true,
+						"stop": true,
+						"temperature": true,
+						"tool_choice": true,
+						"tools": true
+					},
+					"reasoning": {
+						"kind": "openai_effort",
+						"levels": ["low", "medium", "high", "max"]
+					}
+				}
+			},
+			"pricing": {
+				"inputCentsPerMTokens": 0,
+				"outputCentsPerMTokens": 0
 			}
 		},
 		"inception/mercury-2": {
