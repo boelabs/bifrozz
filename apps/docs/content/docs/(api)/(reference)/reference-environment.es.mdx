@@ -11,7 +11,7 @@ El gateway valida su entorno al inicio y sale si falta una variable requerida o 
 | `MASTER_KEY` | Cadena, más de 32 caracteres | Clave de operador de acceso completo. Generar con `openssl rand -base64 48`. |
 | `ENCRYPTION_KEYRING` | Objeto JSON | Asigna identificadores de claves a claves AES hexadecimales de 64 caracteres. Mantén las identificaciones antiguas durante la rotación. |
 | `ACTIVE_ENCRYPTION_KEY_ID` | Identificación de clave | Debe existir en `ENCRYPTION_KEYRING`; cifra cada sobre nuevo. |
-| `DATABASE_URL` | URL de conexión de Postgres | |
+| `DATABASE_URL` | URL de conexión de Postgres | TLS sigue `sslmode` como en libpq; sin él, la conexión va en texto plano. |
 | `REDIS_URL` | URL de conexión de Redis | |
 
 ## Servidor [#server]
