@@ -237,8 +237,10 @@ catalogs, opens a `chore/catalog-sync-*` pull request and squash-merges it when 
 procedure and limits are in [the catalog agent runbook](apps/gateway/src/catalog/sync/RUNBOOK.md),
 which also applies to anyone syncing catalogs by hand. Its merge gate is `catalog:guard`: only
 `catalog.json` files may change, no model may disappear from a hand-maintained catalog, no
-deprecation may be undone (all three block), and a price that moves by 1.5x or more, or disappears,
-leaves the pull request open for a human.
+deprecation may be undone (all three block). A price that moves by 1.5x or more, or disappears, leaves
+the pull request open for a human. So does any id on Microsoft's Azure list that is neither in a
+catalog nor in `AZURE_LISTING_UNSERVED`, an unreadable list, and any edit to that unserved list (the
+one non-catalog change a sync may make).
 
 Reasoning specs are a special case: no source expresses *how* a model controls reasoning
 (`ReasoningSpec.kind`/`levels`/`budgets`), so drafts built from models.dev carry

@@ -1,6 +1,13 @@
-import { catalogDirectory, guardCatalog, guardChangedFiles } from "./guard.ts";
 import { describe, test } from "node:test";
 import assert from "node:assert/strict";
+
+import {
+	AZURE_LISTING_PATH,
+	guardAzureListing,
+	guardChangedFiles,
+	catalogDirectory,
+	guardCatalog,
+} from "./guard.ts";
 
 const catalog = (models: Record<string, unknown>) => ({ models });
 
@@ -20,6 +27,13 @@ describe("guardChangedFiles", () => {
 		assert.deepEqual(
 			findings.map((f) => f.level),
 			["block", "block"],
+		);
+	});
+
+	test("sends a change to the Azure unserved list to a human", () => {
+		assert.deepEqual(
+			guardChangedFiles([AZURE_LISTING_PATH]).map((f) => f.level),
+			["review"],
 		);
 	});
 
@@ -123,6 +137,60 @@ describe("guardCatalog", () => {
 		);
 		assert.deepEqual(
 			findings.map((f) => f.level),
+			["review"],
+		);
+	});
+});
+
+describe("guardAzureListing", () => {
+	const model = (id: string) => ({
+		adapterKey: "azurefoundry",
+		id,
+		section: "Moonshot AI models sold by Azure",
+		retired: false,
+	});
+
+	test("passes when every listed id is resolved", () => {
+		assert.deepEqual(
+			guardAzureListing({
+				complete: true,
+				missing: [],
+				retiredNotDeprecated: [],
+			}),
+			[],
+		);
+	});
+
+	test("holds the merge for missing and retired ids", () => {
+		assert.deepEqual(
+			guardAzureListing({
+				complete: true,
+				missing: [model("Kimi-K3.1-Pro")],
+				retiredNotDeprecated: [{ ...model("Kimi-K2.5"), retired: true }],
+			}),
+			[
+				{
+					level: "review",
+					message:
+						"azurefoundry/Kimi-K3.1-Pro: listed by Azure (Moonshot AI models sold by Azure), neither in the catalog nor in AZURE_LISTING_UNSERVED",
+				},
+				{
+					level: "review",
+					message:
+						"azurefoundry/Kimi-K2.5: retired by Azure, not deprecated here",
+				},
+			],
+		);
+	});
+
+	test("holds the merge when the list cannot be read", () => {
+		assert.deepEqual(
+			guardAzureListing({
+				complete: false,
+				error: "HTTP 503",
+				missing: [],
+				retiredNotDeprecated: [],
+			}).map((f) => f.level),
 			["review"],
 		);
 	});

@@ -1,8 +1,11 @@
+import { checkAzureListing } from "#catalog/sync/azureListing.ts";
 import type { GuardFinding } from "#catalog/sync/guard.ts";
+import type { CatalogEntry } from "#catalog/types.ts";
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 
 import {
+	guardAzureListing,
 	guardChangedFiles,
 	catalogDirectory,
 	guardCatalog,
@@ -10,8 +13,9 @@ import {
 
 /**
  * Merge gate for automated catalog pull requests. Compares the working tree with its merge base on
- * --base (default origin/main). Exit 0: the catalog agent may merge. Exit 2: open the pull request but
- * leave the merge to a human. Exit 1: the change is not a valid catalog sync; fix it.
+ * --base (default origin/main), and the tree's Azure catalogs with Microsoft's model list. Exit 0: the
+ * catalog agent may merge. Exit 2: open the pull request but leave the merge to a human. Exit 1: the
+ * change is not a valid catalog sync; fix it.
  */
 
 function argValue(name: string): string | undefined {
@@ -49,6 +53,18 @@ for (const path of changed) {
 	const after: unknown = JSON.parse(readFileSync(`${root}/${path}`, "utf8"));
 	findings.push(...guardCatalog(directory, before, after));
 }
+
+const azureCatalogs = new Map<string, Record<string, CatalogEntry>>();
+for (const adapterKey of ["azureopenai", "azurefoundry"]) {
+	const document = JSON.parse(
+		readFileSync(
+			`${root}/apps/gateway/src/adapters/${adapterKey}/catalog.json`,
+			"utf8",
+		),
+	) as { models: Record<string, CatalogEntry> };
+	azureCatalogs.set(adapterKey, document.models);
+}
+findings.push(...guardAzureListing(await checkAzureListing(azureCatalogs)));
 
 console.log(
 	`catalog guard: ${changed.length} changed file(s) against ${base} (${mergeBase.slice(0, 7)})`,

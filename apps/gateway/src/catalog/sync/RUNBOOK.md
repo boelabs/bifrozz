@@ -26,6 +26,8 @@ You must not:
 - Touch any file other than a `catalog.json`. No code, tests, docs, schemas, lockfiles, workflows.
   If a correct catalog needs a code or schema change (a price field the schema lacks, a parameter
   the adapter cannot send), leave it out and list it under "Out of scope" in the pull request.
+  The one exception is `AZURE_LISTING_UNSERVED` in `src/catalog/sync/azureListing.ts` (3.2): you may
+  add entries there and nothing else in that file, and the pull request then waits for a human.
 - Remove a model from a hand-maintained catalog, or clear `deprecated` on one. Operators' deployments
   reference these ids; retirement is a flag, and only a human reverses it.
 - Add a provider, a transport, or a new operation to a model.
@@ -140,10 +142,18 @@ realtime transcription or translation on the OpenAI adapter yet).
 **Azure is read for you.** The aggregators never list Azure's deployment ids, so `catalog:sync` reads
 Microsoft's own list (`https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure`,
 both tabs) and reports "Listed by Azure, missing from the catalog" and "Retired by Azure, not
-deprecated here". Every id in those sections is a candidate. One you leave out because Bifrozz cannot
-serve it (no operation or transport for it) goes under "Out of scope" with the reason, so a human adds
-it to `AZURE_LISTING_UNSERVED`. If the report says the list could not be read, read the page by hand
-this run.
+deprecated here". **Resolve every id in those sections this run; none may be skipped or carried
+over:**
+
+- Servable (the adapter has the operation and transport): research and add it like any new model
+  (3.3). Without a Global meter it goes in unpriced; that is not a reason to leave it out.
+- Not servable: add it to `AZURE_LISTING_UNSERVED` with a one-line reason in the style of the
+  entries already there. Never use that list for a model you merely could not research.
+- Retired by Azure: mark it `deprecated` (3.4).
+
+`catalog:guard` re-reads the list against your tree and holds the merge while any id is unresolved,
+so an omission is never silent. If the report says the list could not be read, read the page by hand
+this run; the guard holds that run's pull request for a human as well.
 
 Candidates are: new models in the report, models the providers announced, deprecations the
 providers announced, and "stale essentials" in the report. Most stale essentials are aggregator
@@ -234,27 +244,29 @@ bun run --filter @boelabs/bifrozz catalog:validate
 bun run --filter @boelabs/bifrozz catalog:guard
 ```
 
-`catalog:guard` compares your tree with `origin/main`:
+`catalog:guard` compares your tree with `origin/main`, and your Azure catalogs with Microsoft's list:
 
 | Exit | Meaning | What you do |
 |---|---|---|
-| 0 | Catalog-only change, no risky moves | Open the pull request and merge it when CI is green |
-| 2 | Plausible but risky: a price moved by 1.5x or more, or a price disappeared | Open the pull request, put the findings under "Needs human review", do not merge |
-| 1 | Not a valid catalog sync: a non-catalog file, a removed model, an undone deprecation, a new catalog | Fix it. If you cannot, discard the change and report it |
+| 0 | Catalog-only change, no risky moves, every Azure-listed id resolved | Open the pull request and merge it when CI is green |
+| 2 | Plausible but risky: a price moved by 1.5x or more, a price disappeared, `AZURE_LISTING_UNSERVED` changed, or the Azure list could not be read | Open the pull request, put the findings under "Needs human review", do not merge |
+| 2 | An Azure-listed id is unresolved | Go back to 3.2 and resolve it. Open the pull request with it still unresolved only if you could not, and say why under "Needs human review" |
+| 1 | Not a valid catalog sync: a non-catalog file other than `azureListing.ts`, a removed model, an undone deprecation, a new catalog | Fix it. If you cannot, discard the change and report it |
 
 If a test fails because of your catalog change (a test pins a model or a price), you may not edit
 the test: leave the pull request open, unmerged, and explain.
 
 ### 3.6 Pull request and merge
 
-If nothing changed, stop: no branch, no pull request. Report "no changes" with the list of what you
-checked.
+If nothing changed and `catalog:guard` exited 0, stop: no branch, no pull request. Report "no
+changes" with the list of what you checked. "Nothing changed" never covers an unresolved Azure id:
+resolving it is a change (3.2).
 
 Otherwise:
 
 ```bash
 git checkout -b chore/catalog-sync-$(date -u +%Y-%m-%d-%H%M)
-git add apps/gateway/src/adapters
+git add apps/gateway/src/adapters apps/gateway/src/catalog/sync/azureListing.ts
 git commit -m "Sync model catalogs for $(date -u +%Y-%m-%d)"
 git push -u origin HEAD
 gh pr create --base main --title "..." --body-file <file>
@@ -266,6 +278,8 @@ follows `.github/PULL_REQUEST_TEMPLATE.md`, kept short:
 - **Summary:** each added, corrected or deprecated model with its key numbers, and the snapshot
   counts (added, no longer listed).
 - **Sources:** one provider URL per model you changed.
+- **Azure list:** every id the report's Azure sections listed, one line each: added, unserved (with
+  the reason), or deprecated. Write "nothing listed" when both sections were empty.
 - **Needs human review:** the `catalog:guard` findings, if any. Omit when empty.
 - **Rejected:** the report's proposals you checked and did not apply, in one line each.
 - **Out of scope:** things you found that need code or schema changes.

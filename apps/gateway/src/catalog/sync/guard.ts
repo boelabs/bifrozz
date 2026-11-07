@@ -5,6 +5,8 @@
  * a human merges it. Pure functions over parsed JSON, so the gate is testable without git.
  */
 
+import type { AzureListingFindings } from "./azureListing.ts";
+
 export type GuardLevel = "block" | "review";
 
 export interface GuardFinding {
@@ -31,13 +33,59 @@ export function catalogDirectory(path: string): string | undefined {
 	return CATALOG_PATH.exec(path)?.[1];
 }
 
+/**
+ * The one non-catalog file a sync may touch: deciding not to serve an Azure-listed model is an entry in
+ * `AZURE_LISTING_UNSERVED`, and a human confirms each reason before it merges.
+ */
+export const AZURE_LISTING_PATH =
+	"apps/gateway/src/catalog/sync/azureListing.ts";
+
 export function guardChangedFiles(paths: readonly string[]): GuardFinding[] {
 	return paths
 		.filter((path) => catalogDirectory(path) === undefined)
-		.map((path) => ({
-			level: "block",
-			message: `${path} is not a catalog.json; a catalog sync changes catalogs only`,
-		}));
+		.map((path) =>
+			path === AZURE_LISTING_PATH
+				? {
+						level: "review",
+						message: `${path} changed; a human confirms each AZURE_LISTING_UNSERVED reason`,
+					}
+				: {
+						level: "block",
+						message: `${path} is not a catalog.json; a catalog sync changes catalogs only`,
+					},
+		);
+}
+
+/**
+ * Microsoft's model list compared with the catalogs as they stand after the sync. Every listed id has to
+ * be resolved before the agent may merge: added to the catalog, or listed as unserved with a reason. An
+ * unreadable list is not "nothing new", so it holds the merge too.
+ */
+export function guardAzureListing(
+	listing: AzureListingFindings,
+): GuardFinding[] {
+	if (!listing.complete) {
+		return [
+			{
+				level: "review",
+				message: `Azure model list unreadable (${listing.error ?? "unknown error"}); read it by hand`,
+			},
+		];
+	}
+	return [
+		...listing.missing.map(
+			(model): GuardFinding => ({
+				level: "review",
+				message: `${model.adapterKey}/${model.id}: listed by Azure (${model.section}), neither in the catalog nor in AZURE_LISTING_UNSERVED`,
+			}),
+		),
+		...listing.retiredNotDeprecated.map(
+			(model): GuardFinding => ({
+				level: "review",
+				message: `${model.adapterKey}/${model.id}: retired by Azure, not deprecated here`,
+			}),
+		),
+	];
 }
 
 type Json = Record<string, unknown>;
